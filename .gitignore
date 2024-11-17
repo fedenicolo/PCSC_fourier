@@ -1,0 +1,17 @@
+# Ignore build directories
+cmake-build-*/
+build/
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+
+# Ignore compiled files
+*.o
+*.out
+*.exe
+*.log
+*.swp
+
+# Ignore system files
+.DS_Store
