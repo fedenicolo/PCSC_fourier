@@ -46,6 +46,18 @@ const std::vector<int>& Histogram::getBins() const {
     return bins;
 }
 
+std::vector<std::pair<double, int>> Histogram::getHistogramData() const {
+    std::vector<std::pair<double, int>> histogramData;
+    double binWidth = (maxRange - minRange) / numBins;
+
+    for (size_t i = 0; i < bins.size(); ++i) {
+        double binCenter = minRange + binWidth * (i + 0.5); // Center of the bin
+        histogramData.emplace_back(binCenter, bins[i]);
+    }
+
+    return histogramData;
+}
+
 // Visualize the histogram using Gnuplot
 void Histogram::visualize() const {
     Gnuplot gp;
