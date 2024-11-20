@@ -1,4 +1,5 @@
 #include "Histogram.h"
+#include "Fourier.h"
 #include <vector>
 #include <iostream>
 
@@ -22,9 +23,13 @@ int main() {
         imageHistogram.compute(imageData);
         imageHistogram.visualize(); // Visualize the histogram with Gnuplot
 
+        Fourier<double> fourier(soundData);
+        fourier.print_signal();
+
     } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
+
 
     return 0;
 }

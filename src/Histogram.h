@@ -5,6 +5,7 @@
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 
+//TODO: Change to Eigen Matrix
 #include <vector>
 
 class Histogram {
