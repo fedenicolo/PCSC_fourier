@@ -15,7 +15,7 @@ Histogram::Histogram(int numBins, double minRange, double maxRange)
     }
 }
 
-// Compute the histogram from a generic data input
+// Compute the histogram from a vector input
 void Histogram::compute(const std::vector<double> &data) {
     std::fill(bins.begin(), bins.end(), 0);
 
@@ -46,19 +46,19 @@ const std::vector<int>& Histogram::getBins() const {
     return bins;
 }
 
-std::vector<std::pair<double, int>> Histogram::getHistogramData() const {
-    std::vector<std::pair<double, int>> histogramData;
+std::vector<std::tuple<double, int, double>> Histogram::getHistogramData() const {
+    std::vector<std::tuple<double, int, double>> histogramData;
     double binWidth = (maxRange - minRange) / numBins;
 
     for (size_t i = 0; i < bins.size(); ++i) {
         double binCenter = minRange + binWidth * (i + 0.5); // Center of the bin
-        histogramData.emplace_back(binCenter, bins[i]);
+        histogramData.emplace_back(binCenter, bins[i], binWidth);
     }
 
     return histogramData;
 }
 
-// Visualize the histogram using Gnuplot
+// Visualize Gnuplot
 void Histogram::visualize() const {
     Gnuplot gp;
 
@@ -69,7 +69,6 @@ void Histogram::visualize() const {
         plotData.emplace_back(binCenter, bins[i]);
     }
 
-    // settings
     gp << "set title 'Histogram'\n";
     gp << "set xlabel 'Value'\n";
     gp << "set ylabel 'Frequency'\n";

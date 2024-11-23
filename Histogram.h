@@ -17,7 +17,7 @@ public:
 
     std::vector<double> getNormalizedHistogram() const;
 
-    std::vector<std::pair<double, int>> getHistogramData() const;
+    std::vector<std::tuple<double, int, double>> getHistogramData() const;
 
     void visualize() const;
 

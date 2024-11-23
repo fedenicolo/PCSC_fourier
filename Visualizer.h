@@ -1,35 +1,29 @@
-//
-// Created by nicol on 20/11/2024.
-//
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
 
 #include <vector>
-#include "gnuplot-iostream.h"
+#include <string>
 
 class Visualizer {
 public:
     // Constructor
     Visualizer();
 
-    //histogram
-    void plotHistogram(const std::vector<double>& data, int bins);
+    // Methods for plotting
+    void plotHistogram(const std::vector<double>& data, int bins, const std::string& saveAs = "");
+    void plotLine(const std::vector<double>& data, const std::string& saveAs = "");
+    void plotScatter(const std::vector<double>& x, const std::vector<double>& y, const std::string& saveAs = "");
 
-    //line plot
-    void plotLine(const std::vector<double>& data);
-
-    //scatter plot
-    void plotScatter(const std::vector<double>& x, const std::vector<double>& y);
-
-    // Print summary statistics
+    // Summary statistics
     void printSummary(const std::vector<double>& data);
 
 private:
-    void configureLinePlot(const std::vector<double>& data, Gnuplot& localGp);
-    void configureScatterPlot(const std::vector<double>& x, const std::vector<double>& y, Gnuplot& localGp);
+    // Private helper methods for plot configurations
+    void configureLinePlot(const std::vector<double>& data);
+    void configureScatterPlot(const std::vector<double>& x, const std::vector<double>& y);
 
-    Gnuplot gp;
+    // Output configuration
+    void configureOutput(const std::string& saveAs);
 };
 
 #endif
-

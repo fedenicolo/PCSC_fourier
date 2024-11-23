@@ -1,68 +1,113 @@
-//
-// Created by nicol on 20/11/2024.
-//
 #include "Visualizer.h"
-#include "Histogram.h" // For using the Histogram class
+#include "Histogram.h"
 #include <iostream>
 #include <iomanip>
-#include <numeric>
 #include <stdexcept>
-#include<thread>
-#include<chrono>
+#include <numeric>
+#include "gnuplot-iostream.h"
+#include <filesystem>
 
-// Constructor with persistent Gnuplot settings
 Visualizer::Visualizer() {
-    gp << "set grid\n";
+    std::string outputDirectory = "results";
+    if (!std::filesystem::exists(outputDirectory)) {
+        std::filesystem::create_directory(outputDirectory);
+    }
+
 }
 
-// Histogram
-void Visualizer::plotHistogram(const std::vector<double>& data, int bins) {
-    Gnuplot localGp;
-    localGp << "set terminal wxt persist\n";
+// Configure output for saving plots
+void Visualizer::configureOutput(const std::string& saveAs) {
+    if (!saveAs.empty()) {
+        Gnuplot gp;
+        gp << "set terminal png size 800,600\n";
+        gp << "set output '" << saveAs << "'\n";
+    }
+}
+
+// Plot Histogram
+void Visualizer::plotHistogram(const std::vector<double>& data, int bins, const std::string& saveAs) {
     Histogram histogram(bins, *std::min_element(data.begin(), data.end()), *std::max_element(data.begin(), data.end()));
     histogram.compute(data);
-    histogram.visualize();
+    const auto& histogramData = histogram.getHistogramData();
+
+    Gnuplot gp;
+    gp << "set title 'Histogram'\n";
+    gp << "set xlabel 'Value'\n";
+    gp << "set ylabel 'Frequency'\n";
+    gp << "set boxwidth 0.8 relative\n";
+    gp << "set style fill solid 1.0 border -1\n";
+    gp << "plot '-' using 1:2 with boxes title 'Histogram'\n";
+
+    // Prepare data for plotting
+    std::vector<std::pair<double, int>> plotData;
+    for (const auto& tuple : histogramData) {
+        plotData.emplace_back(std::get<0>(tuple), std::get<1>(tuple));
+    }
+
+    gp.send1d(plotData);
+
+    // Save plot if saveAs is provided
+    if (!saveAs.empty()) {
+        configureOutput(saveAs);
+        gp << "replot\n";
+        gp << "unset output\n";
+    }
 }
 
-// Line Graph
-void Visualizer::plotLine(const std::vector<double>& data) {
-    Gnuplot localGp;
-    localGp << "set terminal wxt 1 size 800,600 persist enhanced title 'Line Plot'\n";
-    configureLinePlot(data, localGp); //private configuration method
+// Plot Line
+void Visualizer::plotLine(const std::vector<double>& data, const std::string& saveAs) {
+    Gnuplot gp;
+    gp << "set title 'Line Plot'\n";
+    gp << "set xlabel 'Index'\n";
+    gp << "set ylabel 'Value'\n";
+    gp << "plot '-' with lines title 'Data'\n";
 
+    // Prepare data for plotting
     std::vector<std::pair<int, double>> plotData;
-
     for (size_t i = 0; i < data.size(); ++i) {
         plotData.emplace_back(static_cast<int>(i), data[i]);
     }
 
-    gp << "plot '-' with lines ls 1 title 'Data'\n";
     gp.send1d(plotData);
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    // Save plot if saveAs is provided
+    if (!saveAs.empty()) {
+        configureOutput(saveAs);
+        gp << "replot\n";
+        gp << "unset output\n";
+    }
 }
 
 // Plot Scatter
-void Visualizer::plotScatter(const std::vector<double>& x, const std::vector<double>& y) {
+void Visualizer::plotScatter(const std::vector<double>& x, const std::vector<double>& y, const std::string& saveAs) {
     if (x.size() != y.size()) {
         throw std::invalid_argument("Vectors x and y must have the same size.");
     }
-    Gnuplot localGp2;
-    localGp2 << "set terminal wxt 2 size 800,600 persist enhanced title 'Scatter Plot'\n";
-    configureScatterPlot(x, y, localGp2);
 
+    Gnuplot gp;
+    gp << "set title 'Scatter Plot'\n";
+    gp << "set xlabel 'X'\n";
+    gp << "set ylabel 'Y'\n";
+    gp << "set style line 1 lc rgb 'red' pt 7 ps 1.5\n";
+    gp << "plot '-' using 1:2 with points ls 1 title 'Data'\n";
+
+    // Prepare data for plotting
     std::vector<std::pair<double, double>> plotData;
-
     for (size_t i = 0; i < x.size(); ++i) {
         plotData.emplace_back(x[i], y[i]);
     }
 
-    gp << "plot '-' with points ls 2 title 'Data'\n";
     gp.send1d(plotData);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    // Save plot if saveAs is provided
+    if (!saveAs.empty()) {
+        configureOutput(saveAs);
+        gp << "replot\n";
+        gp << "unset output\n";
+    }
 }
 
-// Print Summary Statistics
+// Summary Statistics
 void Visualizer::printSummary(const std::vector<double>& data) {
     if (data.empty()) {
         std::cout << "Data is empty. Cannot compute statistics.\n";
@@ -87,21 +132,4 @@ void Visualizer::printSummary(const std::vector<double>& data) {
     std::cout << "Variance: " << variance << "\n";
     std::cout << "Min: " << minValue << "\n";
     std::cout << "Max: " << maxValue << "\n";
-}
-
-
-// Private: Gnuplot for line plots
-void Visualizer::configureLinePlot(const std::vector<double>& data, Gnuplot& localGp) {
-    localGp << "set style line 1 lc rgb 'blue' lt 1 lw 2\n";
-    localGp << "set xlabel 'Index' font ',12'\n";
-    localGp << "set ylabel 'Value' font ',12'\n";
-    localGp << "set title 'Line Plot' font ',14'\n";
-}
-
-// Private: Gnuplot for scatter plots
-void Visualizer::configureScatterPlot(const std::vector<double>& x, const std::vector<double>& y, Gnuplot& localGp) {
-    localGp << "set style line 2 lc rgb 'red' pt 7 ps 1.5\n"; // Red points
-    localGp << "set xlabel 'X' font ',12'\n";
-    localGp << "set ylabel 'Y' font ',12'\n";
-    localGp << "set title 'Scatter Plot' font ',14'\n";
 }

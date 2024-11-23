@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
 
 # Add the executable
-add_executable(PCSC_fourier main.cpp Histogram.cpp Visualizer.cpp)
+add_executable(PCSC_fourier main.cpp Histogram.cpp Visualizer.cpp Output.cpp)
 
 # Link Boost libraries
 target_link_libraries(PCSC_fourier Boost::iostreams Boost::system Boost::filesystem)
