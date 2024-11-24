@@ -3,6 +3,12 @@ project(PCSC_fourier)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# Set the build type to Debug
+set(CMAKE_BUILD_TYPE Debug)
+
+# Set debug flags for more control
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
+
 # Specify the build output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 message(${CMAKE_BINARY_DIR})

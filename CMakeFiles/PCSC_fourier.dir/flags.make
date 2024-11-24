@@ -6,5 +6,5 @@ CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_IOSTREAMS_D
 
 CXX_INCLUDES = -I/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/eigen
 
-CXX_FLAGS = -std=gnu++20
+CXX_FLAGS = -g -O0 -std=gnu++20
 
