@@ -5,6 +5,7 @@
 
 #include "Eigen/Dense"
 #include <complex>
+#include <math.h>
 #include <vector>
 #include <iostream>
 #include <stdexcept>
@@ -16,7 +17,12 @@ class Fourier{
     public:
         Fourier(std::vector<T>& input_signal);
         bool load_signal(std::vector<T>& input_signal);
-        bool transform();
+        bool __is_power_of_2(int v);
+        unsigned int __next_power_of_2(unsigned int x);
+        void pad_signal(int padding);
+        bool transform(int padding);
+        void __fft(Eigen::Matrix<std::complex<T>, 1, -1>& arr);
+        Eigen::Matrix<std::complex<T>, 1, -1> get_fft_result();
         void print_signal();    
     private:
         Eigen::Matrix<T, 1, -1> signal;
@@ -33,17 +39,108 @@ bool Fourier<T>::load_signal(std::vector<T>& input_signal){
     //Might then change this to void if we cannot find a reason why this func should fail
     if(Fourier<T>::signal.cols() != input_signal.size()){
         //NoChange_t means that dimension stays unchanged
-        Fourier<T>::signal.resize(Eigen::NoChange_t, input_signal.size())
+        Fourier<T>::signal.resize(Eigen::NoChange_t(), input_signal.size());
     }
 
-    Fourier<T>::signal = Eigne::Map<Eigen::Matrix<T, 1, input_signal.size()>> (input_signal.data(), 1, input_signal.size());
-    return true
+    Fourier<T>::signal = Eigen::Map<Eigen::Matrix<T, 1, input_signal.size()>> (input_signal.data(), 1, input_signal.size());
+    return true;
+}
+template <typename T>
+bool Fourier<T>::__is_power_of_2(int v){
+    return v && !(v & (v - 1));
 }
 
 template <typename T>
-bool transform(){
-    if
+//This only really works for < 2^32
+unsigned int Fourier<T>::__next_power_of_2(unsigned int x){
+    x--;
+    x |= x >> 1;
+    x |= x >> 2;
+    x |= x >> 4;
+    x |= x >> 8;
+    x |= x >> 16;
+    x++;
+    return x;
 }
+
+template <typename T>
+void Fourier<T>::pad_signal(int padding){
+    if(padding <= 0 && !(__is_power_of_2((int) Fourier<T>::signal.cols()))){
+        //This is the case where the user hasnt specified padding but the signal length is not a power of 2
+        std::cout << "Signal length is not a power of 2 and no or negative padding was provided. Zero padding to the next closest power of 2" << std::endl; 
+        unsigned int old_length = (unsigned int) Fourier<T>::signal.cols();
+        unsigned int new_length =  __next_power_of_2(old_length);
+
+        //conservativeResize leaves the new values uninitialized. They have no gaurentee to be zero.
+        //So we have to explicitly set them to zero.
+        Fourier<T>::signal.conservativeResize(Eigen::NoChange_t(), new_length);
+        Fourier<T>::signal.block(1, old_length, 1, (new_length-old_length)) = Eigen::Matrix<T, -1, -1>::Zero(1, (new_length-old_length));
+    }else if(padding != 0 && !(__is_power_of_2((int) Fourier<T>::signal.cols()))){
+        //This is the case where the user has provided some padding. But I guess we still need to check if the resulting
+        //size will be a power of 2.
+        unsigned int old_length = (unsigned int) Fourier<T>::signal.cols();
+        unsigned int new_length = 0;
+        if(__is_power_of_2(old_length + padding)){
+            unsigned int new_length = old_length + padding;
+        }else{
+            std::cout << "The padding you have provided is not sufficient. Rounding length+padding to the next closest power of 2" << std::endl;
+            unsigned int new_length = __next_power_of_2((unsigned int) old_length + padding);
+        }
+
+        //conservativeResize leaves the new values uninitialized. They have no gaurentee to be zero.
+        //So we have to explicitly set them to zero.
+        Fourier<T>::signal.conservativeResize(Eigen::NoChange_t(), new_length);
+        Fourier<T>::signal.block(1, old_length, 1, (new_length-old_length)) = Eigen::Matrix<T, -1, -1>::Zero(1, (new_length-old_length));
+    }else{
+        std::cout << "The signal length is already a power of 2. Continuing..." << std::endl;
+    }
+}
+template <typename T>
+bool Fourier<T>::transform(int padding){
+    //TODO: Explicitly check if the signal is zero and then break
+    Fourier<T>::pad_signal(padding); 
+    //At this point out signal length should be a power of 2. But we should assert it regardless
+    if(!(__is_power_of_2(Fourier<T>::signal.cols()))){
+        throw std::runtime_error("The signal length is not a power of 2");
+        return false;
+    }
+
+    Eigen::Matrix<std::complex<T>, 1, -1> fft_result = Fourier<T>::signal.template cast<std::complex<T>>();
+    __fft(fft_result);
+    std::cout << "FFT result" << std::endl;
+    std::cout << fft_result << std::endl;
+    return true;
+}
+
+template <typename T>
+void Fourier<T>::__fft(Eigen::Matrix<std::complex<T>, 1, -1>& arr){
+    if(arr.cols() <= 1){
+        return;
+    }
+
+    Eigen::Matrix<std::complex<T>, 1, -1> odd = Eigen::Matrix<std::complex<T>, 1, -1>::Zero(1, arr.cols()/2);
+    Eigen::Matrix<std::complex<T>, 1, -1> even = Eigen::Matrix<std::complex<T>, 1, -1>::Zero(1, arr.cols()/2);
+
+    for(int i = 0; i < arr.cols()/2; i++){
+        even(0, i) = arr(0, 2*i);
+        odd(0, i)= arr(0, 2*i+1);
+    }
+
+    __fft(even);
+    __fft(odd);
+
+    for(int i=0; i < arr.cols()/2; i++){
+        std::complex<T> twiddle_factor = exp(std::complex<T>(0, -2*Fourier<T>::PI*i / arr.cols())) * odd(0, i);
+        arr(0, i) = even(0, i) + twiddle_factor;
+        arr(0, (arr.cols()/2) + i) = even(0, i) - twiddle_factor;
+    }
+}
+
+template <typename T>
+Eigen::Matrix<std::complex<T>, 1, -1> Fourier<T>::get_fft_result(){
+    return Fourier<T>::fft_result;
+}
+
 
 template <typename T>
 void Fourier<T>::print_signal(){

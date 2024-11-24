@@ -25,6 +25,7 @@ int main() {
 
         Fourier<double> fourier(soundData);
         fourier.print_signal();
+        fourier.transform(0);
 
     } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;

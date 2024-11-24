@@ -1297,8 +1297,11 @@ CMakeFiles/PCSC_fourier.dir/src/main.cpp.o: src/main.cpp \
   eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
   eigen/Eigen/src/Eigenvalues/RealQZ.h \
   eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+  /usr/include/c++/11/math.h \
   /usr/include/c++/11/iostream
 
+
+/usr/include/c++/11/math.h:
 
 eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
 
