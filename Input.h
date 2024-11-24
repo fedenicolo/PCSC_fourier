@@ -5,7 +5,7 @@
 #define INPUT_H
 
 #include <string>
-#include <vector>
+#include <Eigen/Dense>
 
 class Input {
 protected:
@@ -22,7 +22,7 @@ public:
 
     virtual bool isValidFile() const;
 
-    virtual std::vector<double> getData() const = 0;
+    virtual Eigen::MatrixXd getData() = 0;
 };
 
 #endif // INPUT_H

@@ -1,24 +1,27 @@
 //
 // Created by nicol on 24/11/2024.
 //
-#ifndef BMP_INPUT_H
-#define BMP_INPUT_H
+#ifndef BMPINPUT_H
+#define BMPINPUT_H
 
 #include "Input.h"
+#include <Eigen/Dense>
 #include <vector>
 #include <string>
 
 class BMPInput : public Input {
 public:
-    // Constructor
     explicit BMPInput(const std::string& filepath);
 
-    // Override the method to process BMP and return a vector
-    std::vector<double> process() override;
+    // Override the base class method to return the processed data as an Eigen matrix
+    Eigen::MatrixXd getData() override;
 
 private:
-    std::vector<double> convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const;
+    // Reads BMP file and extracts pixel data
     void readBMP(const std::string& filepath, std::vector<unsigned char>& pixelData, int& width, int& height) const;
+
+    // Converts pixel data to grayscale values in a 2D Eigen matrix
+    Eigen::MatrixXd convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const;
 };
 
-#endif // BMP_INPUT_H
+#endif // BMPINPUT_H

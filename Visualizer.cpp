@@ -7,12 +7,12 @@
 #include "gnuplot-iostream.h"
 #include <filesystem>
 
+// Constructor
 Visualizer::Visualizer() {
     std::string outputDirectory = "results";
     if (!std::filesystem::exists(outputDirectory)) {
         std::filesystem::create_directory(outputDirectory);
     }
-
 }
 
 // Configure output for saving plots
@@ -25,9 +25,7 @@ void Visualizer::configureOutput(const std::string& saveAs) {
 }
 
 // Plot Histogram
-void Visualizer::plotHistogram(const std::vector<double>& data, int bins, const std::string& saveAs) {
-    Histogram histogram(bins, *std::min_element(data.begin(), data.end()), *std::max_element(data.begin(), data.end()));
-    histogram.compute(data);
+void Visualizer::plotHistogram(const Histogram& histogram, const std::string& saveAs) {
     const auto& histogramData = histogram.getHistogramData();
 
     Gnuplot gp;
