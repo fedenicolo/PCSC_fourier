@@ -1,17 +1,15 @@
-//
-// Created by nicol on 24/11/2024.
-//
 #include "BMPInput.h"
+#include "Input.h"
 #include <fstream>
 #include <stdexcept>
-#include <vector>
 #include <iostream>
+#include <Eigen/Dense>
 
 // Constructor
 BMPInput::BMPInput(const std::string& filepath) : Input(filepath) {}
 
-// Process the BMP file and return grayscale values as a vector
-std::vector<double> BMPInput::process() {
+// Process the BMP file and return grayscale values as an Eigen matrix with image dimensions
+Eigen::MatrixXd BMPInput::getData() {
     std::vector<unsigned char> pixelData;
     int width = 0, height = 0;
 
@@ -20,19 +18,24 @@ std::vector<double> BMPInput::process() {
     return convertToGrayscale(pixelData, width, height);
 }
 
-// Convert pixel data to grayscale
-std::vector<double> BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const {
-    std::vector<double> grayscale;
-    grayscale.reserve(width * height);
+// Convert pixel data to grayscale and return as a 2D Eigen matrix
+Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const {
+    Eigen::MatrixXd grayscale(height, width);
 
-    for (size_t i = 0; i < pixelData.size(); i += 3) { // Assume RGB format
-        unsigned char r = pixelData[i];
-        unsigned char g = pixelData[i + 1];
-        unsigned char b = pixelData[i + 2];
+    int rowPadded = (width * 3 + 3) & (~3);
 
-        // Convert to grayscale using standard luminance formula
-        double gray = 0.299 * r + 0.587 * g + 0.114 * b;
-        grayscale.push_back(gray / 255.0); // Normalize to [0, 1]
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            int pixelIdx = i * rowPadded + j * 3;
+
+            unsigned char r = pixelData[pixelIdx];
+            unsigned char g = pixelData[pixelIdx + 1];
+            unsigned char b = pixelData[pixelIdx + 2];
+
+            // Convert to grayscale using the standard luminance formula
+            double gray = 0.299 * r + 0.587 * g + 0.114 * b;
+            grayscale(i, j) = gray / 255.0; // Normalize to [0, 1]
+        }
     }
 
     return grayscale;
@@ -45,14 +48,10 @@ void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& 
         throw std::runtime_error("Unable to open BMP file: " + filepath);
     }
 
-
     unsigned char fileHeader[14];
     unsigned char infoHeader[40];
 
-    // Read file and info headers.
-    // We need to use reinterpret_cast because file.read work with char* but fileheader is declared as
-    //unsigned char, it is important to user reinterpret and not a normal cast because we need to keep
-    //memory region
+    // Read file and info headers
     file.read(reinterpret_cast<char*>(fileHeader), 14);
     file.read(reinterpret_cast<char*>(infoHeader), 40);
 
@@ -60,14 +59,14 @@ void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& 
         throw std::runtime_error("Not a valid BMP file");
     }
 
-    // Extract image dimensions, we could have used a memcpy but this is fine too and dont use other memory
+    // Extract image dimensions
     width = *(reinterpret_cast<int*>(&infoHeader[4]));
     height = *(reinterpret_cast<int*>(&infoHeader[8]));
 
     int rowPadded = (width * 3 + 3) & (~3); // Each row is padded to a multiple of 4 bytes
     pixelData.resize(rowPadded * height);
 
-    // Move file pointer to the start of pixel data, offset
+    // Move file pointer to the start of pixel data
     int dataOffset = *(reinterpret_cast<int*>(&fileHeader[10]));
     file.seekg(dataOffset, std::ios::beg);
 

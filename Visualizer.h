@@ -1,8 +1,11 @@
+
+
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
 
 #include <vector>
 #include <string>
+#include "Histogram.h"
 
 class Visualizer {
 public:
@@ -10,7 +13,7 @@ public:
     Visualizer();
 
     // Methods for plotting
-    void plotHistogram(const std::vector<double>& data, int bins, const std::string& saveAs = "");
+    void plotHistogram(const Histogram& histogram, const std::string& saveAs = "");
     void plotLine(const std::vector<double>& data, const std::string& saveAs = "");
     void plotScatter(const std::vector<double>& x, const std::vector<double>& y, const std::string& saveAs = "");
 
@@ -27,3 +30,4 @@ private:
 };
 
 #endif
+
