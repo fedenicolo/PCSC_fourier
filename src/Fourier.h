@@ -22,7 +22,8 @@ class Fourier{
         void pad_signal(int padding);
         bool transform(int padding);
         void __fft(Eigen::Matrix<std::complex<T>, 1, -1>& arr);
-        Eigen::Matrix<std::complex<T>, 1, -1> get_fft_result();
+        std::vector<std::complex<T>> get_fft_result();
+        std::vector<T> get_signal();
         void print_signal();    
     private:
         Eigen::Matrix<T, 1, -1> signal;
@@ -137,8 +138,24 @@ void Fourier<T>::__fft(Eigen::Matrix<std::complex<T>, 1, -1>& arr){
 }
 
 template <typename T>
-Eigen::Matrix<std::complex<T>, 1, -1> Fourier<T>::get_fft_result(){
-    return Fourier<T>::fft_result;
+std::vector<std::complex<T>> Fourier<T>::get_fft_result(){
+    std::vector<std::complex<T>> vec_result;
+    //TODO: Wrap this in an if-block so this code can also be used for 2d matrices
+    for(int i=0; i < Fourier<T>::fft_result.cols(), i++){
+        vec_result.push_back(fft_result(0, i));
+    }
+
+    return vec_result;
+}
+
+template <typename T>
+std::vector<T> Fourier<T>::get_signal(){
+    std::vector<T> vec_result;
+    //TODO: Wrap this in an if-block so this code can also be used for 2d matrices
+    for(int i=0; i < Fourier<T>::signal.cols(), i++){
+        vec_result.push_back(signal(0, i));
+    }
+    return vec_result;
 }
 
 
