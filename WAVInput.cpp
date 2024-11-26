@@ -118,16 +118,18 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 
       // Convert bytes to integer sample using the same logic as before
       int DataSample = 0;
+      
       // From Microsoft Specifications : 8 bits per sample is always unsigned
       if (BitsPerSample == 8) {
         DataSample = DataBuffer[sampleIndex] & 0xFF;
-      // From Microsoft Specifications : 9 bits per sample or more is always signed
+      
+        // From Microsoft Specifications : 9 bits per sample or more is always signed
       } else if (BitsPerSample == 16) {
         DataSample = DataBuffer[sampleIndex] | (DataBuffer[sampleIndex + 1] << 8);
       } else if (BitsPerSample == 24) {
         DataSample = (DataBuffer[sampleIndex] |
-             		  DataBuffer[sampleIndex + 1] << 8 |
-             		  DataBuffer[sampleIndex + 2] << 16);
+             		      DataBuffer[sampleIndex + 1] << 8 |
+             		      DataBuffer[sampleIndex + 2] << 16);
         // Because the sample is 24 bits instead of 32, sign extension is needed
         if (DataSample & 0x00800000) { // Mask to check if the MSB == 1
           DataSample |= 0xFF000000; // If the number is negative fill the bits 25-32 with ones
@@ -140,7 +142,6 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
       AudioData(sample, channel) = static_cast<double>(DataSample);
     }
   }
-
 }
 
 void WAVInput::readData(){
