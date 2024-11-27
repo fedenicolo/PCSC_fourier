@@ -7,9 +7,14 @@
 #include <cstdint>
 #include <Eigen/Dense>
 
-WAVInput::WAVInput(const std::string& filepath) : Input(filepath) {}
+WAVInput::WAVInput(const std::string& filepath) : Input(filepath) {
+  AudioFormat=0;
+  NumChannels=0;
+  SampleRate = 0;
+  BitsPerSample = 0;
+}
 
-void WAVInput::ReadHeader(std::ifstream& file){
+void WAVInput::ReadHeader (std::ifstream& file){
   // First four characters of the Header should be "RIFF" for the WAV file to be valid
   char Riff[4];
   file.read(Riff, 4);
@@ -39,7 +44,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
   // Skip BlocSize
   file.ignore(4);
 
-  // Read AudioFormat if AudioFormat != 1 audio data is compressed and additionnal steps are required
+  // Read AudioFormat if AudioFormat != 1 audio data is compressed and additional steps are required
   char Format[2];
   file.read(Format, 2);
   // Converting the char to int knowing that WAV files are using little endian
@@ -85,7 +90,7 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
   char DataChunkHeader[4];
   file.read(DataChunkHeader, 4);
   if (std::string(DataChunkHeader, 4) == "JUNK"){
-    // Skip JUNK chunck if there is one
+    // Skip JUNK chunk if there is one
     file.ignore(32);
   }
   if (std::string(DataChunkHeader, 4) != "data"){
@@ -110,7 +115,7 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 
   // Read Audio Data
   std::vector<char> DataBuffer(DataSize);
-  file.read(DataBuffer.data(), DataSize); // Read the whole data chunck
+  file.read(DataBuffer.data(), DataSize); // Read the whole data chunk
   for (int sample = 0; sample < NumSamples; ++sample) {
     for (int channel = 0; channel < NumChannels; ++channel) {
       // Data_buffer : [Bytes of Sample1 of Channel1, Bytes of Sample1 of Channel2,...]
@@ -118,22 +123,16 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 
       // Convert bytes to integer sample using the same logic as before
       int DataSample = 0;
-      
       // From Microsoft Specifications : 8 bits per sample is always unsigned
       if (BitsPerSample == 8) {
-        DataSample = DataBuffer[sampleIndex] & 0xFF;
-      
-        // From Microsoft Specifications : 9 bits per sample or more is always signed
+        DataSample = (DataBuffer[sampleIndex] & 0xFF) - 128;
+      // From Microsoft Specifications : 9 bits per sample or more is always signed
       } else if (BitsPerSample == 16) {
-        DataSample = DataBuffer[sampleIndex] | (DataBuffer[sampleIndex + 1] << 8);
+        DataSample = (DataBuffer[sampleIndex] & 0xFF) | ((DataBuffer[sampleIndex + 1] & 0xFF) << 8) - 32768;
       } else if (BitsPerSample == 24) {
-        DataSample = (DataBuffer[sampleIndex] |
-             		      DataBuffer[sampleIndex + 1] << 8 |
-             		      DataBuffer[sampleIndex + 2] << 16);
-        // Because the sample is 24 bits instead of 32, sign extension is needed
-        if (DataSample & 0x00800000) { // Mask to check if the MSB == 1
-          DataSample |= 0xFF000000; // If the number is negative fill the bits 25-32 with ones
-    	}
+        DataSample = ((DataBuffer[sampleIndex] & 0xFF) |
+             		      (DataBuffer[sampleIndex + 1] & 0xFF) << 8 |
+             		      (DataBuffer[sampleIndex + 2] & 0xFF) << 16) - 8388607;
       } else {
         throw std::runtime_error("Unsupported BitsPerSample");
       }
@@ -142,27 +141,45 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
       AudioData(sample, channel) = static_cast<double>(DataSample);
     }
   }
+
 }
 
 void WAVInput::readData(){
-
   // Open the stream to the file
   std::ifstream file(filepath, std::ios::binary);
-  if (!file) {
-    throw std::runtime_error("Unable to open BMP file: " + filepath);
+  if (!file.is_open()) {
+    throw std::runtime_error("Unable to open WAV file: " + filepath);
   }
 
   // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
   if (file.peek() == std::ifstream::traits_type::eof()) {
   throw std::runtime_error("WAV file " + filepath + " is empty") ;
 }
-
-  // Read the file
-  ReadHeader(file);
-  ReadFMTChunk(file);
-  ReadDataChunk(file);
+  try{
+    // Read the file
+    ReadHeader(file);
+    ReadFMTChunk(file);
+    ReadDataChunk(file);
+  }  catch (const std::runtime_error& ErrorMessage) {
+    std::cerr << "Runtime error: " << ErrorMessage.what() << std::endl;
+  }
 
   // Close the stream
   file.close();
+}
+
+Eigen::MatrixXd WAVInput::getData_Normalized() {
+  // Extract maximum values column wise to normalize data
+  Eigen::MatrixXd absAudioData = AudioData.cwiseAbs();
+  Eigen::VectorXd max_values = absAudioData.colwise().maxCoeff();
+
+  // Copy Audio Data
+  Eigen::MatrixXd NormalizedData = AudioData;
+
+  // Normalize Data
+  for (int i = 0; i < NumChannels; i++) {
+    NormalizedData.col(i) /= max_values(i);
+  }
+  return NormalizedData;
 }
 

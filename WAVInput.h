@@ -15,7 +15,10 @@ public:
     Eigen::MatrixXd getData() override { return AudioData; }
     int getSampleRate() const{return SampleRate;}
     int getNumChannels() const{return NumChannels;}
+    int getBitsPerSample() const{return BitsPerSample;}
+    int getAudioFormat() const{return AudioFormat;}
     void readData() override;
+    Eigen::MatrixXd getData_Normalized();
 
 private:
     int AudioFormat;
@@ -24,7 +27,7 @@ private:
     int BitsPerSample;
     Eigen::MatrixXd AudioData;
 
-    void ReadHeader(std::ifstream& file);
+    static void ReadHeader(std::ifstream& file);
     void ReadFMTChunk(std::ifstream& file);
     void ReadDataChunk(std::ifstream& file);
 };
