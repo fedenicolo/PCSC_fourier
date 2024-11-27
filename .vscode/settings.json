@@ -2,6 +2,7 @@
     "files.associations": {
         "*.inc": "cpp",
         "cmath": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "nnls": "cpp"
     }
 }
