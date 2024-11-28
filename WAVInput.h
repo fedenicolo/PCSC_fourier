@@ -18,7 +18,6 @@ public:
     int getBitsPerSample() const{return BitsPerSample;}
     int getAudioFormat() const{return AudioFormat;}
     void readData() override;
-    Eigen::MatrixXd getData_Normalized();
 
 private:
     int AudioFormat;

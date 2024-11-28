@@ -21,12 +21,11 @@
 
 int main(int argc, char* argv[])
 {
-    std::string filename = "/home/suttor/Desktop/myfiles/MATH-458_PCSC/math-458-pcsc/work/PCSC_Project/Test_files/SineWave_Stereo.wav";
+    std::string filename = "/home/suttor/Desktop/myfiles/MATH-458_PCSC/math-458-pcsc/work/PCSC_Project/Test_files/Test_24Bit.wav";
     WAVInput AudioInput(filename);
     AudioInput.readData();
     Eigen::MatrixXd AudioData = AudioInput.getData();
     std::cout << "Audio Data: " << AudioData << std::endl;
-    std::cout << "Audio Data Normalized: " << AudioInput.getData_Normalized() << std::endl;
     std::cout << "Audio Format: " << AudioInput.getAudioFormat() << std::endl;
     std::cout << "Audio Channels: " << AudioInput.getNumChannels() << std::endl;
     std::cout << "Sample Rate: " << AudioInput.getSampleRate() << std::endl;

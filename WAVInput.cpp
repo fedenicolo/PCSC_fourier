@@ -79,7 +79,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
   char bitsPerSample[2];
   file.read(bitsPerSample, 2);
   this->BitsPerSample = (bitsPerSample[0] & 0xFF) | ((bitsPerSample[1] & 0xFF) << 8);
-  if (this->BitsPerSample != 8 && this->BitsPerSample != 16 && this->BitsPerSample != 24){
+  if (this->BitsPerSample != 8 && this->BitsPerSample != 16 && this->BitsPerSample != 24 && this->BitsPerSample != 32){
     throw std::runtime_error("Invalid WAV file: Invalid bits per sample");
   }
 }
@@ -121,24 +121,37 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
       // Data_buffer : [Bytes of Sample1 of Channel1, Bytes of Sample1 of Channel2,...]
       int sampleIndex = (sample * NumChannels + channel) * bytesPerSample;
 
-      // Convert bytes to integer sample using the same logic as before
-      int DataSample = 0;
       // From Microsoft Specifications : 8 bits per sample is always unsigned
       if (BitsPerSample == 8) {
-        DataSample = (DataBuffer[sampleIndex] & 0xFF) - 128;
+        uint8_t DataSample = DataBuffer[sampleIndex];
+        AudioData(sample,channel) = static_cast<double>(std::max(((double)DataSample - 128)/127,-1.0));
       // From Microsoft Specifications : 9 bits per sample or more is always signed
       } else if (BitsPerSample == 16) {
-        DataSample = (DataBuffer[sampleIndex] & 0xFF) | ((DataBuffer[sampleIndex + 1] & 0xFF) << 8) - 32768;
+        int16_t DataSample = static_cast<int16_t>((static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8) |
+                                                   static_cast<uint8_t>(DataBuffer[sampleIndex]));
+        AudioData(sample,channel) = static_cast<double>(std::max(((double)DataSample/32767.0),-1.0));
       } else if (BitsPerSample == 24) {
-        DataSample = ((DataBuffer[sampleIndex] & 0xFF) |
-             		      (DataBuffer[sampleIndex + 1] & 0xFF) << 8 |
-             		      (DataBuffer[sampleIndex + 2] & 0xFF) << 16) - 8388607;
+        int32_t DataSample = static_cast<int32_t> ((0x00 << 24) |
+                                                    static_cast<uint8_t>(DataBuffer[sampleIndex+2]) << 16 |
+                                                    static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8 |
+                                                    static_cast<uint8_t>(DataBuffer[sampleIndex]));
+        // Sign extension is needed because we cast 3 bits in a int32_t which is 4 bits
+        if (DataSample & 0x800000) {  // Check if the sign bit (23rd) is set to 1 using a mask
+          // Set the first four bits to 1 because the 24-bit number is encoded in a 32-bit integer
+          DataSample = DataSample | 0xFF000000;
+        }
+        AudioData(sample,channel) = static_cast<double>(std::max((double)DataSample/8388607.0,-1.0));
+
+      } else if (BitsPerSample == 32) {
+        int32_t DataSample = static_cast<int32_t> (static_cast<uint8_t>(DataBuffer[sampleIndex+3]) << 24 |
+                                                   static_cast<uint8_t>(DataBuffer[sampleIndex+2]) << 16 |
+                                                   static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8 |
+                                                   static_cast<uint8_t>(DataBuffer[sampleIndex]));
+        AudioData(sample,channel) = static_cast<double>(std::max((double)DataSample/2147483647.0,-1.0));
       } else {
         throw std::runtime_error("Unsupported BitsPerSample");
       }
 
-      // Store sample in the matrix
-      AudioData(sample, channel) = static_cast<double>(DataSample);
     }
   }
 
@@ -168,18 +181,4 @@ void WAVInput::readData(){
   file.close();
 }
 
-Eigen::MatrixXd WAVInput::getData_Normalized() {
-  // Extract maximum values column wise to normalize data
-  Eigen::MatrixXd absAudioData = AudioData.cwiseAbs();
-  Eigen::VectorXd max_values = absAudioData.colwise().maxCoeff();
-
-  // Copy Audio Data
-  Eigen::MatrixXd NormalizedData = AudioData;
-
-  // Normalize Data
-  for (int i = 0; i < NumChannels; i++) {
-    NormalizedData.col(i) /= max_values(i);
-  }
-  return NormalizedData;
-}
 
