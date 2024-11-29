@@ -2,9 +2,17 @@
 cmake-build-*/
 build/
 
+#Ignore CMAKE files since they can always be regenerated
+CMakeFiles/
+cache.sqlite
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+
 # Ignore IDE-specific files
 .idea/
 *.iml
+.vscode/
 
 # Ignore compiled files
 *.o
@@ -15,3 +23,7 @@ build/
 
 # Ignore system files
 .DS_Store
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake

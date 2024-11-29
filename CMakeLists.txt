@@ -15,12 +15,17 @@ message(${CMAKE_BINARY_DIR})
 file(GLOB SOURCES "src/*.cpp")
 
 include_directories(${CMAKE_BINARY_DIR}/eigen)
+include_directories(/src/ext_libraries/stb_image_write.h)
+
 
 # Add the executable
 add_executable(PCSC_fourier ${SOURCES})
 
 # Find Boost components
 find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
 
 # Link Boost libraries
 target_link_libraries(PCSC_fourier Boost::iostreams Boost::system Boost::filesystem)
