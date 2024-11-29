@@ -15,6 +15,8 @@ message(${CMAKE_BINARY_DIR})
 file(GLOB SOURCES "src/*.cpp")
 
 include_directories(${CMAKE_BINARY_DIR}/eigen)
+include_directories(/src/ext_libraries/stb_image_write.h)
+
 
 # Add the executable
 add_executable(PCSC_fourier ${SOURCES})

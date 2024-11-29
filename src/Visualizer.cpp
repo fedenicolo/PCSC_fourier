@@ -25,8 +25,9 @@ void Visualizer::configureOutput(const std::string& saveAs) {
 }
 
 // Plot Histogram
-void Visualizer::plotHistogram(const Histogram& histogram, const std::string& saveAs) {
-    const auto& histogramData = histogram.getHistogramData();
+void Visualizer::plotHistogram(const Histogram& histogram, const std::string& saveAs, const std::string& type) {
+    Eigen::MatrixXd histogramData = histogram.getHistogramData();
+    Eigen::MatrixXd normalizedData = histogram.getNormalizedHistogram();
 
     Gnuplot gp;
     gp << "set title 'Histogram'\n";
@@ -36,12 +37,26 @@ void Visualizer::plotHistogram(const Histogram& histogram, const std::string& sa
     gp << "set style fill solid 1.0 border -1\n";
     gp << "plot '-' using 1:2 with boxes title 'Histogram'\n";
 
+    std::vector<std::pair<double, double>> plotData;
+
     // Prepare data for plotting
-    std::vector<std::pair<double, int>> plotData;
-    for (const auto& tuple : histogramData) {
-        plotData.emplace_back(std::get<0>(tuple), std::get<1>(tuple));
+    if(type == "normal") {
+        std::vector<std::pair<double, int>> plotData;
+        for (int i = 0; i < histogramData.rows(); ++i) {
+            double binCenter = histogramData(i, 0); // First column: bin center
+            int frequency = static_cast<int>(histogramData(i, 1)); // Second column: frequency
+            plotData.emplace_back(binCenter, frequency);
+        }
     }
 
+    else {
+        std::vector<std::pair<double, double>> plotData;
+        for (int i = 0; i < normalizedData.cols(); ++i) {
+            double binIndex = static_cast<double>(i); // Bin index
+            double normalizedFrequency = normalizedData(0, i); // Assuming a single-row matrix
+            plotData.emplace_back(binIndex, normalizedFrequency);
+        }
+    }
     gp.send1d(plotData);
 
     // Save plot if saveAs is provided

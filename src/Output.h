@@ -1,26 +1,23 @@
-//
-// Created by nicol on 21/11/2024.
-//
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
 #include <string>
+#include <Eigen/Dense>
 
 class Output {
+protected:
+    std::string outputFilePath; // File path for saving the output
 public:
-    // Constructor
-    Output();
+    explicit Output(const std::string& path);
 
-    // Display the plot in a Gnuplot window
-    void display(const std::string& script);
+    virtual ~Output() = default;
 
-    // Save the plot as a PNG
-    void saveAsPNG(const std::string& script, const std::string& filename);
+    // Method to save the data in the desired format
+    virtual void save(const Eigen::MatrixXd& data) = 0;
 
-private:
-    // Utility to create a temporary script file
-    void createScriptFile(const std::string& script, const std::string& filename);
+    std::string getOutputFilePath() const;
+
+    void setOutputFilePath(const std::string& path);
 };
 
-#endif
-
+#endif // OUTPUT_H

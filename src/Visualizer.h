@@ -13,7 +13,7 @@ public:
     Visualizer();
 
     // Methods for plotting
-    void plotHistogram(const Histogram& histogram, const std::string& saveAs = "");
+    void plotHistogram(const Histogram& histogram, const std::string& saveAs = "", const std::string& type = "");
     void plotLine(const std::vector<double>& data, const std::string& saveAs = "");
     void plotScatter(const std::vector<double>& x, const std::vector<double>& y, const std::string& saveAs = "");
 
