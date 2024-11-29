@@ -5,6 +5,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 
+// Constructor
 BMPInput::BMPInput(const std::string& filepath) : Input(filepath) {}
 
 // Process the BMP file and return grayscale values as an Eigen matrix with image dimensions
@@ -50,7 +51,7 @@ void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& 
     unsigned char fileHeader[14];
     unsigned char infoHeader[40];
 
-    // Read file and info headers, here doind the reinterpet cast is necessary cuz we need to convert from int to char*
+    // Read file and info headers
     file.read(reinterpret_cast<char*>(fileHeader), 14);
     file.read(reinterpret_cast<char*>(infoHeader), 40);
 
