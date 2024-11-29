@@ -1,28 +1,29 @@
+#include "Visualizer.h"
 #include "Histogram.h"
 #include "Fourier.h"
 #include <vector>
-#include <iostream>
 
 int main() {
-    try {
-        // Example sound data (amplitudes between -1.0 and 1.0)
-        std::vector<double> soundData = {-0.5, 0.1, 0.5, 0.3, -0.2, 0.8, 0.9, -0.7};
+    Visualizer visualizer;
 
-        // Example image data (pixel intensities between 0 and 255)
-        std::vector<double> imageData = {50, 150, 200, 100, 255, 0, 100, 150};
+    // Example histogram data
+    std::vector<double> histogramData = {1.0, 2.0, 3.0, 3.5, 4.0, 5.5, 6.0, 7.0};
+    visualizer.plotHistogram(histogramData, 8, "results/histogram.png");
 
-        // Test Histogram for sound (10 bins, range -1.0 to 1.0)
-        std::cout << "Testing Histogram for Sound Data...\n";
-        Histogram soundHistogram(10, -1.0, 1.0);
-        soundHistogram.compute(soundData);
-        soundHistogram.visualize(); // Visualize the histogram with Gnuplot
+    // Example line data
+    std::vector<double> lineData = {1.0, 1.5, 2.0, 2.5, 3.0, 3.5};
+    visualizer.plotLine(lineData, "results/line_plot.png");
 
-        // Test Histogram for image (256 bins, range 0 to 255)
-        std::cout << "Testing Histogram for Image Data...\n";
-        Histogram imageHistogram(256, 0, 255);
-        imageHistogram.compute(imageData);
-        imageHistogram.visualize(); // Visualize the histogram with Gnuplot
+    // Example scatter data
+    std::vector<double> scatterX = {1.0, 2.0, 3.0, 4.0};
+    std::vector<double> scatterY = {4.0, 3.0, 2.0, 1.0};
+    visualizer.plotScatter(scatterX, scatterY, "results/scatter_plot.png");
 
+<<<<<<< HEAD:main.cpp
+    // Summary statistics
+    visualizer.printSummary(histogramData);
+
+=======
         Fourier<double> fourier(soundData);
         fourier.print_signal();
         fourier.transform(0);
@@ -30,6 +31,6 @@ int main() {
     } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
+>>>>>>> main:src/main.cpp
     return 0;
 }
-
