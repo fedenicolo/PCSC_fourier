@@ -40,7 +40,7 @@ void Visualizer::plotHistogram(const Histogram& histogram, const std::string& sa
     std::vector<std::pair<double, double>> plotData;
 
     // Prepare data for plotting
-    if(type == 'normal') {
+    if(type == "normal") {
         std::vector<std::pair<double, int>> plotData;
         for (int i = 0; i < histogramData.rows(); ++i) {
             double binCenter = histogramData(i, 0); // First column: bin center
