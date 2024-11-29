@@ -41,7 +41,6 @@ void Visualizer::plotHistogram(const Histogram& histogram, const std::string& sa
 
     // Prepare data for plotting
     if(type == "normal") {
-        std::vector<std::pair<double, int>> plotData;
         for (int i = 0; i < histogramData.rows(); ++i) {
             double binCenter = histogramData(i, 0); // First column: bin center
             int frequency = static_cast<int>(histogramData(i, 1)); // Second column: frequency
@@ -50,7 +49,6 @@ void Visualizer::plotHistogram(const Histogram& histogram, const std::string& sa
     }
 
     else {
-        std::vector<std::pair<double, double>> plotData;
         for (int i = 0; i < normalizedData.cols(); ++i) {
             double binIndex = static_cast<double>(i); // Bin index
             double normalizedFrequency = normalizedData(0, i); // Assuming a single-row matrix
@@ -113,6 +111,45 @@ void Visualizer::plotScatter(const std::vector<double>& x, const std::vector<dou
     gp.send1d(plotData);
 
     // Save plot if saveAs is provided
+    if (!saveAs.empty()) {
+        configureOutput(saveAs);
+        gp << "replot\n";
+        gp << "unset output\n";
+    }
+}
+
+void Visualizer::plotStem(const Eigen::MatrixXd& data, const std::string& saveAs) {
+    if (data.rows() != 1 && data.cols() != 1) {
+        throw std::invalid_argument("Stem plot requires 1D data.");
+    }
+
+    // Flatten the matrix to work as a 1D array
+    Eigen::VectorXd flattened;
+    if (data.rows() == 1) {
+        flattened = data.row(0).transpose(); // Convert row to column
+    } else {
+        flattened = data.col(0); // Use the column as is
+    }
+
+    // Prepare data for plotting
+    std::vector<std::pair<int, double>> plotData;
+    for (int i = 0; i < flattened.size(); ++i) {
+        plotData.emplace_back(i, flattened(i));
+    }
+
+    // Configure Gnuplot
+    Gnuplot gp;
+    gp << "set title 'Stem Plot'\n";
+    gp << "set xlabel 'Index'\n";
+    gp << "set ylabel 'Value'\n";
+    gp << "set style data linespoints\n";
+    gp << "set grid\n";
+    gp << "plot '-' with impulses title 'Stem' lw 1, '-' with points title 'Points' pt 7 ps 1\n";
+
+    gp.send1d(plotData); // Impulses
+    gp.send1d(plotData); // Points
+
+    // Save plot if a filename is provided
     if (!saveAs.empty()) {
         configureOutput(saveAs);
         gp << "replot\n";
