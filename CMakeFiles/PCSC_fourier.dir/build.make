@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project
+CMAKE_SOURCE_DIR = /home/fede/PCSC_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project
+CMAKE_BINARY_DIR = /home/fede/PCSC_project
 
 # Include any dependencies generated for this target.
 include CMakeFiles/PCSC_fourier.dir/depend.make
@@ -69,66 +69,162 @@ include CMakeFiles/PCSC_fourier.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/PCSC_fourier.dir/flags.make
 
+CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
+CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o: src/BMPInput.cpp
+CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o -c /home/fede/PCSC_project/src/BMPInput.cpp
+
+CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/BMPInput.cpp > CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.i
+
+CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/BMPInput.cpp -o CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.s
+
+CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
+CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o: src/CSVOutput.cpp
+CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o -c /home/fede/PCSC_project/src/CSVOutput.cpp
+
+CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/CSVOutput.cpp > CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.i
+
+CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/CSVOutput.cpp -o CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.s
+
 CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
 CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o: src/Fourier.cpp
 CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o -c /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Fourier.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o -c /home/fede/PCSC_project/src/Fourier.cpp
 
 CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Fourier.cpp > CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/Fourier.cpp > CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.i
 
 CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Fourier.cpp -o CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/Fourier.cpp -o CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.s
 
 CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
 CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o: src/Histogram.cpp
 CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o -c /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Histogram.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o -c /home/fede/PCSC_project/src/Histogram.cpp
 
 CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Histogram.cpp > CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/Histogram.cpp > CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.i
 
 CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Histogram.cpp -o CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/Histogram.cpp -o CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.s
+
+CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
+CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o: src/Input.cpp
+CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o -c /home/fede/PCSC_project/src/Input.cpp
+
+CMakeFiles/PCSC_fourier.dir/src/Input.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/Input.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/Input.cpp > CMakeFiles/PCSC_fourier.dir/src/Input.cpp.i
+
+CMakeFiles/PCSC_fourier.dir/src/Input.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/Input.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/Input.cpp -o CMakeFiles/PCSC_fourier.dir/src/Input.cpp.s
+
+CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
+CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o: src/Output.cpp
+CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o -c /home/fede/PCSC_project/src/Output.cpp
+
+CMakeFiles/PCSC_fourier.dir/src/Output.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/Output.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/Output.cpp > CMakeFiles/PCSC_fourier.dir/src/Output.cpp.i
+
+CMakeFiles/PCSC_fourier.dir/src/Output.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/Output.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/Output.cpp -o CMakeFiles/PCSC_fourier.dir/src/Output.cpp.s
+
+CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
+CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o: src/PNGOutput.cpp
+CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o -c /home/fede/PCSC_project/src/PNGOutput.cpp
+
+CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/PNGOutput.cpp > CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.i
+
+CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/PNGOutput.cpp -o CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.s
+
+CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
+CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o: src/Visualizer.cpp
+CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o -c /home/fede/PCSC_project/src/Visualizer.cpp
+
+CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/Visualizer.cpp > CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.i
+
+CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/Visualizer.cpp -o CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.s
 
 CMakeFiles/PCSC_fourier.dir/src/main.cpp.o: CMakeFiles/PCSC_fourier.dir/flags.make
 CMakeFiles/PCSC_fourier.dir/src/main.cpp.o: src/main.cpp
 CMakeFiles/PCSC_fourier.dir/src/main.cpp.o: CMakeFiles/PCSC_fourier.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/main.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/main.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/main.cpp.o -c /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PCSC_fourier.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PCSC_fourier.dir/src/main.cpp.o -MF CMakeFiles/PCSC_fourier.dir/src/main.cpp.o.d -o CMakeFiles/PCSC_fourier.dir/src/main.cpp.o -c /home/fede/PCSC_project/src/main.cpp
 
 CMakeFiles/PCSC_fourier.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PCSC_fourier.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/main.cpp > CMakeFiles/PCSC_fourier.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fede/PCSC_project/src/main.cpp > CMakeFiles/PCSC_fourier.dir/src/main.cpp.i
 
 CMakeFiles/PCSC_fourier.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PCSC_fourier.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/main.cpp -o CMakeFiles/PCSC_fourier.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fede/PCSC_project/src/main.cpp -o CMakeFiles/PCSC_fourier.dir/src/main.cpp.s
 
 # Object files for target PCSC_fourier
 PCSC_fourier_OBJECTS = \
+"CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o" \
+"CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o" \
 "CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o" \
 "CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o" \
+"CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o" \
+"CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o" \
+"CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o" \
+"CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o" \
 "CMakeFiles/PCSC_fourier.dir/src/main.cpp.o"
 
 # External object files for target PCSC_fourier
 PCSC_fourier_EXTERNAL_OBJECTS =
 
+build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o
+build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o
 build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o
 build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o
+build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o
+build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o
+build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o
+build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o
 build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/src/main.cpp.o
 build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/build.make
 build/PCSC_fourier: /usr/lib/x86_64-linux-gnu/libboost_iostreams.so.1.74.0
 build/PCSC_fourier: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0
 build/PCSC_fourier: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.74.0
 build/PCSC_fourier: CMakeFiles/PCSC_fourier.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable build/PCSC_fourier"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fede/PCSC_project/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable build/PCSC_fourier"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PCSC_fourier.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -140,6 +236,6 @@ CMakeFiles/PCSC_fourier.dir/clean:
 .PHONY : CMakeFiles/PCSC_fourier.dir/clean
 
 CMakeFiles/PCSC_fourier.dir/depend:
-	cd /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles/PCSC_fourier.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fede/PCSC_project && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fede/PCSC_project /home/fede/PCSC_project /home/fede/PCSC_project /home/fede/PCSC_project /home/fede/PCSC_project/CMakeFiles/PCSC_fourier.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/PCSC_fourier.dir/depend
 

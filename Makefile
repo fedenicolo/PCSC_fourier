@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project
+CMAKE_SOURCE_DIR = /home/fede/PCSC_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project
+CMAKE_BINARY_DIR = /home/fede/PCSC_project
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fede/PCSC_project/CMakeFiles /home/fede/PCSC_project//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fede/PCSC_project/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,54 @@ PCSC_fourier: cmake_check_build_system
 PCSC_fourier/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/build
 .PHONY : PCSC_fourier/fast
+
+src/BMPInput.o: src/BMPInput.cpp.o
+.PHONY : src/BMPInput.o
+
+# target to build an object file
+src/BMPInput.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.o
+.PHONY : src/BMPInput.cpp.o
+
+src/BMPInput.i: src/BMPInput.cpp.i
+.PHONY : src/BMPInput.i
+
+# target to preprocess a source file
+src/BMPInput.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.i
+.PHONY : src/BMPInput.cpp.i
+
+src/BMPInput.s: src/BMPInput.cpp.s
+.PHONY : src/BMPInput.s
+
+# target to generate assembly for a file
+src/BMPInput.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/BMPInput.cpp.s
+.PHONY : src/BMPInput.cpp.s
+
+src/CSVOutput.o: src/CSVOutput.cpp.o
+.PHONY : src/CSVOutput.o
+
+# target to build an object file
+src/CSVOutput.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.o
+.PHONY : src/CSVOutput.cpp.o
+
+src/CSVOutput.i: src/CSVOutput.cpp.i
+.PHONY : src/CSVOutput.i
+
+# target to preprocess a source file
+src/CSVOutput.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.i
+.PHONY : src/CSVOutput.cpp.i
+
+src/CSVOutput.s: src/CSVOutput.cpp.s
+.PHONY : src/CSVOutput.s
+
+# target to generate assembly for a file
+src/CSVOutput.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/CSVOutput.cpp.s
+.PHONY : src/CSVOutput.cpp.s
 
 src/Fourier.o: src/Fourier.cpp.o
 .PHONY : src/Fourier.o
@@ -177,6 +225,102 @@ src/Histogram.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.s
 .PHONY : src/Histogram.cpp.s
 
+src/Input.o: src/Input.cpp.o
+.PHONY : src/Input.o
+
+# target to build an object file
+src/Input.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Input.cpp.o
+.PHONY : src/Input.cpp.o
+
+src/Input.i: src/Input.cpp.i
+.PHONY : src/Input.i
+
+# target to preprocess a source file
+src/Input.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Input.cpp.i
+.PHONY : src/Input.cpp.i
+
+src/Input.s: src/Input.cpp.s
+.PHONY : src/Input.s
+
+# target to generate assembly for a file
+src/Input.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Input.cpp.s
+.PHONY : src/Input.cpp.s
+
+src/Output.o: src/Output.cpp.o
+.PHONY : src/Output.o
+
+# target to build an object file
+src/Output.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Output.cpp.o
+.PHONY : src/Output.cpp.o
+
+src/Output.i: src/Output.cpp.i
+.PHONY : src/Output.i
+
+# target to preprocess a source file
+src/Output.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Output.cpp.i
+.PHONY : src/Output.cpp.i
+
+src/Output.s: src/Output.cpp.s
+.PHONY : src/Output.s
+
+# target to generate assembly for a file
+src/Output.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Output.cpp.s
+.PHONY : src/Output.cpp.s
+
+src/PNGOutput.o: src/PNGOutput.cpp.o
+.PHONY : src/PNGOutput.o
+
+# target to build an object file
+src/PNGOutput.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.o
+.PHONY : src/PNGOutput.cpp.o
+
+src/PNGOutput.i: src/PNGOutput.cpp.i
+.PHONY : src/PNGOutput.i
+
+# target to preprocess a source file
+src/PNGOutput.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.i
+.PHONY : src/PNGOutput.cpp.i
+
+src/PNGOutput.s: src/PNGOutput.cpp.s
+.PHONY : src/PNGOutput.s
+
+# target to generate assembly for a file
+src/PNGOutput.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/PNGOutput.cpp.s
+.PHONY : src/PNGOutput.cpp.s
+
+src/Visualizer.o: src/Visualizer.cpp.o
+.PHONY : src/Visualizer.o
+
+# target to build an object file
+src/Visualizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.o
+.PHONY : src/Visualizer.cpp.o
+
+src/Visualizer.i: src/Visualizer.cpp.i
+.PHONY : src/Visualizer.i
+
+# target to preprocess a source file
+src/Visualizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.i
+.PHONY : src/Visualizer.cpp.i
+
+src/Visualizer.s: src/Visualizer.cpp.s
+.PHONY : src/Visualizer.s
+
+# target to generate assembly for a file
+src/Visualizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PCSC_fourier.dir/build.make CMakeFiles/PCSC_fourier.dir/src/Visualizer.cpp.s
+.PHONY : src/Visualizer.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -210,12 +354,30 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... PCSC_fourier"
+	@echo "... src/BMPInput.o"
+	@echo "... src/BMPInput.i"
+	@echo "... src/BMPInput.s"
+	@echo "... src/CSVOutput.o"
+	@echo "... src/CSVOutput.i"
+	@echo "... src/CSVOutput.s"
 	@echo "... src/Fourier.o"
 	@echo "... src/Fourier.i"
 	@echo "... src/Fourier.s"
 	@echo "... src/Histogram.o"
 	@echo "... src/Histogram.i"
 	@echo "... src/Histogram.s"
+	@echo "... src/Input.o"
+	@echo "... src/Input.i"
+	@echo "... src/Input.s"
+	@echo "... src/Output.o"
+	@echo "... src/Output.i"
+	@echo "... src/Output.s"
+	@echo "... src/PNGOutput.o"
+	@echo "... src/PNGOutput.i"
+	@echo "... src/PNGOutput.s"
+	@echo "... src/Visualizer.o"
+	@echo "... src/Visualizer.i"
+	@echo "... src/Visualizer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
