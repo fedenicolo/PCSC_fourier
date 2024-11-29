@@ -1,4 +1,6 @@
 #include "Visualizer.h"
+#include "Histogram.h"
+#include "Fourier.h"
 #include <vector>
 
 int main() {
@@ -17,8 +19,18 @@ int main() {
     std::vector<double> scatterY = {4.0, 3.0, 2.0, 1.0};
     visualizer.plotScatter(scatterX, scatterY, "results/scatter_plot.png");
 
+<<<<<<< HEAD:main.cpp
     // Summary statistics
     visualizer.printSummary(histogramData);
 
+=======
+        Fourier<double> fourier(soundData);
+        fourier.print_signal();
+        fourier.transform(0);
+        fourier.inverse_transform();
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+>>>>>>> main:src/main.cpp
     return 0;
 }
