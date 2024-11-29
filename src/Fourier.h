@@ -17,13 +17,9 @@ class Fourier{
     public:
         Fourier(std::vector<T>& input_signal);
         bool load_signal(std::vector<T>& input_signal);
-        bool __is_power_of_2(int v);
-        unsigned int __next_power_of_2(unsigned int x);
         void pad_signal(int padding);
         bool transform(int padding);
-        void __fft(Eigen::Matrix<std::complex<T>, 1, -1>& arr);
         bool inverse_transform();
-        void __ifft(Eigen::Matrix<std::complex<T>, 1, -1>& arr);
         std::vector<std::complex<T>> get_fft_result();
         std::vector<T> get_signal();
         void print_signal();    
@@ -31,6 +27,10 @@ class Fourier{
         Eigen::Matrix<T, 1, -1> signal;
         Eigen::Matrix<std::complex<T>, 1, -1> fft_result;
         Eigen::Matrix<std::complex<T>, 1, -1> inverse_result;
+        bool __is_power_of_2(int v);
+        unsigned int __next_power_of_2(unsigned int x);
+        void __fft(Eigen::Matrix<std::complex<T>, 1, -1>& arr);
+        void __ifft(Eigen::Matrix<std::complex<T>, 1, -1>& arr);
 };
 
 template <typename T>
