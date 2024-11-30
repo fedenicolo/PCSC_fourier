@@ -8,6 +8,7 @@ cache.sqlite
 cmake_install.cmake
 CMakeCache.txt
 Makefile
+.cmake/
 
 # Ignore IDE-specific files
 .idea/
