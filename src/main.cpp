@@ -1,5 +1,6 @@
 #include "Visualizer.h"
 #include "Histogram.h"
+#include "Fourier.h"
 #include "PNGOutput.h"
 #include <Eigen/Dense>
 #include <filesystem>
@@ -14,7 +15,7 @@ int main() {
     }
 
     // Example histogram data
-    std::vector<double> histogramDataVec = {1.0, 2.0, 3.0, 3.5, 4.0, 5.5, 6.0, 7.0};
+    std::vector<double> histogramDataVec = {1.0, 2.0, 3.0, 3.5, 4.0, 5.5, 6.0, 7.0, 9.0};
 
     // Convert to Eigen::MatrixXd
     Eigen::MatrixXd histogramData(1, histogramDataVec.size());
@@ -42,6 +43,14 @@ int main() {
     Eigen::MatrixXd randomImage = Eigen::MatrixXd::Random(256, 256).array() * 127.5 + 127.5; // Normalize to [0, 255]
     PNGOutput pngOutput("results/random_image.png");
     pngOutput.save(randomImage);
+
+    std::cout << "Testing Fourier Transform..." << std::endl;
+    Fourier fourier(randomImage, true);
+    fourier.transform();
+    Eigen::MatrixXcd fourierTransform = fourier.get_fft_result<double>();
+    std::cout << "Fourier Transform: " << fourierTransform << std::endl;
+    std::cout << "Fourier Transform Shape: (" << fourierTransform.rows() << "x" << fourierTransform.cols() << ")" << std::endl;
+
 
     std::cout << "All tasks completed successfully!" << std::endl;
     return 0;

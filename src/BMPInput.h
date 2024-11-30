@@ -4,12 +4,12 @@
 #ifndef BMPINPUT_H
 #define BMPINPUT_H
 
-#include "Input.h"
+#include "Image.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <string>
 
-class BMPInput : public Input {
+class BMPInput : public Image {
 public:
     explicit BMPInput(const std::string& filepath);
 

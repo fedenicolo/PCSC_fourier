@@ -1,11 +1,11 @@
 #include "BMPInput.h"
-#include "Input.h"
+#include "Image.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
 
-BMPInput::BMPInput(const std::string& filepath) : Input(filepath) {}
+BMPInput::BMPInput(const std::string& filepath) : Image(filepath) {}
 
 // Process the BMP file and return grayscale values as an Eigen matrix with image dimensions
 Eigen::MatrixXd BMPInput::getData() {
