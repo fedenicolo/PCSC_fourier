@@ -23,7 +23,6 @@ add_executable(PCSC_fourier ${SOURCES})
 
 # Find Boost components
 find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
-find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 
