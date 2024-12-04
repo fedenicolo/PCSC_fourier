@@ -25,7 +25,6 @@ private:
     int SampleRate;
     int BitsPerSample;
     Eigen::MatrixXd AudioData;
-
     static void ReadHeader(std::ifstream& file);
     void ReadFMTChunk(std::ifstream& file);
     void ReadDataChunk(std::ifstream& file);

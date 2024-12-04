@@ -5,20 +5,13 @@
 #include <iostream>
 #include <Eigen/Dense>
 
-BMPInput::BMPInput(const std::string& filepath) : Image(filepath) {}
-
-// Process the BMP file and return grayscale values as an Eigen matrix with image dimensions
-Eigen::MatrixXd BMPInput::getData() {
-    std::vector<unsigned char> pixelData;
-    int width = 0, height = 0;
-
-    readBMP(filepath, pixelData, width, height);
-
-    return convertToGrayscale(pixelData, width, height);
+BMPInput::BMPInput(const std::string& filepath) : Image(filepath) {
+    height = 0;
+    width = 0;
 }
 
 // Convert pixel data to grayscale and return as a 2D Eigen matrix
-Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const {
+Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData){
     Eigen::MatrixXd grayscale(height, width);
 
     int rowPadded = (width * 3 + 3) & (~3);
@@ -41,7 +34,7 @@ Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& p
 }
 
 // Read BMP file
-void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& pixelData, int& width, int& height) const {
+void BMPInput::readData(){
     std::ifstream file(filepath, std::ios::binary);
     if (!file) {
         throw std::runtime_error("Unable to open BMP file: " + filepath);
@@ -62,7 +55,9 @@ void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& 
     width = *(reinterpret_cast<int*>(&infoHeader[4]));
     height = *(reinterpret_cast<int*>(&infoHeader[8]));
 
+    // Create buffer to store file data
     int rowPadded = (width * 3 + 3) & (~3); // Each row is padded to a multiple of 4 bytes
+    std::vector<unsigned char> pixelData;
     pixelData.resize(rowPadded * height);
 
     // Move file pointer to the start of pixel data
@@ -79,4 +74,7 @@ void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& 
     }
 
     file.close();
+
+    // Convert to grayscale and save in ImageData Eigen Matrix
+    ImageData = convertToGrayscale(pixelData);
 }

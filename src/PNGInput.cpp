@@ -5,11 +5,11 @@
 #include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
-#include "ext_libraries/stb_image.h"
+#include "ext_libraries/stb_image_write.h"
 
-PNGInput::PNGInput(const std::string& filepath) : Input(filepath) {
-    width=0;
-    height=0;
+PNGInput::PNGInput(const std::string& filepath) : Image(filepath) {
+    width = 0;
+    height = 0;
     num_channels = 0;
 }
 
@@ -34,7 +34,7 @@ void PNGInput::readData(){
         ImageData = convertToGrayscale(Image);
     }
     //Free Image memory after use
-    stbi_image_free(Image_data);
+    stbi_image_free(Image);
 }
 
 
@@ -59,7 +59,7 @@ Eigen::MatrixXd PNGInput::convertToGrayscale(unsigned char* Image) const {
                 unsigned char blue = Image[pixel_index + 2];
 
                 // Convert to grayscale using standard formula
-                unsigned char gray = static_cast<unsigned char>(0.299 * red + 0.587 * green + 0.114 * blue)
+                unsigned char gray = static_cast<unsigned char>(0.299 * red + 0.587 * green + 0.114 * blue);
 
                 grayscale(y,x) = static_cast<double>(gray) / 255.0;
             }

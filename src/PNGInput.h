@@ -4,19 +4,19 @@
 #ifndef PNGINPUT_H
 #define PNGINPUT_H
 
-#include "Input.h"
+#include "Image.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <string>
 
-class PNGInput : public Input {
+class PNGInput : public Image {
 public:
     explicit PNGInput(const std::string& filepath);
     void readData() override;
     int getWidth() const {return width;}
     int getHeight() const {return height;}
-    int getChannels() const {return channels;}
-    Eigen::MatrixXd getData() override { return AudioData;}
+    int getChannels() const {return num_channels;}
+    Eigen::MatrixXd getData() override { return ImageData;}
 
 private:
     int width;

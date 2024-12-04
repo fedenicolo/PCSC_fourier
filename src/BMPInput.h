@@ -12,13 +12,14 @@
 class BMPInput : public Image {
 public:
     explicit BMPInput(const std::string& filepath);
-
-    Eigen::MatrixXd getData() override;
+    void readData() override;
+    Eigen::MatrixXd getData() override { return ImageData;}
 
 private:
-    void readBMP(const std::string& filepath, std::vector<unsigned char>& pixelData, int& width, int& height) const;
-    
-    Eigen::MatrixXd convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const;
+    int width;
+    int height;
+    Eigen::MatrixXd ImageData;
+    Eigen::MatrixXd convertToGrayscale(const std::vector<unsigned char>& pixelData) const;
 };
 
 #endif // BMPINPUT_H
