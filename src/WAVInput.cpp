@@ -1,5 +1,5 @@
 #include "WAVInput.h"
-#include "Input.h"
+#include "Sound.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <Eigen/Dense>
 
-WAVInput::WAVInput(const std::string& filepath) : Input(filepath) {
+WAVInput::WAVInput(const std::string& filepath) : Sound(filepath) {
   AudioFormat=0;
   NumChannels=0;
   SampleRate = 0;

@@ -4,12 +4,12 @@
 #ifndef WAVINPUT_H
 #define WAVINPUT_H
 
-#include "Input.h"
+#include "Sound.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <string>
 
-class WAVInput : public Input {
+class WAVInput : public Sound {
 public:
     explicit WAVInput(const std::string& filepath);
     Eigen::MatrixXd getData() override { return AudioData;}
