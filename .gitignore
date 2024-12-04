@@ -21,6 +21,7 @@ Makefile
 *.exe
 *.log
 *.swp
+*.json
 
 # Ignore system files
 .DS_Store
@@ -28,3 +29,4 @@ CMakeCache.txt
 CMakeFiles/
 Makefile
 cmake_install.cmake
+CMakeLists.txt
