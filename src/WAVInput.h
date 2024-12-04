@@ -12,7 +12,7 @@
 class WAVInput : public Input {
 public:
     explicit WAVInput(const std::string& filepath);
-    Eigen::MatrixXd getData() override { return AudioData; }
+    Eigen::MatrixXd getData() override { return AudioData;}
     int getSampleRate() const{return SampleRate;}
     int getNumChannels() const{return NumChannels;}
     int getBitsPerSample() const{return BitsPerSample;}

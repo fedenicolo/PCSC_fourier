@@ -15,6 +15,7 @@ WAVInput::WAVInput(const std::string& filepath) : Input(filepath) {
 }
 
 void WAVInput::ReadHeader (std::ifstream& file){
+
   // First four characters of the Header should be "RIFF" for the WAV file to be valid
   char Riff[4];
   file.read(Riff, 4);
@@ -158,27 +159,30 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 }
 
 void WAVInput::readData(){
-  // Open the stream to the file
-  std::ifstream file(filepath, std::ios::binary);
-  if (!file.is_open()) {
-    throw std::runtime_error("Unable to open WAV file: " + filepath);
-  }
-
-  // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
-  if (file.peek() == std::ifstream::traits_type::eof()) {
-  throw std::runtime_error("WAV file " + filepath + " is empty") ;
-}
   try{
+    // Open the stream to the file
+    std::ifstream file(filepath, std::ios::binary);
+    if (!file.is_open()) {
+      throw std::runtime_error("Unable to open WAV file: " + filepath);
+    }
+
+    // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
+    if (file.peek() == std::ifstream::traits_type::eof()) {
+    throw std::runtime_error("WAV file " + filepath + " is empty") ;
+    }
+
     // Read the file
     ReadHeader(file);
     ReadFMTChunk(file);
     ReadDataChunk(file);
+
+    // Close the stream
+    file.close();
+
   }  catch (const std::runtime_error& ErrorMessage) {
     std::cerr << "Runtime error: " << ErrorMessage.what() << std::endl;
   }
 
-  // Close the stream
-  file.close();
 }
 
 
