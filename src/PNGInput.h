@@ -1,24 +1,29 @@
 //
 // Created by nicol on 24/11/2024.
 //
-#ifndef BMPINPUT_H
-#define BMPINPUT_H
+#ifndef PNGINPUT_H
+#define PNGINPUT_H
 
 #include "Input.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <string>
 
-class BMPInput : public Input {
+class PNGInput : public Input {
 public:
-    explicit BMPInput(const std::string& filepath);
-
-    Eigen::MatrixXd getData() override;
+    explicit PNGInput(const std::string& filepath);
+    void readData() override;
+    int getWidth() const {return width;}
+    int getHeight() const {return height;}
+    int getChannels() const {return channels;}
+    Eigen::MatrixXd getData() override { return AudioData;}
 
 private:
-    void readBMP(const std::string& filepath, std::vector<unsigned char>& pixelData, int& width, int& height) const;
-    
-    Eigen::MatrixXd convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const;
+    int width;
+    int height;
+    int num_channels;
+    Eigen::MatrixXd ImageData;
+    Eigen::MatrixXd convertToGrayscale(unsigned char* Image) const;
 };
 
-#endif // BMPINPUT_H
+#endif // PNGINPUT_H

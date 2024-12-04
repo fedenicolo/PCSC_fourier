@@ -1,82 +1,74 @@
-#include "BMPInput.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "PNGInput.h"
 #include "Input.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
+#include "ext_libraries/stb_image.h"
 
-BMPInput::BMPInput(const std::string& filepath) : Input(filepath) {}
-
-// Process the BMP file and return grayscale values as an Eigen matrix with image dimensions
-Eigen::MatrixXd BMPInput::getData() {
-    std::vector<unsigned char> pixelData;
-    int width = 0, height = 0;
-
-    readBMP(filepath, pixelData, width, height);
-
-    return convertToGrayscale(pixelData, width, height);
+PNGInput::PNGInput(const std::string& filepath) : Input(filepath) {
+    width=0;
+    height=0;
+    num_channels = 0;
 }
 
-// Convert pixel data to grayscale and return as a 2D Eigen matrix
-Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData, int width, int height) const {
+void PNGInput::readData(){
+
+    //Load Image Data
+    unsigned char* Image = stbi_load(filepath.c_str(), &width, &height, &num_channels, 0);
+    //Throw runtime_error if image did not load properly
+    if (!Image) {
+        throw std::runtime_error("Failed to load image: " + std::to_string(stbi_failure_reason()));
+    }
+    else{
+        // Print image information
+        std::cout << "Image loaded successfully!" << std::endl;
+        std::cout << "Width: " << width << ", Height: " << height;
+        std::cout << ", Channels: " << num_channels << std::endl;
+
+        // Allocate memory for the data matrix
+        ImageData.resize(height,width)
+
+        // Store gray scale image in ImageData
+        ImageData = convertToGrayscale(Image);
+    }
+    //Free Image memory after use
+    stbi_image_free(Image_data);
+}
+
+
+Eigen::MatrixXd PNGInput::convertToGrayscale(unsigned char* Image) const {
+
+    // Create Eigen matrix with correct size
     Eigen::MatrixXd grayscale(height, width);
 
-    int rowPadded = (width * 3 + 3) & (~3);
-
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            int pixelIdx = i * rowPadded + j * 3;
-
-            unsigned char r = pixelData[pixelIdx];
-            unsigned char g = pixelData[pixelIdx + 1];
-            unsigned char b = pixelData[pixelIdx + 2];
-
-            // Convert to grayscale using the standard luminance formula
-            double gray = 0.299 * r + 0.587 * g + 0.114 * b;
-            grayscale(i, j) = gray / 255.0; // Normalize to [0, 1]
+    // Convert Image to normalized grayscale data
+    if (num_channels == 1) { // Image has only one channel, data is only normalized
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                grayscale(y,x) = static_cast<double>(Image[y*width + x]) / 255.0;
+            }
         }
+    } else if (num_channels == 3) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel_index = (y * width + x) * 3;
+                unsigned char red = Image[pixel_index];
+                unsigned char green = Image[pixel_index + 1];
+                unsigned char blue = Image[pixel_index + 2];
+
+                // Convert to grayscale using standard formula
+                unsigned char gray = static_cast<unsigned char>(0.299 * red + 0.587 * green + 0.114 * blue)
+
+                grayscale(y,x) = static_cast<double>(gray) / 255.0;
+            }
+        }
+    } else {
+        throw std::runtime_error("Failed to convert image, image must have 1 or 3 channels");
     }
 
     return grayscale;
 }
 
-// Read BMP file
-void BMPInput::readBMP(const std::string& filepath, std::vector<unsigned char>& pixelData, int& width, int& height) const {
-    std::ifstream file(filepath, std::ios::binary);
-    if (!file) {
-        throw std::runtime_error("Unable to open BMP file: " + filepath);
-    }
 
-    unsigned char fileHeader[14];
-    unsigned char infoHeader[40];
-
-    // Read file and info headers, here doind the reinterpet cast is necessary cuz we need to convert from int to char*
-    file.read(reinterpret_cast<char*>(fileHeader), 14);
-    file.read(reinterpret_cast<char*>(infoHeader), 40);
-
-    if (fileHeader[0] != 'B' || fileHeader[1] != 'M') {
-        throw std::runtime_error("Not a valid BMP file");
-    }
-
-    // Extract image dimensions
-    width = *(reinterpret_cast<int*>(&infoHeader[4]));
-    height = *(reinterpret_cast<int*>(&infoHeader[8]));
-
-    int rowPadded = (width * 3 + 3) & (~3); // Each row is padded to a multiple of 4 bytes
-    pixelData.resize(rowPadded * height);
-
-    // Move file pointer to the start of pixel data
-    int dataOffset = *(reinterpret_cast<int*>(&fileHeader[10]));
-    file.seekg(dataOffset, std::ios::beg);
-
-    // Read pixel data
-    for (int i = 0; i < height; ++i) {
-        file.read(reinterpret_cast<char*>(&pixelData[i * rowPadded]), rowPadded);
-    }
-
-    if (!file) {
-        throw std::runtime_error("Error reading BMP pixel data.");
-    }
-
-    file.close();
-}
