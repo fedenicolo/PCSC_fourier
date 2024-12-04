@@ -1,150 +1,85 @@
-//
-// Created by nicol on 17/11/2024.
-//
-
-/*
 #include "Histogram.h"
 #include <iostream>
-#include <iomanip>
-#include <stdexcept>
 #include <numeric>
+#include <stdexcept>
+#include <algorithm> // For std::clamp
 #include "gnuplot-iostream.h"
 
-Histogram::Histogram(int numBins, double minRange, double maxRange)
-    : bins(numBins, 0), numBins(numBins), minRange(minRange), maxRange(maxRange) {
-    if (numBins <= 0 || minRange >= maxRange) {
-        throw std::invalid_argument("Invalid number of bins or range.");
+// Constructor from Input
+Histogram::Histogram(Input& inputObject, int numBins)
+    : numBins(numBins) {
+    if (numBins <= 0) {
+        throw std::invalid_argument("Number of bins must be positive.");
+    }
+    initialize(inputObject.getData(), numBins);
+}
+
+// Constructor from Eigen matrix
+Histogram::Histogram(const Eigen::MatrixXd& dataMatrix, int numBins)
+    : numBins(numBins) {
+    if (numBins <= 0) {
+        throw std::invalid_argument("Number of bins must be positive.");
+    }
+    initialize(dataMatrix, numBins);
+}
+
+// Shared initialization logic
+void Histogram::initialize(const Eigen::MatrixXd& dataMatrix, int numBins) {
+    data = dataMatrix;
+    flattenMatrix();
+
+    minRange = data.minCoeff();
+    maxRange = data.maxCoeff();
+
+    bins.resize(numBins, 0);
+}
+
+// Flatten a multi-row matrix into a single row
+void Histogram::flattenMatrix() {
+    if (data.rows() > 1) {
+        data.resize(1, data.size()); // Flatten into a single row
     }
 }
 
-// Compute the histogram from a vector input
-void Histogram::compute(const std::vector<double> &data) {
+// Compute the histogram
+void Histogram::compute() {
     std::fill(bins.begin(), bins.end(), 0);
+    double range = maxRange - minRange;
 
-    for (double value : data) {
+    for (int i = 0; i < data.cols(); ++i) {
+        double value = data(0, i);
         if (value >= minRange && value <= maxRange) {
-            int bin = static_cast<int>(((value - minRange) / (maxRange - minRange)) * numBins);
-            if (bin >= numBins) bin = numBins - 1; // Handle edge case for maxRange
+            int bin = static_cast<int>(((value - minRange) / range) * numBins);
+            bin = std::clamp(bin, 0, numBins - 1);
             bins[bin]++;
         }
     }
 }
 
 // Get normalized histogram as a probability density
-std::vector<double> Histogram::getNormalizedHistogram() const {
+Eigen::VectorXd Histogram::getNormalizedHistogram() const {
     int totalCount = std::accumulate(bins.begin(), bins.end(), 0);
-    std::vector<double> normalized(bins.size(), 0.0);
-
-    if (totalCount > 0) {
-        for (size_t i = 0; i < bins.size(); ++i) {
-            normalized[i] = static_cast<double>(bins[i]) / totalCount;
-        }
-    }
-    return normalized;
-}
-
-//get frequency counts
-const std::vector<int>& Histogram::getBins() const {
-    return bins;
-}
-
-std::vector<std::tuple<double, int, double>> Histogram::getHistogramData() const {
-    std::vector<std::tuple<double, int, double>> histogramData;
-    double binWidth = (maxRange - minRange) / numBins;
-
-    for (size_t i = 0; i < bins.size(); ++i) {
-        double binCenter = minRange + binWidth * (i + 0.5); // Center of the bin
-        histogramData.emplace_back(binCenter, bins[i], binWidth);
-    }
-
-    return histogramData;
-}
-
-// Visualize Gnuplot
-void Histogram::visualize() const {
-    Gnuplot gp;
-
-    std::vector<std::pair<double, int>> plotData;
-    double binWidth = (maxRange - minRange) / numBins;
-    for (size_t i = 0; i < bins.size(); ++i) {
-        double binCenter = minRange + binWidth * (i + 0.5); // Center of the bin
-        plotData.emplace_back(binCenter, bins[i]);
-    }
-
-    gp << "set title 'Histogram'\n";
-    gp << "set xlabel 'Value'\n";
-    gp << "set ylabel 'Frequency'\n";
-    gp << "set grid\n";
-    gp << "set boxwidth 0.8 relative\n";
-    gp << "set style fill solid 1.0 border -1\n";
-    gp << "set xtics rotate by -45\n";
-    gp << "set format x '%.1f'\n";
-    gp << "set format y '%.0f'\n";
-    gp << "plot '-' with boxes title 'Histogram'\n";
-    gp.send1d(plotData);
-}
-*/
-
-//
-// Created by nicol on 17/11/2024.
-//
-#include "Histogram.h"
-#include <iostream>
-#include <iomanip>
-#include <stdexcept>
-#include <numeric>
-#include "gnuplot-iostream.h"
-
-// Constructor
-Histogram::Histogram(int numBins, double minRange, double maxRange)
-    : bins(numBins, 0), numBins(numBins), minRange(minRange), maxRange(maxRange) {
-    if (numBins <= 0 || minRange >= maxRange) {
-        throw std::invalid_argument("Invalid number of bins or range.");
-    }
-}
-
-// Compute the histogram from an Eigen matrix input
-void Histogram::compute(const Eigen::MatrixXd &data) {
-    if (data.rows() != 1) {
-        throw std::invalid_argument("Input matrix must have exactly one row.");
-    }
-
-    std::fill(bins.begin(), bins.end(), 0);
-
-    for (int i = 0; i < data.cols(); ++i) {
-        double value = data(0, i);
-        if (value >= minRange && value <= maxRange) {
-            int bin = static_cast<int>(((value - minRange) / (maxRange - minRange)) * numBins);
-            if (bin >= numBins) bin = numBins - 1; // Handle edge case for maxRange
-            bins[bin]++;
-        }
-    }
-}
-
-// Get normalized histogram as a probability density (Eigen matrix)
-Eigen::MatrixXd Histogram::getNormalizedHistogram() const {
-    int totalCount = std::accumulate(bins.begin(), bins.end(), 0);
-    Eigen::MatrixXd normalized(1, bins.size());
+    Eigen::VectorXd normalized(bins.size());
     normalized.setZero();
 
     if (totalCount > 0) {
         for (size_t i = 0; i < bins.size(); ++i) {
-            normalized(0, i) = static_cast<double>(bins[i]) / totalCount;
+            normalized(i) = static_cast<double>(bins[i]) / totalCount;
         }
     }
     return normalized;
 }
 
-// Get frequency counts (Eigen matrix)
-Eigen::MatrixXi Histogram::getBins() const {
-    Eigen::MatrixXi binCounts(1, bins.size());
+// Get frequency counts
+Eigen::VectorXi Histogram::getBins() const {
+    Eigen::VectorXi binCounts(bins.size());
     for (size_t i = 0; i < bins.size(); ++i) {
-        binCounts(0, i) = bins[i];
+        binCounts(i) = bins[i];
     }
     return binCounts;
 }
 
-// Get histogram data for visualization (Eigen matrix)
+// Get histogram data for visualization
 Eigen::MatrixXd Histogram::getHistogramData() const {
     Eigen::MatrixXd histogramData(bins.size(), 3); // Columns: [binCenter, frequency, binWidth]
     double binWidth = (maxRange - minRange) / numBins;
@@ -159,12 +94,13 @@ Eigen::MatrixXd Histogram::getHistogramData() const {
     return histogramData;
 }
 
-// Visualize Gnuplot
+// Visualize histogram using Gnuplot
 void Histogram::visualize() const {
     Gnuplot gp;
 
     std::vector<std::pair<double, int>> plotData;
     double binWidth = (maxRange - minRange) / numBins;
+
     for (size_t i = 0; i < bins.size(); ++i) {
         double binCenter = minRange + binWidth * (i + 0.5); // Center of the bin
         plotData.emplace_back(binCenter, bins[i]);
@@ -179,9 +115,6 @@ void Histogram::visualize() const {
     gp << "set xtics rotate by -45\n";
     gp << "set format x '%.1f'\n";
     gp << "set format y '%.0f'\n";
-    gp << "plot '-' with boxes title 'Histogram'\n";
+    gp << "plot '-' using 1:2 with boxes title 'Histogram'\n";
     gp.send1d(plotData);
 }
-
-
-
