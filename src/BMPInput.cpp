@@ -1,5 +1,6 @@
 #include "BMPInput.h"
 #include "Image.h"
+#include "ImageExceptions.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
@@ -39,7 +40,7 @@ void BMPInput::readData(){
 
     std::ifstream file(filepath, std::ios::binary);
     if (!file) {
-        throw std::runtime_error("Unable to open BMP file: " + filepath);
+        throw INVALID_BMP_FILE_OPEN("Unable to open BMP file: " + filepath);
     }
 
     unsigned char fileHeader[14];
@@ -50,7 +51,7 @@ void BMPInput::readData(){
     file.read(reinterpret_cast<char*>(infoHeader), 40);
 
     if (fileHeader[0] != 'B' || fileHeader[1] != 'M') {
-        throw std::runtime_error("Not a valid BMP file");
+        throw INVALID_BMP_BM();
     }
 
     // Extract image dimensions
@@ -82,7 +83,7 @@ void BMPInput::readData(){
     pixelData = flippedData;
 
     if (!file) {
-        throw std::runtime_error("Error reading BMP pixel data.");
+        throw INVALID_BMP_READ();
     }
 
     file.close();

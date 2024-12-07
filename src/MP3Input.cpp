@@ -1,5 +1,6 @@
 #include "MP3Input.h"
 #include "Input.h"
+#include "AudioExceptions.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
@@ -18,14 +19,14 @@ void MP3Input::readData(){
     mpg123_init();
     mpg123_handle* mh = mpg123_new(nullptr, nullptr);
     if (!mh) {
-        throw std::runtime_error("Failed to initialize mpg123 handle.");
+        throw INIT_MPG123();
     }
 
     //Open the MP3 file and check if it was opened correctly
     if (mpg123_open(mh, filepath.c_str()) != MPG123_OK) {
         mpg123_delete(mh);
         mpg123_exit();
-        throw std::runtime_error("Failed to open MP3 file: " + filepath);
+        throw INVALID_MP3_FILE_OPEN("Unable to open MP3 file: " + filepath);
     }
 
     //Get the format details (useful for output class)
@@ -33,7 +34,7 @@ void MP3Input::readData(){
         mpg123_close(mh);
         mpg123_delete(mh);
         mpg123_exit();
-        throw std::runtime_error("Failed to get MP3 format details");
+        throw INVALID_MP3_FORMAT_DETAILS();
     }
 
     //Read the MP3 file
@@ -77,7 +78,7 @@ void MP3Input::readData(){
                 mpg123_close(mh);
                 mpg123_delete(mh);
                 mpg123_exit();
-                throw std::runtime_error("Unsupported encoding format.");
+                throw INVALID_MP3_ENCODING_FORMAT();
             }
     }
 
@@ -87,7 +88,7 @@ void MP3Input::readData(){
         mpg123_close(mh);
         mpg123_delete(mh);
         mpg123_exit();
-        throw std::runtime_error(std::string("Error reading MP3: ") + mpg123_strerror(mh));
+        throw INVALID_MP3_READING("Error reading MP3 file :" + filepath +".", mh);
     }
 
     //Free allocated memory for the Data buffer, close data reader, exit mpg123

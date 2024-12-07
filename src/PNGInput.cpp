@@ -1,5 +1,6 @@
 #include "PNGInput.h"
 #include "Input.h"
+#include "ImageExceptions.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
@@ -20,7 +21,7 @@ void PNGInput::readData(){
     unsigned char* Image = stbi_load(filepath.c_str(), &width, &height, &num_channels, 0);
     //Throw runtime_error if image did not load properly
     if (!Image) {
-        throw std::runtime_error("Failed to load image: " + std::string(stbi_failure_reason()));
+        throw INVALID_PNG_READ("Failed to load image: " + filepath + ". " + std::string(stbi_failure_reason()));
     }
     else{
         // Print image information
@@ -66,7 +67,7 @@ Eigen::MatrixXd PNGInput::convertToGrayscale(const unsigned char* Image) const {
             }
         }
     } else {
-        throw std::runtime_error("Failed to convert image, image must have 1 or 3 channels");
+        throw INVALID_PNG_NUM_CHANNELS();
     }
 
     return grayscale;
