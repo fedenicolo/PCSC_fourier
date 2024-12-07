@@ -98,9 +98,9 @@ void Visualizer::configureOutput(const std::string& saveAs) {
     }
 }
 
-void Visualizer::printSummary(const Eigen::MatrixXd& data) const {
+void Visualizer::printSummary(Eigen::MatrixXd& data) const {
     // Flatten the matrix into a vector
-    Eigen::VectorXd flattened = Eigen::Map<Eigen::VectorXd>(data.data(), data.size());
+    Eigen::Map<Eigen::VectorXd> flattened(data.data(), data.size());
 
     // Calculate basic statistics
     double mean = flattened.mean();

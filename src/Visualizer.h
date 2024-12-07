@@ -14,7 +14,7 @@ public:
 
     // Generic plot function
     void plot(const Eigen::MatrixXd& data, const std::string& plotType, int numBins = 10, const std::string& saveAs = "");
-    void printSummary(const Eigen::MatrixXd& data) const;
+    void printSummary(Eigen::MatrixXd& data) const;
 
 private:
     // Helper functions for different plot types

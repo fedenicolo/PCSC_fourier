@@ -1,5 +1,4 @@
 //A H file for the Fourier Transform class.
-
 #ifndef FOURIER_H
 #define FOURNER_H
 
@@ -10,7 +9,7 @@
 #include <math.h>
 #include <vector>
 #include <iostream>
-#include <stdexcept>
+#include "FourierExceptions.h"
 #include <tuple>
 
 
@@ -24,9 +23,9 @@ class Fourier{
         Fourier(Eigen::MatrixXd input, bool image);
         
         template <typename T>
-        void load_signal(Eigen::Matrix<T, -1, -1> input);
-        bool transform(std::tuple<int, int> padding);
-        bool inverse_transform();
+        void load_signal(const Eigen::MatrixBase<T>& input, bool image);
+        void transform(std::tuple<int, int> padding);
+        void inverse_transform();
         
         template <typename T>
         Eigen::Matrix<std::complex<T>, -1, -1> get_fft_result();
@@ -34,6 +33,10 @@ class Fourier{
         template <typename T>
         Eigen::Matrix<T, -1, -1> get_signal();
         void print_signal();    
+        void __pad_signal(std::tuple<int, int> padding);
+        bool __is_power_of_2(int v);
+        unsigned int __next_power_of_2(unsigned int x);
+    
     private:
         //Private variables
         Eigen::MatrixXd signal;
@@ -46,21 +49,21 @@ class Fourier{
         bool image;
 
         //Private helper functions
-        void __pad_signal(std::tuple<int, int> padding);
-        bool __is_power_of_2(int v);
-        unsigned int __next_power_of_2(unsigned int x);
         void __fft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr);
         void __ifft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr);
 };
 
+Fourier::Fourier(){};
 Fourier::Fourier(Image& input) : signal(input.getData()), signal_rows(input.getData().rows()), signal_cols(input.getData().cols()), image(true) {};
 Fourier::Fourier(Sound& input) : signal(input.getData()), signal_rows(input.getData().rows()), signal_cols(input.getData().cols()), image(false) {}; 
 Fourier::Fourier(Eigen::MatrixXd input, bool image) : signal(input), signal_rows(input.rows()), signal_cols(input.cols()), image(image) {};
 template <typename T>
-void Fourier::load_signal(Eigen::Matrix<T, -1, -1> input){
+void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
+    Fourier::signal.resize(input.rows(), input.cols());
     Fourier::signal = input.template cast<double>();
     Fourier::signal_rows = Fourier::signal.rows();
     Fourier::signal_cols = Fourier::signal.cols();
+    Fourier::image = image;
 }
 
 bool Fourier::__is_power_of_2(int v){
@@ -147,18 +150,16 @@ void Fourier::__pad_signal(std::tuple<int, int> padding){
 
 
 
-bool Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
+void Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
     //TODO: Explicitly check if the signal is zero and then break
     Fourier::__pad_signal(padding); 
     //At this point out signal length should be a power of 2. But we should assert it regardless
     if(!(__is_power_of_2(Fourier::signal.cols()))){
-        throw std::runtime_error("The signal column length is not a power of 2");
-        return false;
+        throw NOT_POWER_OF_TWO();
     }
 
     if(!(__is_power_of_2(Fourier::signal.rows()))){
-        throw std::runtime_error("The signal row length is not a power of 2");
-        return false;
+        throw NOT_POWER_OF_TWO();
     }
 
     //Cast the signal to a complex double
@@ -183,7 +184,6 @@ bool Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
 
     std::cout << "FFT result" << std::endl;
     std::cout << fft_result << std::endl;
-    return true;
 }
 
 void Fourier::__fft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
@@ -209,11 +209,9 @@ void Fourier::__fft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
     }
 }
 
-
-bool Fourier::inverse_transform(){
+void Fourier::inverse_transform(){
     if(Fourier::fft_result.cols() == 0){
-        throw std::runtime_error("The FFT result is empty. Please run the 'transform' function before calling inverse_transform ");
-        return false;
+        throw EMPTY_FFT_RESULT();
     }
 
     Fourier::inverse_result = Fourier::fft_result;
@@ -236,7 +234,6 @@ bool Fourier::inverse_transform(){
     
     Fourier::inverse_result /= (inverse_result.cols() * inverse_result.rows());
     std::cout << "Inverse Transform Result: " << std::endl << inverse_result.real() << std::endl;
-    return true;
 }
 
 
