@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Fourier.cpp" "CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o" "gcc" "CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o.d"
-  "/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/Histogram.cpp" "CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o" "gcc" "CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o.d"
-  "/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/src/main.cpp" "CMakeFiles/PCSC_fourier.dir/src/main.cpp.o" "gcc" "CMakeFiles/PCSC_fourier.dir/src/main.cpp.o.d"
+  "/home/fede/PCSC_project/src/Fourier.cpp" "CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o" "gcc" "CMakeFiles/PCSC_fourier.dir/src/Fourier.cpp.o.d"
+  "/home/fede/PCSC_project/src/Histogram.cpp" "CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o" "gcc" "CMakeFiles/PCSC_fourier.dir/src/Histogram.cpp.o.d"
+  "/home/fede/PCSC_project/src/main.cpp" "CMakeFiles/PCSC_fourier.dir/src/main.cpp.o" "gcc" "CMakeFiles/PCSC_fourier.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.

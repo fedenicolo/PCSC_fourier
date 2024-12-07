@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_IOSTREAMS_DYN_LINK -DBOOST_SYSTEM_DYN_LINK
 
-CXX_INCLUDES = -I/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/eigen
+CXX_INCLUDES = -I/home/fede/PCSC_project/eigen -I/usr/include/eigen3
 
 CXX_FLAGS = -g -O0 -std=gnu++20
 
