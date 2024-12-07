@@ -1,11 +1,12 @@
-#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "PNGInput.h"
 #include "Input.h"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
-#include "ext_libraries/stb_image_write.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "ext_libraries/stb_image.h"
+
 
 PNGInput::PNGInput(const std::string& filepath) : Image(filepath) {
     width = 0;
@@ -19,7 +20,7 @@ void PNGInput::readData(){
     unsigned char* Image = stbi_load(filepath.c_str(), &width, &height, &num_channels, 0);
     //Throw runtime_error if image did not load properly
     if (!Image) {
-        throw std::runtime_error("Failed to load image: " + std::to_string(stbi_failure_reason()));
+        throw std::runtime_error("Failed to load image: " + std::string(stbi_failure_reason()));
     }
     else{
         // Print image information
@@ -28,7 +29,7 @@ void PNGInput::readData(){
         std::cout << ", Channels: " << num_channels << std::endl;
 
         // Allocate memory for the data matrix
-        ImageData.resize(height,width)
+        ImageData.resize(height,width);
 
         // Store gray scale image in ImageData
         ImageData = convertToGrayscale(Image);
@@ -38,7 +39,7 @@ void PNGInput::readData(){
 }
 
 
-Eigen::MatrixXd PNGInput::convertToGrayscale(unsigned char* Image) const {
+Eigen::MatrixXd PNGInput::convertToGrayscale(const unsigned char* Image) const {
 
     // Create Eigen matrix with correct size
     Eigen::MatrixXd grayscale(height, width);

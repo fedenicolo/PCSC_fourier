@@ -23,7 +23,7 @@ private:
     int height;
     int num_channels;
     Eigen::MatrixXd ImageData;
-    Eigen::MatrixXd convertToGrayscale(unsigned char* Image) const;
+    Eigen::MatrixXd convertToGrayscale(const unsigned char* Image) const;
 };
 
 #endif // PNGINPUT_H

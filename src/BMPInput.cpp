@@ -11,7 +11,8 @@ BMPInput::BMPInput(const std::string& filepath) : Image(filepath) {
 }
 
 // Convert pixel data to grayscale and return as a 2D Eigen matrix
-Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData){
+Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& pixelData) const{
+
     Eigen::MatrixXd grayscale(height, width);
 
     int rowPadded = (width * 3 + 3) & (~3);
@@ -35,6 +36,7 @@ Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& p
 
 // Read BMP file
 void BMPInput::readData(){
+
     std::ifstream file(filepath, std::ios::binary);
     if (!file) {
         throw std::runtime_error("Unable to open BMP file: " + filepath);
@@ -68,6 +70,16 @@ void BMPInput::readData(){
     for (int i = 0; i < height; ++i) {
         file.read(reinterpret_cast<char*>(&pixelData[i * rowPadded]), rowPadded);
     }
+
+    std::vector<unsigned char> flippedData;
+    flippedData.resize(pixelData.size());
+    int rowSize = width * 3; // Assuming 3 channels (RGB)
+    for (int i = 0; i < height; ++i) {
+        int srcRowIdx = (height - i - 1) * rowPadded;  // Flip the rows
+        int dstRowIdx = i * rowPadded;
+        std::copy(&pixelData[srcRowIdx], &pixelData[srcRowIdx + rowPadded], &flippedData[dstRowIdx]);
+    }
+    pixelData = flippedData;
 
     if (!file) {
         throw std::runtime_error("Error reading BMP pixel data.");

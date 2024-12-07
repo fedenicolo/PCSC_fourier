@@ -13,6 +13,8 @@ class BMPInput : public Image {
 public:
     explicit BMPInput(const std::string& filepath);
     void readData() override;
+    int getWidth() const{return width;}
+    int getHeight() const{return height;}
     Eigen::MatrixXd getData() override { return ImageData;}
 
 private:

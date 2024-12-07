@@ -23,17 +23,17 @@ void MP3Input::readData(){
 
     //Open the MP3 file and check if it was opened correctly
     if (mpg123_open(mh, filepath.c_str()) != MPG123_OK) {
-        throw std::runtime_error("Failed to open MP3 file: " + filepath);
         mpg123_delete(mh);
         mpg123_exit();
+        throw std::runtime_error("Failed to open MP3 file: " + filepath);
     }
 
     //Get the format details (useful for output class)
     if (mpg123_getformat(mh, &SampleRate, &NumChannels, &AudioFormat) != MPG123_OK) {
-        throw std::runtime_error("Failed to get MP3 format details");
         mpg123_close(mh);
         mpg123_delete(mh);
         mpg123_exit();
+        throw std::runtime_error("Failed to get MP3 format details");
     }
 
     //Read the MP3 file
@@ -73,21 +73,21 @@ void MP3Input::readData(){
                 break;
             }
             default:
-                throw std::runtime_error("Unsupported encoding format.");
                 delete[] Databuffer;
                 mpg123_close(mh);
                 mpg123_delete(mh);
                 mpg123_exit();
+                throw std::runtime_error("Unsupported encoding format.");
             }
     }
 
     //Check if data has been loaded correctly
     if (error != MPG123_DONE) {
-        throw std::runtime_error("Error reading MP3: " + mpg123_strerror(mh));
         delete[] Databuffer;
         mpg123_close(mh);
         mpg123_delete(mh);
         mpg123_exit();
+        throw std::runtime_error(std::string("Error reading MP3: ") + mpg123_strerror(mh));
     }
 
     //Free allocated memory for the Data buffer, close data reader, exit mpg123
@@ -99,6 +99,10 @@ void MP3Input::readData(){
     //Store Data in AudioData Eigen Matrix
     size_t NumSamples = Data.size() / NumChannels;
     AudioData.resize(NumSamples, NumChannels);
+    double rows = AudioData.rows();
+    double cols = AudioData.cols();
+    std::cout << "Number of rows: " << rows << std::endl;
+    std::cout << "Number of cols: " << cols << std::endl;
     for (size_t i = 0; i < NumSamples; ++i) {
         for (int channel = 0; channel < NumChannels; ++channel) {
             AudioData(i, channel) = Data[i * NumChannels + channel];
