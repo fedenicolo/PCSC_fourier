@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "ImageExceptions.h"
 #include <fstream>
-#include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
 #define STB_IMAGE_IMPLEMENTATION

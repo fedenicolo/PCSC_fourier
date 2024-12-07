@@ -2,7 +2,6 @@
 #include "Sound.h"
 #include "AudioExceptions.h"
 #include <fstream>
-#include <stdexcept>
 #include <iostream>
 #include <vector>
 #include <cstdint>

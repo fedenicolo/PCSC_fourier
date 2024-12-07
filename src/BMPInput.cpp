@@ -2,7 +2,6 @@
 #include "Image.h"
 #include "ImageExceptions.h"
 #include <fstream>
-#include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
 

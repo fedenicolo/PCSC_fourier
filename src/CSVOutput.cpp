@@ -2,13 +2,15 @@
 // Created by nicol on 29/11/2024.
 //
 #include "CSVOutput.h"
+#include "ImageExceptions.h"
+#include <Eigen/Dense>
 
 CSVOutput::CSVOutput(const std::string& path) : Output(path) {}
 
 void CSVOutput::save(const Eigen::MatrixXd& data) {
     std::ofstream file(outputFilePath);
     if (!file.is_open()) {
-        throw std::runtime_error("Cannot open file: " + outputFilePath);
+        throw INVALID_CSV_OPEN("Cannot open file: " + outputFilePath);
     }
 
     for (int i = 0; i < data.rows(); ++i) {

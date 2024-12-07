@@ -2,7 +2,9 @@
 // Created by nicol on 29/11/2024.
 //
 #include "PNGOutput.h"
-#include <stdexcept>
+#include "ImageExceptions.h"
+#include <vector>
+#include <Eigen/Dense>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "ext_libraries/stb_image_write.h"
 
@@ -13,7 +15,7 @@ void PNGOutput::save(const Eigen::MatrixXd& data) {
     int width = static_cast<int>(data.cols());
 
     if (height <= 0 || width <= 0) {
-        throw std::invalid_argument("Invalid image dimensions.");
+        throw INVALID_PNG_DIMENSIONS();
     }
 
     // Prepare image data
@@ -26,6 +28,6 @@ void PNGOutput::save(const Eigen::MatrixXd& data) {
 
     // Save as PNG
     if (!stbi_write_png(outputFilePath.c_str(), width, height, 1, imageData.data(), width)) {
-        throw std::runtime_error("Failed to save PNG file.");
+        throw PNG_SAVE_FAIL();
     }
 }

@@ -56,5 +56,33 @@ class INVALID_PNG_NUM_CHANNELS : public std::exception{
     }
 };
 
+class INVALID_PNG_DIMENSIONS : public std::exception{
+    public:
+    const char* what() const noexcept override{
+        return "Invalid image dimensions.";
+    }
+};
+
+class PNG_SAVE_FAIL : public std::exception{
+    public:
+    const char* what() const noexcept override{
+        return "Failed to save PNG file.";
+    }
+};
+
+class INVALID_CSV_OPEN : public std::exception {
+private:
+    std::string error_message;
+
+public:
+    INVALID_CSV_OPEN(const std::string& custom_message) {
+        error_message = custom_message;
+    }
+
+    const char* what() const noexcept override {
+        return error_message.c_str();
+    }
+};
+
 
 #endif // IMAGEEXCEPTIONS_H

@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "AudioExceptions.h"
 #include <fstream>
-#include <stdexcept>
 #include <iostream>
 #include <Eigen/Dense>
 #include "ext_libraries/mpg123-1.32.8/local/include/mpg123.h"
