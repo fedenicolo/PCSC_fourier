@@ -98,14 +98,14 @@ void MP3Input::readData(){
 
     //Store Data in AudioData Eigen Matrix
     size_t NumSamples = Data.size() / NumChannels;
-    AudioData.resize(NumSamples, NumChannels);
+    AudioData.resize(NumChannels, NumSamples);
     double rows = AudioData.rows();
     double cols = AudioData.cols();
     std::cout << "Number of rows: " << rows << std::endl;
     std::cout << "Number of cols: " << cols << std::endl;
     for (size_t i = 0; i < NumSamples; ++i) {
         for (int channel = 0; channel < NumChannels; ++channel) {
-            AudioData(i, channel) = Data[i * NumChannels + channel];
+            AudioData(channel, i) = Data[i * NumChannels + channel];
         }
     }
 

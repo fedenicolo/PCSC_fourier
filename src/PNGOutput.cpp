@@ -22,7 +22,7 @@ void PNGOutput::save(const Eigen::MatrixXd& data) {
     std::vector<unsigned char> imageData(height * width);
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            imageData[i * width + j] = static_cast<unsigned char>(data(i, j));
+            imageData[i * width + j] = static_cast<unsigned char>(data(i, j)*255);
         }
     }
 

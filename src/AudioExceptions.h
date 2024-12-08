@@ -134,5 +134,26 @@ public:
     }
 };
 
+class INVALID_LAME_CHANNELS : public std::exception{
+public:
+    const char* what() const noexcept override{
+        return "Only mono (1) and stereo (2) channels are supported.";
+    }
+};
+
+class INVALID_LAME_INIT : public std::exception{
+public:
+    const char* what() const noexcept override{
+        return "Failed to initialize LAME encoder.";
+    }
+};
+
+class LAME_FAILED_ENCODE : public std::exception{
+public:
+    const char* what() const noexcept override{
+        return "Failed to encode MP3 data.";
+    }
+};
+
 
 #endif // AUDIOEXCEPTIONS_H

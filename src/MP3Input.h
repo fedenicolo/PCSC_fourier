@@ -12,9 +12,9 @@
 class MP3Input : public Sound {
 public:
     explicit MP3Input(const std::string& filepath);
-    int getSampleRate() const{return SampleRate;}
-    int getNumChannels() const{return NumChannels;}
-    int getAudioFormat() const{return AudioFormat;}
+    int getSampleRate() const override {return SampleRate;}
+    int getNumChannels() const override {return NumChannels;}
+    int getAudioFormat() const{ return AudioFormat;}
     void readData() override;
     Eigen::MatrixXd getData() override { return AudioData;}
 

@@ -112,7 +112,7 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 
   // Allocate memory for the data matrix
   int NumSamples = totalSamples / NumChannels; // Samples per channel, if the file is valid this should be an integer
-  AudioData.resize(NumSamples,NumChannels);
+  AudioData.resize(NumChannels,NumSamples);
 
   // Read Audio Data
   std::vector<char> DataBuffer(DataSize);
@@ -125,12 +125,12 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
       // From Microsoft Specifications : 8 bits per sample is always unsigned
       if (BitsPerSample == 8) {
         uint8_t DataSample = DataBuffer[sampleIndex];
-        AudioData(sample,channel) = static_cast<double>(std::max(((double)DataSample - 128)/127,-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max(((double)DataSample - 128)/127,-1.0));
       // From Microsoft Specifications : 9 bits per sample or more is always signed
       } else if (BitsPerSample == 16) {
         int16_t DataSample = static_cast<int16_t>((static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8) |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex]));
-        AudioData(sample,channel) = static_cast<double>(std::max(((double)DataSample/32767.0),-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max(((double)DataSample/32767.0),-1.0));
       } else if (BitsPerSample == 24) {
         int32_t DataSample = static_cast<int32_t> ((0x00 << 24) |
                                                     static_cast<uint8_t>(DataBuffer[sampleIndex+2]) << 16 |
@@ -141,14 +141,14 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
           // Set the first four bits to 1 because the 24-bit number is encoded in a 32-bit integer
           DataSample = DataSample | 0xFF000000;
         }
-        AudioData(sample,channel) = static_cast<double>(std::max((double)DataSample/8388607.0,-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max((double)DataSample/8388607.0,-1.0));
 
       } else if (BitsPerSample == 32) {
         int32_t DataSample = static_cast<int32_t> (static_cast<uint8_t>(DataBuffer[sampleIndex+3]) << 24 |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex+2]) << 16 |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8 |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex]));
-        AudioData(sample,channel) = static_cast<double>(std::max((double)DataSample/2147483647.0,-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max((double)DataSample/2147483647.0,-1.0));
       } else {
         throw INVALID_WAV_BITS_SAMPLE();
       }
