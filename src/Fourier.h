@@ -29,6 +29,9 @@ class Fourier{
         
         template <typename T>
         Eigen::Matrix<std::complex<T>, -1, -1> get_fft_result();
+
+        template <typename T>
+        Eigen::Matrix<T, -1, -1> get_inverse_result();
         
         template <typename T>
         Eigen::Matrix<T, -1, -1> get_signal();
@@ -151,7 +154,6 @@ void Fourier::__pad_signal(std::tuple<int, int> padding){
 
 
 void Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
-    //TODO: Explicitly check if the signal is zero and then break
     Fourier::__pad_signal(padding); 
     //At this point out signal length should be a power of 2. But we should assert it regardless
     if(!(__is_power_of_2(Fourier::signal.cols()))){
@@ -182,8 +184,8 @@ void Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
         }
     }
 
-    std::cout << "FFT result" << std::endl;
-    std::cout << fft_result << std::endl;
+    // std::cout << "FFT result" << std::endl;
+    // std::cout << fft_result << std::endl;
 }
 
 void Fourier::__fft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
@@ -227,13 +229,13 @@ void Fourier::inverse_transform(){
     if(image){
         for(int i=0; i < Fourier::inverse_result.cols(); i++){
             Eigen::Matrix<std::complex<double>, 1, -1> matrix_type_col_vec = Fourier::inverse_result.col(i).transpose();
-            __fft1d(matrix_type_col_vec);
+            __ifft1d(matrix_type_col_vec);
             Fourier::inverse_result.col(i) = matrix_type_col_vec.transpose();
         }
     }
     
     Fourier::inverse_result /= (inverse_result.cols() * inverse_result.rows());
-    std::cout << "Inverse Transform Result: " << std::endl << inverse_result.real() << std::endl;
+    //std::cout << "Inverse Transform Result: " << std::endl << inverse_result.real() << std::endl;
 }
 
 
@@ -265,6 +267,11 @@ void Fourier::__ifft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
 template <typename T>
 Eigen::Matrix<std::complex<T>, -1, -1> Fourier::get_fft_result(){
     return Fourier::fft_result.template cast<std::complex<T>>();
+}
+
+template <typename T>
+Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result(){
+    return Fourier::inverse_result.real().template cast<T>();
 }
 
 template <typename T>
