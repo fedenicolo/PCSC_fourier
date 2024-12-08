@@ -1,7 +1,7 @@
 #include "WAVInput.h"
 #include "Sound.h"
+#include "AudioExceptions.h"
 #include <fstream>
-#include <stdexcept>
 #include <iostream>
 #include <vector>
 #include <cstdint>
@@ -15,11 +15,12 @@ WAVInput::WAVInput(const std::string& filepath) : Sound(filepath) {
 }
 
 void WAVInput::ReadHeader (std::ifstream& file){
+
   // First four characters of the Header should be "RIFF" for the WAV file to be valid
   char Riff[4];
   file.read(Riff, 4);
   if (std::string(Riff,4) != "RIFF"){
-    throw std::runtime_error("Invalid WAV file: Missing RIFF header");
+    throw INVALID_WAV_RIFF();
   }
 
   //We might want to add a comparison between chunk size and file size and throw an error
@@ -29,7 +30,7 @@ void WAVInput::ReadHeader (std::ifstream& file){
   char WAVEHeader[4];
   file.read(WAVEHeader, 4);
   if (std::string(WAVEHeader, 4) != "WAVE"){
-    throw  std::runtime_error("Invalid WAV file : Missing WAVE header");
+    throw  INVALID_WAV_WAVE();
   }
 }
 void WAVInput::ReadFMTChunk(std::ifstream& file){
@@ -38,7 +39,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
   char fmtHeader[4];
   file.read(fmtHeader, 4);
   if (std::string(fmtHeader, 4) != "fmt "){
-    throw std::runtime_error("Invalid WAV file: Missing fmt chunk");
+    throw INVALID_WAV_fmt();
   }
 
   // Skip BlocSize
@@ -50,7 +51,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
   // Converting the char to int knowing that WAV files are using little endian
   this->AudioFormat  = (Format[0] & 0xFF) | ((Format[1] & 0xFF) << 8); // Filter with 0xFF to make sur its unsigned
   if (this->AudioFormat != 1){
-    throw std::runtime_error("Unsupported WAV file: Compressed Audio is not supported");
+    throw INVALID_WAV_AUDIO_FORMAT();
   }
 
   // Read Number of channels
@@ -58,7 +59,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
   file.read(Channels, 2);
   this->NumChannels  = (Channels[0] & 0xFF) | ((Channels[1] & 0xFF) << 8);
   if (this->NumChannels < 1){
-    throw std::runtime_error("Invalid WAV file: Invalid number of channels");
+    throw INVALID_WAV_NUM_CHANNELS();
   }
 
   // Read Sample Rate
@@ -69,7 +70,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
                      ((sampleRate[2] & 0xFF) << 16) |
                      ((sampleRate[3] & 0xFF) << 24);
   if (this->SampleRate < 0){
-    throw std::runtime_error("Invalid WAV file: Invalid sample rate");
+    throw INVALID_WAV_SAMPLE_RATE();
   }
 
   // Skip Byte Rate and Block Align
@@ -80,7 +81,7 @@ void WAVInput::ReadFMTChunk(std::ifstream& file){
   file.read(bitsPerSample, 2);
   this->BitsPerSample = (bitsPerSample[0] & 0xFF) | ((bitsPerSample[1] & 0xFF) << 8);
   if (this->BitsPerSample != 8 && this->BitsPerSample != 16 && this->BitsPerSample != 24 && this->BitsPerSample != 32){
-    throw std::runtime_error("Invalid WAV file: Invalid bits per sample");
+    throw INVALID_WAV_BITS_SAMPLE();
   }
 }
 
@@ -94,7 +95,7 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
     file.ignore(32);
   }
   if (std::string(DataChunkHeader, 4) != "data"){
-    throw std::runtime_error("Invalid WAV file: Invalid data chunk");
+    throw INVALID_WAV_DATA_CHUNK();
   }
 
   // Read Data Size chunk
@@ -111,7 +112,7 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 
   // Allocate memory for the data matrix
   int NumSamples = totalSamples / NumChannels; // Samples per channel, if the file is valid this should be an integer
-  AudioData.resize(NumSamples,NumChannels);
+  AudioData.resize(NumChannels,NumSamples);
 
   // Read Audio Data
   std::vector<char> DataBuffer(DataSize);
@@ -124,12 +125,12 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
       // From Microsoft Specifications : 8 bits per sample is always unsigned
       if (BitsPerSample == 8) {
         uint8_t DataSample = DataBuffer[sampleIndex];
-        AudioData(sample,channel) = static_cast<double>(std::max(((double)DataSample - 128)/127,-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max(((double)DataSample - 128)/127,-1.0));
       // From Microsoft Specifications : 9 bits per sample or more is always signed
       } else if (BitsPerSample == 16) {
         int16_t DataSample = static_cast<int16_t>((static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8) |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex]));
-        AudioData(sample,channel) = static_cast<double>(std::max(((double)DataSample/32767.0),-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max(((double)DataSample/32767.0),-1.0));
       } else if (BitsPerSample == 24) {
         int32_t DataSample = static_cast<int32_t> ((0x00 << 24) |
                                                     static_cast<uint8_t>(DataBuffer[sampleIndex+2]) << 16 |
@@ -140,16 +141,16 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
           // Set the first four bits to 1 because the 24-bit number is encoded in a 32-bit integer
           DataSample = DataSample | 0xFF000000;
         }
-        AudioData(sample,channel) = static_cast<double>(std::max((double)DataSample/8388607.0,-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max((double)DataSample/8388607.0,-1.0));
 
       } else if (BitsPerSample == 32) {
         int32_t DataSample = static_cast<int32_t> (static_cast<uint8_t>(DataBuffer[sampleIndex+3]) << 24 |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex+2]) << 16 |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex+1]) << 8 |
                                                    static_cast<uint8_t>(DataBuffer[sampleIndex]));
-        AudioData(sample,channel) = static_cast<double>(std::max((double)DataSample/2147483647.0,-1.0));
+        AudioData(channel,sample) = static_cast<double>(std::max((double)DataSample/2147483647.0,-1.0));
       } else {
-        throw std::runtime_error("Unsupported BitsPerSample");
+        throw INVALID_WAV_BITS_SAMPLE();
       }
 
     }
@@ -158,27 +159,31 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 }
 
 void WAVInput::readData(){
-  // Open the stream to the file
-  std::ifstream file(filepath, std::ios::binary);
-  if (!file.is_open()) {
-    throw std::runtime_error("Unable to open WAV file: " + filepath);
-  }
-
-  // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
-  if (file.peek() == std::ifstream::traits_type::eof()) {
-  throw std::runtime_error("WAV file " + filepath + " is empty") ;
-}
   try{
+    // Open the stream to the file
+    std::ifstream file(filepath, std::ios::binary);
+    if (!file.is_open()) {
+      throw INVALID_WAV_FILE_OPEN("Unable to open WAV file : " + filepath);
+    }
+
+    // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
+    if (file.peek() == std::ifstream::traits_type::eof()) {
+    throw INVALID_WAV_FILE_EMPTY();
+    }
+
     // Read the file
     ReadHeader(file);
     ReadFMTChunk(file);
     ReadDataChunk(file);
-  }  catch (const std::runtime_error& ErrorMessage) {
-    std::cerr << "Runtime error: " << ErrorMessage.what() << std::endl;
+
+    // Close the stream
+    file.close();
+
+  }  catch (const std::exception& e) {
+      std::cerr << "Caught exception: " << e.what() << std::endl;
+      std::exit(EXIT_FAILURE);
   }
 
-  // Close the stream
-  file.close();
 }
 
 
