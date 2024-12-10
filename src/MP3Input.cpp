@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <Eigen/Dense>
-#include "ext_libraries/mpg123-1.32.8/local/include/mpg123.h"
+#include "mpg123.h"
 
 MP3Input::MP3Input(const std::string& filepath) : Sound(filepath) {
     AudioFormat=0;

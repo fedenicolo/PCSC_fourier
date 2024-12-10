@@ -25,10 +25,16 @@ class Fourier{
         template <typename T>
         void load_signal(const Eigen::MatrixBase<T>& input, bool image);
         void transform(std::tuple<int, int> padding);
+
+        template <typename T>
+        void load_transform(const Eigen::MatrixBase<std::complex<T>>& input, bool image);
         void inverse_transform();
         
         template <typename T>
         Eigen::Matrix<std::complex<T>, -1, -1> get_fft_result();
+
+        template <typename T>
+        Eigen::Matrix<T, -1, -1> get_inverse_result_padded();
 
         template <typename T>
         Eigen::Matrix<T, -1, -1> get_inverse_result();
@@ -57,8 +63,15 @@ class Fourier{
 };
 
 Fourier::Fourier(){};
-Fourier::Fourier(Image& input) : signal(input.getData()), signal_rows(input.getData().rows()), signal_cols(input.getData().cols()), image(true) {};
-Fourier::Fourier(Sound& input) : signal(input.getData()), signal_rows(input.getData().rows()), signal_cols(input.getData().cols()), image(false) {}; 
+
+Fourier::Fourier(Image& input){
+    Fourier::load_signal(input.getData(), true);
+}
+
+Fourier::Fourier(Sound& input){ 
+    Fourier::load_signal(input.getData(), false);
+}
+
 Fourier::Fourier(Eigen::MatrixXd input, bool image) : signal(input), signal_rows(input.rows()), signal_cols(input.cols()), image(image) {};
 template <typename T>
 void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
@@ -68,6 +81,16 @@ void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
     Fourier::signal_cols = Fourier::signal.cols();
     Fourier::image = image;
 }
+
+template <typename T>
+void Fourier::load_transform(const Eigen::MatrixBase<std::complex<T>>& input, bool image){
+    Fourier::fft_result.resize(input.rows(), input.cols());
+    Fourier::fft_result = input.template cast<std::complex<double>>();
+    Fourier::signal_rows = Fourier::fft_result.rows();
+    Fourier::signal_cols = Fourier::fft_result.cols();
+    Fourier::image = image;
+}
+
 
 bool Fourier::__is_power_of_2(int v){
     return v && !(v & (v - 1));
@@ -270,8 +293,13 @@ Eigen::Matrix<std::complex<T>, -1, -1> Fourier::get_fft_result(){
 }
 
 template <typename T>
-Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result(){
+Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result_padded(){
     return Fourier::inverse_result.real().template cast<T>();
+}
+
+template <typename T>
+Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result(){
+    return Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).real().template cast<T>();
 }
 
 template <typename T>

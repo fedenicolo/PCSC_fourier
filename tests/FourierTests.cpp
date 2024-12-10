@@ -3,7 +3,8 @@
 #include <complex>
 #include <iostream>
 #include <Eigen/Dense>
-
+#include "WAVInput.h"
+#include "BMPInput.h"
 
 class FourierTest : public ::testing::Test{
 
@@ -42,6 +43,12 @@ class FourierTest : public ::testing::Test{
 
     Fourier fourier_1d;
     Fourier fourier_2d;
+
+    WAVInput wav_file = WAVInput("../Test_files/Sine_24Bit.wav");
+    Fourier fourier_wav = Fourier(wav_file);
+
+    BMPInput bmp_file = BMPInput("../Test_files/white_25x25.bmp");
+    Fourier fourier_bmp = Fourier(bmp_file);
 };
 
 
@@ -79,4 +86,14 @@ TEST_F(FourierTest, Transform2D){
 TEST_F(FourierTest, InverseTransform2D){
     double residual = (fft_signal_2d - fourier_2d.get_inverse_result<double>()).norm();   
     ASSERT_NEAR(residual, 9e-15, 2e-15);
+}
+
+TEST_F(FourierTest, LoadingSound){
+    double residual = (wav_file.getData() - fourier_wav.get_signal<double>()).norm();
+    ASSERT_NEAR(residual, 1e-16, 1e-16);
+}
+
+TEST_F(FourierTest, LoadingImage){
+    double residual = (bmp_file.getData() - fourier_bmp.get_signal<double>()).norm();
+    ASSERT_NEAR(residual, 1e-16, 1e-16);
 }

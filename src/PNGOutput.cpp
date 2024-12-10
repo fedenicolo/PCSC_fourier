@@ -6,7 +6,7 @@
 #include <vector>
 #include <Eigen/Dense>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "ext_libraries/stb_image_write.h"
+#include "stb_image_write.h"
 
 PNGOutput::PNGOutput(const std::string& path) : Output(path) {}
 

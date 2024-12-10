@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
-#include "ext_libraries/lame-3.100/include/lame.h"
+#include "lame.h"
 
 MP3Output::MP3Output(const std::string& path, const Sound& sound) : Output(path) {
     sampleRate = sound.getSampleRate();

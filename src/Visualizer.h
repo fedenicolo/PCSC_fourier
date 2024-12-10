@@ -20,10 +20,9 @@ private:
     // Helper functions for different plot types
     void plotHistogram(const Eigen::MatrixXd& data, int numBins, const std::string& saveAs);
     void plotLine(const Eigen::MatrixXd& data, const std::string& saveAs);
-    void plotScatter(const Eigen::MatrixXd& data, const std::string& saveAs);
 
     // Output configuration (for saving images)
-    void configureOutput(const std::string& saveAs);
+    void configureOutput(Gnuplot& gp, const std::string& saveAs);
 };
 
 #endif // VISUALIZER_H

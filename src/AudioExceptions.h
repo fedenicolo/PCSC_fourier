@@ -4,7 +4,7 @@
 #ifndef AUDIOEXCEPTIONS_H
 #define AUDIOEXCEPTIONS_H
 
-#include "ext_libraries/mpg123-1.32.8/local/include/mpg123.h"
+#include "mpg123.h"
 #include <exception>
 #include <stdexcept>
 

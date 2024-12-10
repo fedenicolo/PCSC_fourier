@@ -5,7 +5,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 #define STB_IMAGE_IMPLEMENTATION
-#include "ext_libraries/stb_image.h"
+#include "stb_image.h"
 
 
 PNGInput::PNGInput(const std::string& filepath) : Image(filepath) {

@@ -1,3 +1,6 @@
+#ifndef FOURIER_EXCEPTIONS_H
+#define FOURIER_EXCEPTIONS_H
+
 #include <exception>
 #include <stdexcept>
 
@@ -15,3 +18,5 @@ class NOT_POWER_OF_TWO : public std::exception{
             return "The signal is not a power of 2.";
         }
 };
+
+#endif
