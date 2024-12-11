@@ -27,7 +27,7 @@ class Fourier{
         void transform(std::tuple<int, int> padding);
 
         template <typename T>
-        void load_transform(const Eigen::MatrixBase<std::complex<T>>& input, bool image);
+        void load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool image);
         void inverse_transform();
         
         template <typename T>
@@ -83,11 +83,11 @@ void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
 }
 
 template <typename T>
-void Fourier::load_transform(const Eigen::MatrixBase<std::complex<T>>& input, bool image){
+void Fourier::load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool image){
     Fourier::fft_result.resize(input.rows(), input.cols());
     Fourier::fft_result = input.template cast<std::complex<double>>();
-    Fourier::signal_rows = Fourier::fft_result.rows();
-    Fourier::signal_cols = Fourier::fft_result.cols();
+    //Fourier::signal_rows = Fourier::fft_result.rows();
+    //Fourier::signal_cols = Fourier::fft_result.cols();
     Fourier::image = image;
 }
 

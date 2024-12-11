@@ -18,6 +18,7 @@
 void menu(char& filetype_str);
 void menu2(char& op_str);
 void menu3(char& op_str);
+void menu_restart(char& op_str);
 void menu_fourier(char& op_str);
 
 void get_filepath(std::string& filepath_str);
@@ -119,8 +120,6 @@ int main() {
         }
         default: {
             std::cout << "Invalid input. Please try again." << std::endl;
-            
-            get_out_of_filepath:
             menu(filetype);
             goto switch_case_1;
             break;
@@ -134,18 +133,22 @@ int main() {
     std::cout << "FFT computed. Continuing..." << std::endl;
     
     char op2;
+    menu_op_2:
     menu2(op2);
     
     char graph_type;
-    menu_op_2:
+    switch_case_2:
     switch(op2){
         case 'a':{
+            //This is the case where the user has chosen to graph the signal
+            new_plot:
             menu3(graph_type);
             Visualizer graph = Visualizer();
             
-            menu_op_3:
+            swtich_case_graph:
             switch(graph_type){
                 case 'a':{
+                    //Histogram Option
                     int num_bins = 10;
                     std::string save_path = "";
                     std::string save_bool = "y";
@@ -164,21 +167,28 @@ int main() {
                     break;
                 }
                 case 'b':{
-                    std::cout << "Needs Implimentation" << std::endl;
+                    //Line Plot Option
+                    if(image){
+                        std::cout << "You have chosen the line plot option. But the data loaded was an image. Choose a different plot option" << std::endl;
+                        goto new_plot;
+                    }
 
-                    image=true;
+                    std::string save_path = "";
+                    std::string save_bool = "y";
+                    std::cout << "Do you want to save this plot? (y/n)" << std::endl;
+                    std::cin >> save_bool;
+
+                    if(save_bool == "y"){
+                        std::cout << "Please enter the save path: Eg: graph1.png" << std::endl;
+                        std::cin >> save_path;
+                    }
+
+                    graph.plot(data, "line", 0, save_path);
                     break;
                 }
                 case 'c':{
-                    std::cout << "Needs Implimentation" << std::endl;
-                    
-                    image=false;
-                    break;
-                }
-                case 'd':{
-                    std::cout << "Needs Implimentation" << std::endl;
-                    
-                    image=false;
+                    //Summary Information
+                    graph.plot(data, "summary");
                     break;
                 }
                 case 'z':{
@@ -187,13 +197,15 @@ int main() {
                 default: {
                     std::cout << "Invalid input. Please try again." << std::endl;
                     menu3(graph_type);
-                    goto menu_op_2;
+                    goto switch_case_graph;
                     break;
                 }
             }
             break;
         }
         case 'b':{
+            //This is the case where we need to filter the signal
+
             break;
         }
         case 'q':{
@@ -206,14 +218,35 @@ int main() {
         default: {
             std::cout << "Invalid input. Please try again." << std::endl;
             menu2(op2);
-            goto menu_op_2;
+            goto switch_case_2;
             break;
         }
     }
     
+    
+    //Here we need to have the option to go back to a certain menu.
+    char op4;
+    menu_restart(op4);
 
-
-
+    switch_case_3:
+    switch(op4){
+    case 'a':{
+        goto menu_op_1;
+        break;
+    }
+    case 'b':{
+        goto menu_op_2
+    }
+    case 'q':{
+        std::cout << "Goodbye!" << std::endl;
+        return 0;
+    } 
+    default:
+        std::cout << "Invalid input. Please try again." << std::endl;
+        menu_restart(op4);
+        goto switch_case_3;
+        break;
+    }
     return 0;
 
 }
@@ -231,7 +264,8 @@ void menu(char& filetype_str){
     std::cout << "Sounds:" << std::endl;
     std::cout << "\t c) WAV" << std::endl; 
     std::cout << "\t d) MP3" << std::endl;
-    std::cout << "Type in the filetype you want to load (eg if you want to load a PNG type a). To quit type q" << std::endl;
+    std::cout << "\t q) Quit" <<std::endl;
+    std::cout << "Type in the filetype you want to load (eg if you want to load a PNG type a)" << std::endl;
     std::cin >> filetype_str;
 }
 void menu2(char& op_str){
@@ -247,11 +281,19 @@ void menu3(char& op_str){
     std::cout << "You have chosen the graph option. Which graph do you want:" << std::endl;
     std::cout << "\t a) Histogram (Image/Audio data)" << std::endl;
     std::cout << "\t b) Line plot (Audio data)" << std::endl;
-    std::cout << "\t c) Scatter plot (Audio data)" << std::endl;
-    std::cout << "\t d) Summary (Images/Audio data)" << std::endl;
+    std::cout << "\t c) Summary (Images/Audio data)" << std::endl;
     std::cout << "\t z) Go to previous menu" << std::endl;
 
     std::cin >> op_str;
+}
+
+void menu_restart(char& op_str){
+    std::cout << "You have reached the end of the program pipeline. You have the choice of going to a certain menu or quitting" << std::endl;
+    std::cout << "The options are:" << std::endl;
+    std::cout << "\t a) Load a new signal" << std::endl;
+    std::cout << "\t b) Graph/Filter signal" < std::endl;
+    std::cout << "\t q) Quit" << std::endl;
+
 }
 
 void menu_fourier(char& op_str){
