@@ -12,7 +12,11 @@
 #include "FourierExceptions.h"
 #include <tuple>
 
-
+/** @class Fourier
+ *  @brief This is a class created to compute the Fourier Transform of an image or a signal. It can accept both Image and Sound
+ * classes as well as a generic Eigen Matrix. However if you provide an Eigen matrix you also need to specify whether
+ * the data provided is an image or a sound, as computing the fourier transforms of those are different. 
+ */
 class Fourier{
     double PI = 3.141592653589793238460;
     
@@ -20,14 +24,14 @@ class Fourier{
         Fourier();
         Fourier(Image& input);
         Fourier(Sound& input);
-        Fourier(Eigen::MatrixXd input, bool image);
+        Fourier(Eigen::MatrixXd input, bool isImage);
         
         template <typename T>
-        void load_signal(const Eigen::MatrixBase<T>& input, bool image);
+        void load_signal(const Eigen::MatrixBase<T>& input, bool isImage);
         void transform(std::tuple<int, int> padding);
 
         template <typename T>
-        void load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool image);
+        void load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool isImage);
         void inverse_transform();
         
         template <typename T>
@@ -62,29 +66,61 @@ class Fourier{
         void __ifft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr);
 };
 
+/** @brief This is the base constructor for the Fourier Class. This takes no inputs but you must load a signal using
+the load_signal function 
+ */
 Fourier::Fourier(){};
 
+/** @brief This constructor gets called if you pass in a class that is a daughter of the Image class. This can throw and
+error if the input you provided cannot be read. For more information on these errors have a look at the
+"ImageExceptions.h" file.
+ * @param input an Image object or any image that is a daughter of the Image class.
+ * @throws exception if something goes wrong. Have a look at the "ImageExceptions.h" file for all the failure modes.
+ */
 Fourier::Fourier(Image& input){
+    input.readData();
     Fourier::load_signal(input.getData(), true);
 }
 
+
+/** @brief This constructor gets called if you pass in a class that is a daughter of the Sound class. This can throw and
+error if the input you provided cannot be read. For more information on these errors have a look at the
+"AudioExceptions.h" file.
+ * @param input a Sound object or any image that is a daughter of the Image class.
+ * @throws exception if reading the file goes wrong. Have a look at the "AudioExceptions.h" file for all the failure modes.
+ */
 Fourier::Fourier(Sound& input){ 
+    input.readData();
     Fourier::load_signal(input.getData(), false);
 }
 
-Fourier::Fourier(Eigen::MatrixXd input, bool image) : signal(input), signal_rows(input.rows()), signal_cols(input.cols()), image(image) {};
+/** @brief This constructor gets called if you pass in an Eigen::MatrixXd. When calling this you should also specify
+whether this data is an image or if it is a sound. This greatly affects how the FFT is computed. If you want to load
+another type of Eigen matrix you need to call the default constructor first and then call the load_signal function.
+ * @param input an Eigen::MatrixXd matrix
+*/
+Fourier::Fourier(Eigen::MatrixXd input, bool isImage) : signal(input), signal_rows(input.rows()), signal_cols(input.cols()), image(image) {};
 template <typename T>
 void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
     Fourier::signal.resize(input.rows(), input.cols());
     Fourier::signal = input.template cast<double>();
     Fourier::signal_rows = Fourier::signal.rows();
     Fourier::signal_cols = Fourier::signal.cols();
-    Fourier::image = image;
+    Fourier::image = isImage;
 }
 
+
+
+/** @brief This is a function that can be used to load an already computed fourier transform to compute it's inverse.
+ * 
+ *  @param input An Eigen::Matrix<std::complex<T>, -1, -1> matrix, containing the transform of which you want to compute
+ *  the inverse of. 
+ *  @param isImage A bool to indicate if the transform is of an image (true) or if it is a sound (false)
+*/
 template <typename T>
-void Fourier::load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool image){
+void Fourier::load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool isImage){ 
     Fourier::fft_result.resize(input.rows(), input.cols());
+    Fourier::fft_result.setZero();
     Fourier::fft_result = input.template cast<std::complex<double>>();
     //Fourier::signal_rows = Fourier::fft_result.rows();
     //Fourier::signal_cols = Fourier::fft_result.cols();
@@ -240,6 +276,7 @@ void Fourier::inverse_transform(){
     }
 
     Fourier::inverse_result = Fourier::fft_result;
+    std::cout << "Before inverse transform. But after filtering" << Fourier::inverse_result << std::endl;
     
     for(int i=0; i < Fourier::inverse_result.rows(); i++){
         Eigen::Matrix<std::complex<double>, 1, -1> matrix_type_row_vec = Fourier::inverse_result.row(i);

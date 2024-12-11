@@ -9,34 +9,35 @@
 #include <Eigen/Dense>
 #include <complex>
 #include <cmath>
+#include <fstream>
 
 class SignalProcessor {
-private:
-    Eigen::Matrix<std::complex<double>, -1, -1> data; // Stores the input data (image or sound)
-    Eigen::MatrixXd frequencyGrid; // Precomputed frequency grid
+    private:
+        Eigen::MatrixXcd data; // Stores the input data (image or sound)
+        Eigen::MatrixXd frequencyGrid; // Precomputed frequency grid
 
-    // Helper method to compute the frequency grid
+        // Helper method to compute the frequency grid
 
-    void computeFrequencyGrid();
+        void computeFrequencyGrid();
 
-public:
-    // Constructor
-    template <typename T>
-    SignalProcessor(const Eigen::Matrix<std::complex<T>, -1, -1>& input);
+    public:
+        // Constructor
+        template <typename T>
+        SignalProcessor(const Eigen::Matrix<std::complex<T>, -1, -1>& input);
 
-    // std::pair<Eigen::MatrixXd, Eigen::MatrixXd> computeGradients();
-    Eigen::MatrixXd computeMagnitude(const Eigen::MatrixXd& gradientX, const Eigen::MatrixXd& gradientY);
-    // Eigen::MatrixXd extractContours(double threshold);
+        // std::pair<Eigen::MatrixXd, Eigen::MatrixXd> computeGradients();
+        Eigen::MatrixXd computeMagnitude(const Eigen::MatrixXd& gradientX, const Eigen::MatrixXd& gradientY);
+        // Eigen::MatrixXd extractContours(double threshold);
+        Eigen::MatrixXd applyThreshold(const Eigen::MatrixXd& magnitude, double threshold);
+        
+        Eigen::MatrixXcd applyHighPassFilter(double cutoff);
+        Eigen::MatrixXcd applyLowPassFilter(double cutoff);
+        
+        template <typename T>
+        void load_signal(const Eigen::MatrixBase<T>& input);
 
-    
-    Eigen::MatrixXcd applyHighPassFilter(double cutoff);
-    Eigen::MatrixXcd applyLowPassFilter(double cutoff);
-    
-    template <typename T>
-    void load_signal(const Eigen::MatrixBase<T>& input);
-
-    template <typename T>
-    Eigen::Matrix<std::complex<T>, -1, -1> getData();
+        template <typename T>
+        Eigen::Matrix<std::complex<T>, -1, -1> getData();
         
 };
 
@@ -112,7 +113,7 @@ void SignalProcessor::computeFrequencyGrid() {
     }
 
     // Method to apply threshold
-    Eigen::MatrixXd applyThreshold(const Eigen::MatrixXd& magnitude, double threshold){
+    Eigen::MatrixXd SignalProcessor::applyThreshold(const Eigen::MatrixXd& magnitude, double threshold){
         Eigen::MatrixXd contours = Eigen::MatrixXd::Zero(magnitude.rows(), magnitude.cols());
 
         for (int i = 0; i < magnitude.rows(); ++i) {
@@ -141,18 +142,24 @@ void SignalProcessor::computeFrequencyGrid() {
     // High Band Filter
 
     Eigen::MatrixXcd SignalProcessor::applyHighPassFilter(double cutoff) {
-        Eigen::MatrixXcd filteredData = data; // Start with a copy of the data
+        std::ofstream file("test.txt");
+        Eigen::MatrixXcd filteredData = data;
+        Eigen::MatrixXd filter(data.rows(), data.cols());
+        file << "Here is the matrix before filtering:\n" << filteredData << '\n';
 
-        int rows = data.rows();
-        int cols = data.cols();
-
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (frequencyGrid(i, j) <= cutoff) {
-                    filteredData(i, j) = std::complex<double>(0.0, 0.0); // Suppress low frequencies
-                }
+        for(int x = 0; x < filteredData.rows(); x++){
+            for(int y = 0; y < filteredData.cols(); y++){
+                filteredData(x, y) = (frequencyGrid(x, y) <= cutoff) ? filteredData(x, y) : std::complex<double>(0.0, 0.0);
             }
         }
+
+
+        if (file.is_open()){
+            file << "Here is the filter:\n" << filter << '\n';
+            file << "Here is the filtered data:\n" << filteredData << '\n';
+        }
+
+        file.close();
 
         return filteredData;
     }
@@ -177,8 +184,7 @@ void SignalProcessor::computeFrequencyGrid() {
 
     // Getter to retrieve the data
     template <typename T>
-    const Eigen::Matrix<std::complex<T>, -1, -1> SignalProcessor::getData(){
-        return SignalProcessor::data.template cast<std::complex<T>>();
+    Eigen::Matrix<std::complex<T>, -1, -1> SignalProcessor::getData(){
+        return SignalProcessor::data.block(0, 0, SignalProcessor::data.rows(), SignalProcessor::data.cols()).template cast<std::complex<T>>();
     }
-
 #endif //SIGNALPROCESSOR_H
