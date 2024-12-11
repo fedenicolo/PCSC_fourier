@@ -1,5 +1,4 @@
 #include "BMPInput.h"
-#include "Image.h"
 #include "ImageExceptions.h"
 #include <fstream>
 #include <iostream>

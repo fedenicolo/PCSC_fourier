@@ -1,5 +1,4 @@
 #include "PNGInput.h"
-#include "Input.h"
 #include "ImageExceptions.h"
 #include <fstream>
 #include <iostream>

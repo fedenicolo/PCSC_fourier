@@ -1,5 +1,4 @@
 #include "MP3Input.h"
-#include "Input.h"
 #include "AudioExceptions.h"
 #include <fstream>
 #include <iostream>
@@ -50,7 +49,7 @@ void MP3Input::readData(){
                 short* samples = reinterpret_cast<short*>(Databuffer);
                 size_t sampleCount = done / sizeof(short);
                 for (size_t i = 0; i < sampleCount; ++i) {
-                    Data.push_back(std::max(samples[i] / 32767.0,-1.0));
+                    Data.push_back(samples[i] / 32768.0);
                 }
                 break;
             }
@@ -59,7 +58,7 @@ void MP3Input::readData(){
                 unsigned short* samples = reinterpret_cast<unsigned short*>(Databuffer);
                 size_t sampleCount = done / sizeof(unsigned short);
                 for (size_t i = 0; i < sampleCount; ++i) {
-                    Data.push_back(std::max((samples[i] - 32768) / 32767.0,-1.0));
+                    Data.push_back((samples[i] - 32768) / 32768.0);
                 }
                 break;
             }
