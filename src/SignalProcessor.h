@@ -94,9 +94,16 @@ void SignalProcessor::computeFrequencyGrid() {
 
     // Compute the combined frequency grid
     frequencyGrid = Eigen::MatrixXd::Zero(rows, cols);
+
+    int center = rows / 2;
+
+
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            frequencyGrid(i, j) = std::sqrt(rowFreq(i, 0) * rowFreq(i, 0) + colFreq(0, j) * colFreq(0, j));
+            float u_centered = i - center;
+            float v_centered = j - center;
+
+            frequencyGrid(i, j) = std::sqrt(u_centered*u_centered + v_centered*v_centered);
         }
     }
 }

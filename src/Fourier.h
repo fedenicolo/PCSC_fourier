@@ -42,6 +42,11 @@ class Fourier{
 
         template <typename T>
         Eigen::Matrix<T, -1, -1> get_inverse_result();
+
+
+        Eigen::Matrix<std::complex<double>, -1, -1> shift(const Eigen::Matrix<std::complex<double>, -1, -1>& matrix);
+
+        Eigen::Matrix<std::complex<double>, -1, -1> unshift(const Eigen::Matrix<std::complex<double>, -1, -1>& matrix);
         
         template <typename T>
         Eigen::Matrix<T, -1, -1> get_signal();
@@ -235,6 +240,48 @@ void Fourier::__pad_signal(std::tuple<int, int> padding){
         std::cout << "The signal length is already a power of 2. Continuing..." << std::endl;
     }
 }
+
+/**
+ * @brief Shifts the zero-frequency component to the center of the matrix.
+ *        Useful for visualization and aligning frequency components.
+ * @param matrix The input matrix to shift.
+ * @return The shifted matrix.
+ */
+Eigen::Matrix<std::complex<double>, -1, -1> Fourier::shift(const Eigen::Matrix<std::complex<double>, -1, -1>& matrix){
+    Eigen::Matrix<std::complex<double>, -1, -1> shifted = matrix;
+    int rows = matrix.rows();
+    int cols = matrix.cols();
+    int halfRows = rows / 2;
+    int halfCols = cols / 2;
+
+    // Swap quadrants to bring low frequencies to the center
+    shifted.block(0, 0, halfRows, halfCols).swap(shifted.block(halfRows, halfCols, halfRows, halfCols));
+    shifted.block(halfRows, 0, halfRows, halfCols).swap(shifted.block(0, halfCols, halfRows, halfCols));
+
+    return shifted;
+}
+
+/**
+ * @brief Unshifts the matrix, moving the zero-frequency component back to the corners.
+ *        This is the inverse of the `shift` operation.
+ * @param matrix The input matrix to unshift.
+ * @return The unshifted matrix.
+ */
+Eigen::Matrix<std::complex<double>, -1, -1> Fourier::unshift(const Eigen::Matrix<std::complex<double>, -1, -1>& matrix){
+    Eigen::MatrixXcd unshifted = matrix;
+    int rows = matrix.rows();
+    int cols = matrix.cols();
+    int halfRows = rows / 2;
+    int halfCols = cols / 2;
+
+    // Swap quadrants to bring low frequencies back to the corners
+    unshifted.block(0, 0, halfRows, halfCols).swap(unshifted.block(halfRows, halfCols, halfRows, halfCols));
+    unshifted.block(halfRows, 0, halfRows, halfCols).swap(unshifted.block(0, halfCols, halfRows, halfCols));
+
+    return unshifted;
+}
+
+
 
 
 /**

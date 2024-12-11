@@ -13,6 +13,7 @@
 #include "Fourier.h"
 #include "ImageExceptions.h"
 #include "Visualizer.h"
+#include "SignalProcessor.h"
 
 
 void menu(char& filetype_str);
@@ -201,11 +202,18 @@ int main() {
                     break;
                 }
             }
+            
             break;
         }
         case 'b':{
             //This is the case where we need to filter the signal
-
+            Eigen::MatrixXcd shifted = fft_->shift(fft_->get_fft_result<double>());
+            SignalProcessor sp = SignalProcessor(shifted);
+            Eigen::MatrixXcd filtered = sp.applyLowPassFilter(3.14159/3);
+            fft_->load_transform<double>(fft_->unshift(filtered), true);
+            fft_->inverse_transform();
+            PNGOutput output = PNGOutput("output.png");
+            output.save(fft_->get_inverse_result<double>());
             break;
         }
         case 'q':{
@@ -293,6 +301,7 @@ void menu_restart(char& op_str){
     std::cout << "\t a) Load a new signal" << std::endl;
     std::cout << "\t b) Graph/Filter signal" << std::endl;
     std::cout << "\t q) Quit" << std::endl;
+    std::cin >> op_str;
 
 }
 
