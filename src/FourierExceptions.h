@@ -5,6 +5,20 @@
 #include <stdexcept>
 
 
+class EMPTY_SIGNAL : public std::exception{
+    public:
+        const char* what(){
+            return "The signal is empty.";
+        }
+};
+
+class EMPTY_INVERSE_RESULT : public std::exception{
+    public:
+        const char* what(){
+            return "The inverse result is empty.";
+        }
+};
+
 class EMPTY_FFT_RESULT : public std::exception{
     public:
         const char* what(){

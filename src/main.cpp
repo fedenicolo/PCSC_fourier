@@ -145,7 +145,7 @@ int main() {
             menu3(graph_type);
             Visualizer graph = Visualizer();
             
-            swtich_case_graph:
+            switch_case_graph:
             switch(graph_type){
                 case 'a':{
                     //Histogram Option
@@ -235,7 +235,7 @@ int main() {
         break;
     }
     case 'b':{
-        goto menu_op_2
+        goto menu_op_2;
     }
     case 'q':{
         std::cout << "Goodbye!" << std::endl;
@@ -291,7 +291,7 @@ void menu_restart(char& op_str){
     std::cout << "You have reached the end of the program pipeline. You have the choice of going to a certain menu or quitting" << std::endl;
     std::cout << "The options are:" << std::endl;
     std::cout << "\t a) Load a new signal" << std::endl;
-    std::cout << "\t b) Graph/Filter signal" < std::endl;
+    std::cout << "\t b) Graph/Filter signal" << std::endl;
     std::cout << "\t q) Quit" << std::endl;
 
 }

@@ -101,7 +101,7 @@ another type of Eigen matrix you need to call the default constructor first and 
 */
 Fourier::Fourier(Eigen::MatrixXd input, bool isImage) : signal(input), signal_rows(input.rows()), signal_cols(input.cols()), image(image) {};
 template <typename T>
-void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
+void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool isImage){
     Fourier::signal.resize(input.rows(), input.cols());
     Fourier::signal = input.template cast<double>();
     Fourier::signal_rows = Fourier::signal.rows();
@@ -112,11 +112,12 @@ void Fourier::load_signal(const Eigen::MatrixBase<T>& input, bool image){
 
 
 /** @brief This is a function that can be used to load an already computed fourier transform to compute it's inverse.
- * 
+ *  
+ *  @tparam T Type of the std::complex values.
  *  @param input An Eigen::Matrix<std::complex<T>, -1, -1> matrix, containing the transform of which you want to compute
  *  the inverse of. 
- *  @param isImage A bool to indicate if the transform is of an image (true) or if it is a sound (false)
-*/
+ *  @param isImage A bool to indicate if the transform is of an image (true) or if it is a sound (false) 
+ */
 template <typename T>
 void Fourier::load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input, bool isImage){ 
     Fourier::fft_result.resize(input.rows(), input.cols());
@@ -128,11 +129,27 @@ void Fourier::load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input
 }
 
 
+/**
+ * @brief A helper function to check if a number is a power of 2
+ * 
+ * @param v an INTEGER to check 
+ * @return true if the number is a power of 2
+ * @return false if the number if not a power of 2
+ */
 bool Fourier::__is_power_of_2(int v){
     return v && !(v & (v - 1));
 }
 
 //This only really works for < 2^32
+
+/**
+ * @brief A helper funciton to compute the closest power of 2 that is larger than the provided number. It accepts and
+ * returns an unsigned int. It is up to the user to ensure that the number is less than 2^32 and also that the datatype
+ * is an unsigned int otherwise the behaviour is undefined.
+ * 
+ * @param x an UNSIGNED INT.
+ * @return unsigned int
+ */
 unsigned int Fourier::__next_power_of_2(unsigned int x){
     x--;
     x |= x >> 1;
@@ -144,7 +161,16 @@ unsigned int Fourier::__next_power_of_2(unsigned int x){
     return x;
 }
 
-
+/**
+ * @brief This accepts an std::tuple<int, int> and zero-pads a signal such that its length this a power of 2. A power of
+ * 2 length is needed to compute the FFT. If 0 is provided as padding then the signal will be zero-padded to the next
+ * closest power of 2. If some padding is provided, the function will try to pad the signal with that padding. If the
+ * signal is still not a power of 2, then the function will add additional padding such that the resulting signal is a
+ * power of 2.
+ * 
+ * @param padding a std::tupe<int, int> where the first numbber is the padding for the rows and the second number is the
+ * padding for the columns.
+ */
 void Fourier::__pad_signal(std::tuple<int, int> padding){
     //Essentially check if the rows or cols are a power of 2. If not, pad it with zeros.
     int padding_rows = std::get<0>(padding);
@@ -211,8 +237,23 @@ void Fourier::__pad_signal(std::tuple<int, int> padding){
 }
 
 
-
+/**
+ * @brief This function computes the FFT of the loaded signal. Provided you have a signal loaded you can call this
+ * without any arguments to just compute the transform. The function will implicitly pad the signal to a power of 2 if
+ * its length is not already a power of 2. Otherwise you can specify the padding you want to apply and it will try to
+ * pad the signal with that padding. If the signal is stil not a power of 2, the function will add additional padding
+ * such that the length in both the columns and rows is a power of 2.
+ * 
+ * @param padding an std::tuple<int, int> specifying the padding in the rows and the columns respectively
+ * @throw EMPTY_SIGNAL if the signal is empty
+ * @throw NOT_POWER_OF_TWO if the signal is not a power of 2
+ */
 void Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
+    if(Fourier::signal.rows() == 0 || Fourier::signal.cols() == 0){
+        throw EMPTY_SIGNAL();
+    }
+    
+    
     Fourier::__pad_signal(padding); 
     //At this point out signal length should be a power of 2. But we should assert it regardless
     if(!(__is_power_of_2(Fourier::signal.cols()))){
@@ -247,6 +288,11 @@ void Fourier::transform(std::tuple<int, int> padding = std::make_tuple(0, 0)){
     // std::cout << fft_result << std::endl;
 }
 
+/**
+ * @brief A helper function to compute the UNSHIFTED FFT of a 1D row vector inplace.
+ * 
+ * @param arr A 1D std::complex<double> 1D row vector from Eigen (Eigen::Matrix<std::complex<double>>, 1, -1). 
+ */
 void Fourier::__fft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
     if(arr.cols() <= 1){
         return;
@@ -270,13 +316,19 @@ void Fourier::__fft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
     }
 }
 
+
+/**
+ * @brief A function to compute the inverse transform provided that there is a transform to compute the inverse of. This
+ * function will throw an EMPTY_FFT_RESULT if there is no transformed signal to compute the inverse of.
+ * 
+ * @throws EMPTY_FFT_RESULT if there is no transformed signal to compute the inverse of.
+ */
 void Fourier::inverse_transform(){
-    if(Fourier::fft_result.cols() == 0){
+    if(Fourier::fft_result.cols() == 0 || Fourier::fft_result.rows() == 0){
         throw EMPTY_FFT_RESULT();
     }
 
     Fourier::inverse_result = Fourier::fft_result;
-    std::cout << "Before inverse transform. But after filtering" << Fourier::inverse_result << std::endl;
     
     for(int i=0; i < Fourier::inverse_result.rows(); i++){
         Eigen::Matrix<std::complex<double>, 1, -1> matrix_type_row_vec = Fourier::inverse_result.row(i);
@@ -295,10 +347,13 @@ void Fourier::inverse_transform(){
     }
     
     Fourier::inverse_result /= (inverse_result.cols() * inverse_result.rows());
-    //std::cout << "Inverse Transform Result: " << std::endl << inverse_result.real() << std::endl;
 }
 
-
+/**
+ * @brief This is a helper function to compute the inverse fft of a 1D row vector inplace
+ * 
+ * @param arr THis is a 1D std::complex<double> 1D row vector from Eigen (Eigen::Matrix<std::complex<double>, 1, -1>)
+ */
 void Fourier::__ifft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
     if(arr.cols() <= 1){
         return;
@@ -323,28 +378,88 @@ void Fourier::__ifft1d(Eigen::Matrix<std::complex<double>, 1, -1>& arr){
     }
 }
 
-
+/**
+ * @brief A getter function to get the FFT result. The user should specify what the return type of the complex matrix
+ * should be. For example if you wanted the FFT result as Eigen::Matrix<std::complex<float>, -1, -1> then you would call
+ * fourier.get_fft_result<float>(). This function will throw an EMPTY_FFT_RESULT if the FFT result is empty.
+ * 
+ * @tparam T the type of the returned std::complex values
+ * @return Eigen::Matrix<std::complex<T>, -1, -1>
+ * @throws EMPTY_FFT_RESULT if the FFT result is empty 
+ */
 template <typename T>
 Eigen::Matrix<std::complex<T>, -1, -1> Fourier::get_fft_result(){
+    if(Fourier::fft_result.cols() == 0 || Fourier::fft_result.rows() == 0){
+        throw EMPTY_FFT_RESULT();
+    }
+
     return Fourier::fft_result.template cast<std::complex<T>>();
 }
 
+/**
+ * @brief A getter function to get the padded version of the inverse FFT result. The user should specify what the return
+ * type of the matrix should be. For example if you wanted the FFT result as Eigen::Matrix<float, -1, -1> then you would call fourier.get_inverse_result_padded<float>()
+ * 
+ * @tparam T the type of the returned matrix.
+ * @return Eigen::Matrix<T, -1, -1> 
+ * @throws EMPTY_INVERSE_RESULT if the inverse result is empty
+ */
 template <typename T>
 Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result_padded(){
+    if(Fourier::inverse_result.cols() == 0 || Fourier::inverse_result.rows() == 0){
+        throw EMPTY_INVERSE_RESULT();
+    }
+
+
     return Fourier::inverse_result.real().template cast<T>();
 }
 
+/**
+ * @brief A getter function to return the truncated version of the inverse FFT result. The user should specify what the return
+ * type of the matrix should be. For example if you wanted the FFT result as Eigen::Matrix<float, -1, -1> then you would
+ * call fourier.get_inverse_result<float>(). The inverse result is truncated to the size of the original signal.
+ * 
+ * @tparam T the type of the returned matrix.
+ * @return Eigen::Matrix<T, -1, -1> 
+ * @throws EMPTY_INVERSE_RESULT if the inverse result is empty
+ */
 template <typename T>
 Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result(){
+    if(Fourier::inverse_result.cols() == 0 || Fourier::inverse_result.rows() == 0){
+        throw EMPTY_INVERSE_RESULT();
+    }
+
     return Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).real().template cast<T>();
 }
 
+
+/**
+ * @brief A getter function to return the loaded signal. Will throw a EMPTY_SIGNAL if the signal is empty
+ * 
+ * @tparam T 
+ * @return Eigen::Matrix<T, -1, -1> 
+ * @throws EMPTY_SIGNAL if the signal is empty
+ */
 template <typename T>
 Eigen::Matrix<T, -1, -1> Fourier::get_signal(){
+    if(Fourier::signal.cols() == 0 || Fourier::signal.rows() == 0){
+        throw EMPTY_SIGNAL();
+    }
+
     return Fourier::signal.template cast<T>();
 }
 
+
+/**
+ * @brief A function to print the loaded signal. Will throw a EMPTY_SIGNAL if the signal is empty
+ * @throws EMPTY_SIGNAL if the signal is empty
+ * 
+ */
 void Fourier::print_signal(){
+    if(Fourier::signal.cols() == 0 || Fourier::signal.rows() == 0){
+        throw EMPTY_SIGNAL();
+    }
+    
     std::cout << signal << std::endl;
 }
 
