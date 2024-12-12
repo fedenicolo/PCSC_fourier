@@ -5,6 +5,7 @@
 #include "BMPInput.h"
 #include "MP3Output.h"
 #include "PNGOutput.h"
+#include "CSVOutput.h"
 #include <iostream>
 #include <string>
 #include <exception>
@@ -13,8 +14,10 @@
 #include "ImageExceptions.h"
 #include "Visualizer.h"
 #include "SignalProcessor.h"
+#include <regex>
+#include <string>
 
-
+bool validateExtension(const std::string& filename, const std::string& expected_extension)
 void menu(char& filetype_str);
 void menu2(char& op_str);
 void menu3(char& op_str);
@@ -194,63 +197,118 @@ int main() {
             std::cin >> op_filter;
 
             switch_case_filter:
-            switch(op_filter){
-                case 'a':{
+            switch(op_filter) {
+                case 'a': {
                     Eigen::MatrixXcd shifted = fft_->shift(fft_->get_fft_result<double>());
                     SignalProcessor sp = SignalProcessor(shifted);
-                    std::cout << "What cutoff frequency do you want to use? Remember this is a low-pass filter [0-PI]" << std::endl;
+                    std::cout << "What cutoff frequency do you want to use? Remember this is a low-pass filter [0-1]" << std::endl;
                     double cutoff;
                     std::cin >> cutoff;
                     Eigen::MatrixXcd filtered = sp.applyLowPassFilter(cutoff);
                     fft_->load_transform<double>(fft_->unshift(filtered), true);
                     fft_->inverse_transform();
-                    
+
                     char save_img;
                     save_low_pass_option:
                     std::cout << "Do you want to save the image? (y/n)" << std::endl;
-                    std::cin >> save_img; 
-                    if(save_img == 'y'){
-                        std::string img_path = "";
-                        std::cout << "Please enter the save path: Eg: output.png" << std::endl; 
-                        std::cin >> img_path;  
-                        PNGOutput output = PNGOutput(img_path);
-                        output.save(fft_->get_inverse_result<double>());
-                    }else if(save_img != 'n'){
+                    std::cin >> save_img;
+                    if(save_img == 'y') {
+                        char save_format;
+                        save_low_pass_format_option:
+                        std::cout << "Choose a format to save: (p) PNG or (c) CSV" << std::endl;
+                        std::cin >> save_format;
+
+                        if(save_format == 'p') {
+                            std::string img_path = "";
+                            do {
+                                std::cout << "Please enter the save path for PNG (e.g., output.png): " << std::endl;
+                                std::cin >> img_path;
+                                if (!validateExtension(img_path, "png")) {
+                                    std::cout << "Invalid file extension. Please ensure the filename ends with .png." << std::endl;
+                                }
+                            } while (!validateExtension(img_path, "png"));
+
+                            PNGOutput output = PNGOutput(img_path);
+                            output.save(fft_->get_inverse_result<double>());
+                        } else if(save_format == 'c') {
+                            std::string csv_path = "";
+                            do {
+                                std::cout << "Please enter the save path for CSV (e.g., output.csv): " << std::endl;
+                                std::cin >> csv_path;
+                                if (!validateExtension(csv_path, "csv")) {
+                                    std::cout << "Invalid file extension. Please ensure the filename ends with .csv." << std::endl;
+                                }
+                            } while (!validateExtension(csv_path, "csv"));
+
+                            CSVOutput output = CSVOutput(csv_path);
+                            output.save(fft_->get_inverse_result<double>());
+                        } else {
+                            std::cout << "Invalid input. Please try again." << std::endl;
+                            goto save_low_pass_format_option;
+                        }
+                    } else if(save_img != 'n') {
                         std::cout << "Invalid input. Please try again." << std::endl;
                         goto save_low_pass_option;
                     }
-                    
+
                     // Low pass filter
                     break;
                 }
-                case 'b':{
-                    //High pass filter
+                case 'b': {
                     Eigen::MatrixXcd shifted = fft_->shift(fft_->get_fft_result<double>());
                     SignalProcessor sp = SignalProcessor(shifted);
-                    std::cout << "What cutoff frequency do you want to use? Remember this is a high-pass filter [0-PI]" << std::endl;
+                    std::cout << "What cutoff frequency do you want to use? Remember this is a high-pass filter [0-1]" << std::endl;
                     double cutoff;
                     std::cin >> cutoff;
                     Eigen::MatrixXcd filtered = sp.applyHighPassFilter(cutoff);
                     fft_->load_transform<double>(fft_->unshift(filtered), true);
                     fft_->inverse_transform();
-                    
-                    char save_img;
+
+                    char save_audio;
                     save_high_pass_option:
-                    std::cout << "Do you want to save the image? (y/n)" << std::endl;
-                    std::cin >> save_img; 
-                    if(save_img == 'y'){
-                        std::string img_path = "";
-                        std::cout << "Please enter the save path: Eg: output.png" << std::endl; 
-                        std::cin >> img_path;  
-                        PNGOutput output = PNGOutput(img_path);
-                        output.save(fft_->get_inverse_result<double>());
-                    }else if(save_img != 'n'){
+                    std::cout << "Do you want to save the audio? (y/n)" << std::endl;
+                    std::cin >> save_audio;
+                    if(save_audio == 'y') {
+                        char save_format;
+                        save_high_pass_format_option:
+                        std::cout << "Choose a format to save: (m) MP3 or (c) CSV" << std::endl;
+                        std::cin >> save_format;
+
+                        if(save_format == 'm') {
+                            std::string mp3_path = "";
+                            do {
+                                std::cout << "Please enter the save path for MP3 (e.g., output.mp3): " << std::endl;
+                                std::cin >> mp3_path;
+                                if (!validateExtension(mp3_path, "mp3")) {
+                                    std::cout << "Invalid file extension. Please ensure the filename ends with .mp3." << std::endl;
+                                }
+                            } while (!validateExtension(mp3_path, "mp3"));
+
+                            MP3Output output = MP3Output(mp3_path);
+                            output.save(fft_->get_inverse_result<double>());
+                        } else if(save_format == 'c') {
+                            std::string csv_path = "";
+                            do {
+                                std::cout << "Please enter the save path for CSV (e.g., output.csv): " << std::endl;
+                                std::cin >> csv_path;
+                                if (!validateExtension(csv_path, "csv")) {
+                                    std::cout << "Invalid file extension. Please ensure the filename ends with .csv." << std::endl;
+                                }
+                            } while (!validateExtension(csv_path, "csv"));
+
+                            CSVOutput output = CSVOutput(csv_path);
+                            output.save(fft_->get_inverse_result<double>());
+                        } else {
+                            std::cout << "Invalid input. Please try again." << std::endl;
+                            goto save_high_pass_format_option;
+                        }
+                    } else if(save_audio != 'n') {
                         std::cout << "Invalid input. Please try again." << std::endl;
                         goto save_high_pass_option;
                     }
                     break;
                 }
-                case 'z':{
+                case 'z': {
                     goto menu_op_2;
                 }
                 default: {
@@ -258,7 +316,9 @@ int main() {
                     goto switch_case_2;
                     break;
                 }
-            }            
+            }
+
+
             break;
         }
         case 'q':{
@@ -351,4 +411,10 @@ void menu_restart(char& op_str){
 
 void menu_fourier(char& op_str){
     //Maybe do some stuff with the FFT here.
+}
+
+// Function to validate file extension
+bool validateExtension(const std::string& filename, const std::string& expected_extension) {
+    std::regex extension_pattern(".*\\." + expected_extension + "$");
+    return std::regex_match(filename, extension_pattern);
 }
