@@ -1,55 +1,86 @@
-# PCSC_fourier
+# Project name : PCSC_fourier
+The goal of the PCSC_fourier project is to provide a set of easy-to-use tools for basic audio and image processing using object-oriented C++.
 
+## Instructions to Build the Project
 
-## Histogram Class
-Purpose
-The Histogram class computes and visualizes histograms for numerical data, such as:
-- Pixel intensities in images.
-- Amplitude values in sound data.
+1. Navigate to the root directory of the project. Update the submodules by running:
+   ```bash
+   git submodule update --init --recursive
+   ```
 
-The class uses Gnuplot for graphical visualization.
+2. If you have previously built something in this directory, clear out any generated files by running:
+   ```bash
+   make clean
+   ./clean.sh
+   ```
 
----
+3. Generate the Makefile for building by running:
+   ```bash
+   cmake -DTESTS=ON -DDOCUMENTATION=ON .
+   ```
 
-Features
-- Numerical Data Support: Handles 1D array (sound and image data).
-- Configurable Bins: Allows flexible bin sizes and data ranges.
-- Normalized Output: Provides histograms as raw frequency counts or normalized probability distributions.
-- Visualization: Uses Gnuplot to generate professional-looking bar charts.
+4. To build the tests, run:
+   ```bash
+   make tests
+   ```
+   You may also set the `-j<NUM_THREADS>` flag to use multiple threads for faster compilation. Note that compiling from scratch may take a while.
 
----
+5. Run the tests with the command:
+   ```bash
+   make -i run_tests
+   ```
 
-Class Documentation
+6. To build the main program, run:
+   ```bash
+   make main
+   ```
 
-Public Methods
-1. Histogram(int numBins, double minRange, double maxRange)
-   Initializes the histogram with the specified number of bins and data range.
-   Parameters:
-   - numBins: Number of bins.
-   - minRange: Minimum value in the data range.
-   - maxRange: Maximum value in the data range.
+7. To generate the Doxygen documentation, run:
+   ```bash
+   make doc_doxygen
+   ```
+   The documentation will be created in the `docs` directory.
 
-2. void compute(const std::vector<double>& data)
-   Computes the histogram by populating frequency counts for the input data.
-   Parameter: data - Vector of numerical values.
+8. The main program and all test files will be located in the `build` directory.
 
-3. std::vector<double> getNormalizedHistogram() const
-   Returns the histogram as a normalized probability distribution (values between 0 and 1).
+## Typical program execution and usage
 
-4. const std::vector<int>& getBins() const
-   Provides raw frequency counts for each bin.
+## Features
 
-5. void visualize() const
-   Generates a graphical representation of the histogram using Gnuplot.
+- **Input Handling**:
+  - `BMPInput`, `PNGInput`, `WAVInput`: Classes specialized in reading BMP images, PNG images, and WAV audio files respectively.
+  These classes provide easy-to-use methods to read audio and image data from different types of file. They also provide methods
+  to extract basic metadata about the data signals such as the sampling rate for audio data and the width and height for images.
 
+- **Output Generation**:
+  - `MP3Output`, `PNGOutput`, `CSVOutput`: Classes used to save processed audio or image data in MP3, PNG, or CSV formats.
+  These classes provide intuitive methods to encode and save audio and image data to different types of files.
 
-## Instructions to build
-1. cd into the root directory of the project. Update the submodules by running `git submodule update --init --recursive`
-2. If you have previously built something in this directory, run `make clean` and `./clean.sh` to clear out any generated files. 
-3. Run the command `cmake -DTESTS=ON -DDOCUMENTATION=ON .` to generate the Makefile for building.
-4. To build the tests, run `make tests`. You may want to also set the `-j<NUM_THREADS>` flag to use multiple threads to
-   compile. It is completely normal for long compilation times if you are compiling from scratch.
-5. To run the tests run the command `make -i run_tests`
-6. To build the main file run `make main`
-7. To build the doxygen documentation, run `make doc_doxygen`. This will build the documentation in the ``docs` directory.
-8. The main program and all test files will be in the `build` directory.
+- **Processing**:
+  - `Fourier`: This class handles features related to the computation of the Fast Fourier Transform for both audio signals and images.
+  It is also used to compute the inverse FFT. Most of the edge cases are treated internally (e. g. padding of the signal before computing its FFT).
+  The Fourier class has multiple constructors and provides several templated methods allowing great flexibility in its usage.
+
+  - `AudioProcessor`: This class provides methods to filter FFT data and therefore process audio and image data. The filters that are available to the user
+  are easy-to-use low-pass and high-pass filters. The filtering methods only require a cutoff value (2*fcutoff/fsample) in order to work.
+
+- **Visualization**:
+  - `Histogram`: This class provides methods for computing and visualizing histograms. It can be used to compute histograms of pixel intensity 
+  probabilities for example (should we add the part about FFT amplitude visualization here or not ?).
+
+  - `Visualizer`: This class provides easy-to-use methods for visualizing data using different plot types with Gnuplot integration.
+
+- **Error Handling**:
+  - The project uses custom exception classes extensively to ensure robust error reporting and handling. Most exceptions are thrown in situations
+  that would lead to unavoidable critical failure of the program, therefore most exceptions are handeled by simply terminating the program.
+
+- **Third-party Libraries**:
+  - `LAME`: For MP3 encoding.
+  - `stb_image`: For reading and writing PNG images.
+  - `GNUplot`: For generating plots.
+  - `Eigen`: For matrix and vector computations.
+  - `Google Test`: For implementing and managing tests.
+
+## Tests using Google Tests
+
+## Todos and limitations
