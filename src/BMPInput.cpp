@@ -20,9 +20,9 @@ Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& p
         for (int j = 0; j < width; ++j) {
             int pixelIdx = i * rowPadded + j * 3;
 
-            unsigned char r = pixelData[pixelIdx];
+            unsigned char b = pixelData[pixelIdx];
             unsigned char g = pixelData[pixelIdx + 1];
-            unsigned char b = pixelData[pixelIdx + 2];
+            unsigned char r = pixelData[pixelIdx + 2];
 
             // Convert to grayscale using the standard luminance formula
             double gray = 0.299 * r + 0.587 * g + 0.114 * b;
@@ -70,9 +70,10 @@ void BMPInput::readData(){
         file.read(reinterpret_cast<char*>(&pixelData[i * rowPadded]), rowPadded);
     }
 
+    // BMP files store pixel data starting from the bottow row so the rows need to be flipped
     std::vector<unsigned char> flippedData;
     flippedData.resize(pixelData.size());
-    int rowSize = width * 3; // Assuming 3 channels (RGB)
+    int rowSize = width * 3;
     for (int i = 0; i < height; ++i) {
         int srcRowIdx = (height - i - 1) * rowPadded;  // Flip the rows
         int dstRowIdx = i * rowPadded;
