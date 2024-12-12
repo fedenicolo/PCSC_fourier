@@ -8,6 +8,10 @@
 #include <exception>
 #include <stdexcept>
 
+/** @class INVALID_WAV_RIFF
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the RIFF header of the ".wav" file is missing.
+ */
 class INVALID_WAV_RIFF : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -15,6 +19,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_WAVE
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the WAVE header of the ".wav" file is missing.
+ */
 class INVALID_WAV_WAVE : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -22,6 +30,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_fmt
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the fmt chunk of the ".wav" file is missing.
+ */
 class INVALID_WAV_fmt : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -29,6 +41,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_AUDIO_FORMAT
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the audio format of the ".wav" file is unsupported by the readData method of the WAVInput class.
+ */
 class INVALID_WAV_AUDIO_FORMAT : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -36,6 +52,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_NUM_CHANNELS
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the audio data stored in the ".wav" file is not mono or stereo
+ */
 class INVALID_WAV_NUM_CHANNELS : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -43,6 +63,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_SAMPLE_RATE
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the sampling rate of the audio data stored in the ".wav" file does not make sens (e.g. negative number).
+ */
 class INVALID_WAV_SAMPLE_RATE : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -50,6 +74,11 @@ public:
     }
 };
 
+/** @class INVALID_WAV_BITS_SAMPLE
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the bits per sample of the audio data stored in the ".wav" file is not supported by the readData method of the
+ *  WAVInput class.
+ */
 class INVALID_WAV_BITS_SAMPLE : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -57,6 +86,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_DATA_CHUNK
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the data chunk of the ".wav" file is invalid.
+ */
 class INVALID_WAV_DATA_CHUNK : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -64,6 +97,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_FILE_OPEN
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when a ".wav" file could not be opened.
+ */
 class INVALID_WAV_FILE_OPEN : public std::exception{
 private:
     std::string error_message;
@@ -78,6 +115,10 @@ public:
     }
 };
 
+/** @class INVALID_WAV_FILE_EMPTY
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when a ".wav" file is empty.
+ */
 class INVALID_WAV_FILE_EMPTY : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -85,6 +126,10 @@ public:
     }
 };
 
+/** @class INIT_MPG123
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the MPG123 handler could not be initialized properly.
+ */
 class INIT_MPG123 : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -92,6 +137,10 @@ public:
     }
 };
 
+/** @class INVALID_MP3_FILE_OPEN
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when a ".mp3" file could not be opened.
+ */
 class INVALID_MP3_FILE_OPEN : public std::exception{
 private:
     std::string error_message;
@@ -106,6 +155,10 @@ public:
     }
 };
 
+/** @class INVALID_MP3_FORMAT_DETAILS
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the format details of a ".mp3" file are not valid for the MPG123 library.
+ */
 class INVALID_MP3_FORMAT_DETAILS : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -113,6 +166,10 @@ public:
     }
 };
 
+/** @class INVALID_MP3_ENCODING_FORMAT
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the audio format of the ".mp3" file is unsupported by the readData method of the MP3Input class.
+ */
 class INVALID_MP3_ENCODING_FORMAT : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -120,6 +177,10 @@ public:
     }
 };
 
+/** @class INVALID_MP3_READING
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the MPG123 library is not able to read a ".mp3" file properly.
+ */
 class INVALID_MP3_READING : public std::exception {
 private:
     std::string error_message;
@@ -134,6 +195,10 @@ public:
     }
 };
 
+/** @class INVALID_LAME_CHANNELS
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the number of audio channels of the audio data is not supported by the LAME library.
+ */
 class INVALID_LAME_CHANNELS : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -141,6 +206,10 @@ public:
     }
 };
 
+/** @class INVALID_LAME_INIT
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the LAME encoder fails to initialize properly.
+ */
 class INVALID_LAME_INIT : public std::exception{
 public:
     const char* what() const noexcept override{
@@ -148,6 +217,10 @@ public:
     }
 };
 
+/** @class LAME_FAILED_ENCODE
+ *  @brief This is an exception class that inherits from std::exception. It is used to throw a custom exception
+ *  when the LAME encoder fails to encode the audio data to the ".mp3" file.
+ */
 class LAME_FAILED_ENCODE : public std::exception{
 public:
     const char* what() const noexcept override{

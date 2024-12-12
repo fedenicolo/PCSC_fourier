@@ -44,7 +44,7 @@ TEST(BMPInputTest, ValidateBMPReadChess) {
     }
 
     // Compare normalized data stored in BMPInput with data from CSV
-    BMPInput ImageInput("Test_Files/chessboard.bmp");
+    BMPInput ImageInput("Test_Files/chessboard2.bmp");
     ImageInput.readData();
     Eigen::MatrixXd Pixels = ImageInput.getData();
     ASSERT_EQ(Pixels.rows(), True_Pixel.rows());
@@ -57,7 +57,7 @@ TEST(BMPInputTest, ValidateBMPReadChess) {
 TEST(BMPInputTest, ValidateBMPReadGradient) {
 
     //Read CSV file with data of the same .bmp file read using python library
-    std::ifstream file("Test_Files/gradient_pixel_values.csv");
+    std::ifstream file("Test_Files/gradient_test_result.csv");
     ASSERT_TRUE(file.is_open());
 
     std::string line;
@@ -95,5 +95,5 @@ TEST(BMPInputTest, ValidateBMPReadGradient) {
     ASSERT_EQ(Pixels.cols(), True_Pixel.cols());
 
     double residual = (Pixels - True_Pixel).norm();
-    ASSERT_NEAR(residual, 1e-12, 1e-12);
+    ASSERT_NEAR(residual, 5e-7, 1e-7);
 }

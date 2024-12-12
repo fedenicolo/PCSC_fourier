@@ -6,7 +6,6 @@
 #include <Eigen/Dense>
 #include "WAVInput.h"
 #include "BMPInput.h"
-#include "MP3Input.h"
 #include "PNGInput.h"
 
 class FourierTest : public ::testing::Test{
@@ -50,8 +49,8 @@ class FourierTest : public ::testing::Test{
     WAVInput wav_file = WAVInput("Test_Files/Sine24bit.wav");
     Fourier fourier_wav = Fourier(wav_file);
     
-    MP3Input mp3_file = MP3Input("Test_Files/SineStereo.mp3");
-    Fourier fourier_mp3 = Fourier(mp3_file);
+    // MP3Input mp3_file = MP3Input("Test_Files/SineStereo.mp3");
+    // Fourier fourier_mp3 = Fourier(mp3_file);
 
 
     PNGInput png_file = PNGInput("Test_Files/chessboard.png");
@@ -100,10 +99,10 @@ TEST_F(FourierTest, LoadingWAV){
     ASSERT_NEAR(residual, 1e-16, 1e-16);
 }
 
-TEST_F(FourierTest, LoadingMP3){
-    double residual = (mp3_file.getData() - fourier_mp3.get_signal<double>()).norm();
-    ASSERT_NEAR(residual, 1e-16, 1e-16);
-}
+// TEST_F(FourierTest, LoadingMP3){
+//     double residual = (mp3_file.getData() - fourier_mp3.get_signal<double>()).norm();
+//     ASSERT_NEAR(residual, 1e-16, 1e-16);
+// }
 
 TEST_F(FourierTest, LoadingPNG){
     double residual = (png_file.getData() - fourier_png.get_signal<double>()).norm();

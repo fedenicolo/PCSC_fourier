@@ -7,7 +7,7 @@
 
 /**
  * @class Histogram
- * @brief A class for computing and visualizing histograms from data matrices or input objects.
+ * @brief A class for computing and visualizing histograms from data matrices or input objects, including Fourier transform results.
  */
 class Histogram {
 public:
@@ -20,12 +20,21 @@ public:
     Histogram(Input& inputObject, int numBins = 10);
 
     /**
-     * @brief Constructs a histogram from an Eigen matrix.
+     * @brief Constructs a histogram from a real-valued Eigen matrix.
      * @param dataMatrix The input Eigen matrix.
      * @param numBins The number of bins for the histogram (default: 10).
      * @throws std::invalid_argument If numBins is not positive.
      */
     Histogram(const Eigen::MatrixXd& dataMatrix, int numBins = 10);
+
+    /**
+     * @brief Constructs a histogram from a complex-valued Eigen matrix, such as a Fourier transform result.
+     * @param complexMatrix The complex-valued Eigen matrix (e.g., Fourier transform result).
+     * @param numBins The number of bins for the histogram.
+     * @param sampleRate The sample rate of the input data (default: 1.0).
+     * @throws std::invalid_argument If numBins is not positive.
+     */
+    Histogram(const Eigen::MatrixXcd& complexMatrix, int numBins, double sampleRate = 1.0);
 
     /**
      * @brief Computes the histogram by populating bins with frequency counts.
@@ -50,17 +59,13 @@ public:
      */
     Eigen::MatrixXd getHistogramData() const;
 
-    /**
-     * @brief Visualizes the histogram using Gnuplot.
-     */
-    void visualize() const;
 
 private:
-    Eigen::MatrixXd data;       ///< Flattened data matrix.
-    std::vector<int> bins;      ///< Frequency counts for each bin.
-    int numBins;                ///< Number of bins in the histogram.
-    double minRange;            ///< Minimum value of the data range.
-    double maxRange;            ///< Maximum value of the data range.
+    Eigen::MatrixXd data;          ///< Flattened data matrix.
+    std::vector<int> bins;         ///< Frequency counts for each bin.
+    int numBins;                   ///< Number of bins in the histogram.
+    double minRange;               ///< Minimum value of the data range.
+    double maxRange;               ///< Maximum value of the data range.
 
     /**
      * @brief Flattens a multi-row matrix into a single row.
@@ -68,11 +73,19 @@ private:
     void flattenMatrix();
 
     /**
-     * @brief Initializes the histogram data and bin ranges.
+     * @brief Initializes the histogram data and bin ranges for a real-valued matrix.
      * @param dataMatrix The input Eigen matrix.
      * @param numBins The number of bins for the histogram.
      */
     void initialize(const Eigen::MatrixXd& dataMatrix, int numBins);
+
+    /**
+     * @brief Initializes the histogram data and bin ranges for a complex-valued matrix.
+     * @param complexMatrix The complex-valued Eigen matrix (e.g., Fourier transform result).
+     * @param numBins The number of bins for the histogram.
+     * @param sampleRate The sample rate of the input data.
+     */
+    void initialize(const Eigen::MatrixXcd& complexMatrix, int numBins, double sampleRate);
 };
 
 #endif // HISTOGRAM_H

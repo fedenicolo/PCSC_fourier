@@ -1,6 +1,5 @@
 #include "Image.h"
 #include "Sound.h"
-#include "MP3Input.h"
 #include "WAVInput.h"
 #include "PNGInput.h"
 #include "BMPInput.h"
@@ -92,27 +91,6 @@ int main() {
                 }
             }
 
-            break;
-        }
-        case 'd':{
-            get_filepath(filepath);
-            if (filepath == "z") goto menu_op_1;
-            
-            while(true){
-                try{
-                    std::unique_ptr<MP3Input> input(new MP3Input(filepath));
-                    input->readData();
-                    data = input->getData();
-                    image = false;
-                    break;
-                }
-                catch(const std::exception& e)
-                {
-                    std::cout << e.what() << std::endl;
-                    get_filepath(filepath);
-                    if (filepath == "z") goto menu_op_1;
-                }
-            }
             break;
         }
         case 'q':{
@@ -337,8 +315,7 @@ void menu(char& filetype_str){
     std::cout << "\t a) PNG" << std::endl; 
     std::cout << "\t b) BMP" << std::endl; 
     std::cout << "Sounds:" << std::endl;
-    std::cout << "\t c) WAV" << std::endl; 
-    std::cout << "\t d) MP3" << std::endl;
+    std::cout << "\t c) WAV" << std::endl;
     std::cout << "\t q) Quit" <<std::endl;
     std::cout << "Type in the filetype you want to load (eg if you want to load a PNG type a)" << std::endl;
     std::cin >> filetype_str;

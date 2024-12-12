@@ -3,18 +3,10 @@
 #include <numeric>
 #include <stdexcept>
 #include <algorithm> // For std::clamp
+#include <complex>
 #include "gnuplot-iostream.h"
 
-// Constructor from Input
-Histogram::Histogram(Input& inputObject, int numBins)
-    : numBins(numBins) {
-    if (numBins <= 0) {
-        throw std::invalid_argument("Number of bins must be positive.");
-    }
-    initialize(inputObject.getData(), numBins);
-}
-
-// Constructor from Eigen matrix
+// Constructors
 Histogram::Histogram(const Eigen::MatrixXd& dataMatrix, int numBins)
     : numBins(numBins) {
     if (numBins <= 0) {
@@ -23,14 +15,38 @@ Histogram::Histogram(const Eigen::MatrixXd& dataMatrix, int numBins)
     initialize(dataMatrix, numBins);
 }
 
-// Shared initialization logic
+Histogram::Histogram(const Eigen::MatrixXcd& complexMatrix, int numBins, double sampleRate)
+    : numBins(numBins) {
+    if (numBins <= 0) {
+        throw std::invalid_argument("Number of bins must be positive.");
+    }
+    initialize(complexMatrix, numBins, sampleRate);
+}
+
+// Initialization for real-valued matrix
 void Histogram::initialize(const Eigen::MatrixXd& dataMatrix, int numBins) {
     data = dataMatrix;
     flattenMatrix();
+    minRange = data.minCoeff();
+    maxRange = data.maxCoeff();
+    bins.resize(numBins, 0);
+}
+
+// Initialization for complex-valued matrix
+void Histogram::initialize(const Eigen::MatrixXcd& complexMatrix, int numBins, double sampleRate) {
+    // Compute the power spectrum
+    Eigen::MatrixXd powerSpectrum = complexMatrix.array().abs2().matrix();
+
+    // Flatten the power spectrum for a 1D histogram
+    data = Eigen::Map<Eigen::VectorXd>(powerSpectrum.data(), powerSpectrum.size());
+
+    // Compute frequency bins (assume equally spaced frequencies)
+    int numRows = complexMatrix.rows();
+    int numCols = complexMatrix.cols();
+    int totalSamples = numRows * numCols;
 
     minRange = data.minCoeff();
     maxRange = data.maxCoeff();
-
     bins.resize(numBins, 0);
 }
 
@@ -46,8 +62,8 @@ void Histogram::compute() {
     std::fill(bins.begin(), bins.end(), 0);
     double range = maxRange - minRange;
 
-    for (int i = 0; i < data.cols(); ++i) {
-        double value = data(0, i);
+    for (int i = 0; i < data.size(); ++i) {
+        double value = data(i);
         if (value >= minRange && value <= maxRange) {
             int bin = static_cast<int>(((value - minRange) / range) * numBins);
             bin = std::clamp(bin, 0, numBins - 1);
@@ -92,29 +108,4 @@ Eigen::MatrixXd Histogram::getHistogramData() const {
     }
 
     return histogramData;
-}
-
-// Visualize histogram using Gnuplot
-void Histogram::visualize() const {
-    Gnuplot gp;
-
-    std::vector<std::pair<double, int>> plotData;
-    double binWidth = (maxRange - minRange) / numBins;
-
-    for (size_t i = 0; i < bins.size(); ++i) {
-        double binCenter = minRange + binWidth * (i + 0.5); // Center of the bin
-        plotData.emplace_back(binCenter, bins[i]);
-    }
-
-    gp << "set title 'Histogram'\n";
-    gp << "set xlabel 'Value'\n";
-    gp << "set ylabel 'Frequency'\n";
-    gp << "set grid\n";
-    gp << "set boxwidth 0.8 relative\n";
-    gp << "set style fill solid 1.0 border -1\n";
-    gp << "set xtics rotate by -45\n";
-    gp << "set format x '%.1f'\n";
-    gp << "set format y '%.0f'\n";
-    gp << "plot '-' using 1:2 with boxes title 'Histogram'\n";
-    gp.send1d(plotData);
 }

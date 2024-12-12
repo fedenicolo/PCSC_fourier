@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <Eigen/Dense>
+#include "Bitmap.h"
 
 BMPInput::BMPInput(const std::string& filepath) : Image(filepath) {
     height = 0;
@@ -20,9 +21,9 @@ Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& p
         for (int j = 0; j < width; ++j) {
             int pixelIdx = i * rowPadded + j * 3;
 
-            unsigned char b = pixelData[pixelIdx];
+            unsigned char r = pixelData[pixelIdx];
             unsigned char g = pixelData[pixelIdx + 1];
-            unsigned char r = pixelData[pixelIdx + 2];
+            unsigned char b = pixelData[pixelIdx + 2];
 
             // Convert to grayscale using the standard luminance formula
             double gray = 0.299 * r + 0.587 * g + 0.114 * b;
@@ -35,58 +36,72 @@ Eigen::MatrixXd BMPInput::convertToGrayscale(const std::vector<unsigned char>& p
 
 // Read BMP file
 void BMPInput::readData(){
+    bmp::Bitmap image(filepath);
 
-    std::ifstream file(filepath, std::ios::binary);
-    if (!file) {
-        throw INVALID_BMP_FILE_OPEN("Unable to open BMP file: " + filepath);
+    BMPInput::width = image.width();
+    BMPInput::height = image.height();
+    std::vector<std::uint8_t> pixel_data;
+
+    for(auto pix : image){
+        pixel_data.push_back(pix.r);
+        pixel_data.push_back(pix.g);
+        pixel_data.push_back(pix.b);
     }
 
-    unsigned char fileHeader[14];
-    unsigned char infoHeader[40];
+    ImageData = convertToGrayscale(pixel_data);
 
-    // Read file and info headers, here doind the reinterpet cast is necessary cuz we need to convert from int to char*
-    file.read(reinterpret_cast<char*>(fileHeader), 14);
-    file.read(reinterpret_cast<char*>(infoHeader), 40);
 
-    if (fileHeader[0] != 'B' || fileHeader[1] != 'M') {
-        throw INVALID_BMP_BM();
-    }
+    // std::ifstream file(filepath, std::ios::binary);
+    // if (!file) {
+    //     throw INVALID_BMP_FILE_OPEN("Unable to open BMP file: " + filepath);
+    // }
 
-    // Extract image dimensions
-    width = *(reinterpret_cast<int*>(&infoHeader[4]));
-    height = *(reinterpret_cast<int*>(&infoHeader[8]));
+    // unsigned char fileHeader[14];
+    // unsigned char infoHeader[40];
 
-    // Create buffer to store file data
-    int rowPadded = (width * 3 + 3) & (~3); // Each row is padded to a multiple of 4 bytes
-    std::vector<unsigned char> pixelData;
-    pixelData.resize(rowPadded * height);
+    // // Read file and info headers, here doind the reinterpet cast is necessary cuz we need to convert from int to char*
+    // file.read(reinterpret_cast<char*>(fileHeader), 14);
+    // file.read(reinterpret_cast<char*>(infoHeader), 40);
 
-    // Move file pointer to the start of pixel data
-    int dataOffset = *(reinterpret_cast<int*>(&fileHeader[10]));
-    file.seekg(dataOffset, std::ios::beg);
+    // if (fileHeader[0] != 'B' || fileHeader[1] != 'M') {
+    //     throw INVALID_BMP_BM();
+    // }
 
-    // Read pixel data
-    for (int i = 0; i < height; ++i) {
-        file.read(reinterpret_cast<char*>(&pixelData[i * rowPadded]), rowPadded);
-    }
+    // // Extract image dimensions
+    // width = *(reinterpret_cast<int*>(&infoHeader[4]));
+    // height = *(reinterpret_cast<int*>(&infoHeader[8]));
 
-    // BMP files store pixel data starting from the bottow row so the rows need to be flipped
-    std::vector<unsigned char> flippedData;
-    flippedData.resize(pixelData.size());
-    int rowSize = width * 3;
-    for (int i = 0; i < height; ++i) {
-        int srcRowIdx = (height - i - 1) * rowPadded;  // Flip the rows
-        int dstRowIdx = i * rowPadded;
-        std::copy(&pixelData[srcRowIdx], &pixelData[srcRowIdx + rowPadded], &flippedData[dstRowIdx]);
-    }
-    pixelData = flippedData;
+    // // Create buffer to store file data
+    // int rowPadded = (width * 3 + 3) & (~3); // Each row is padded to a multiple of 4 bytes
+    // std::vector<unsigned char> pixelData;
+    // pixelData.resize(rowPadded * height);
 
-    if (!file) {
-        throw INVALID_BMP_READ();
-    }
+    // // Move file pointer to the start of pixel data
+    // int dataOffset = *(reinterpret_cast<int*>(&fileHeader[10]));
+    // file.seekg(dataOffset, std::ios::beg);
 
-    file.close();
+    // // Read pixel data
+    // for (int i = 0; i < height; ++i) {
+    //     file.read(reinterpret_cast<char*>(&pixelData[i * rowPadded]), rowPadded);
+    // }
 
-    // Convert to grayscale and save in ImageData Eigen Matrix
-    ImageData = convertToGrayscale(pixelData);
+    // // BMP files store pixel data starting from the bottow row so the rows need to be flipped
+    // std::vector<unsigned char> flippedData;
+    // flippedData.resize(pixelData.size());
+    // int rowSize = width * 3;
+    // for (int i = 0; i < height; ++i) {
+    //     int srcRowIdx = (height - i - 1) * rowPadded;  // Flip the rows
+    //     int dstRowIdx = i * rowPadded;
+    //     std::copy(&pixelData[srcRowIdx], &pixelData[srcRowIdx + rowPadded], &flippedData[dstRowIdx]);
+    // }
+    // pixelData = flippedData;
+
+    // // if (!file) {
+    // //     throw INVALID_BMP_READ();
+    // // }
+
+    // file.close();
+
+    // // Convert to grayscale and save in ImageData Eigen Matrix
+    // ImageData = convertToGrayscale(pixelData);
 }

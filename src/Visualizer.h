@@ -21,7 +21,7 @@ public:
     /**
      * @brief Plots data using the specified plot type.
      * @param data The input data matrix to be plotted.
-     * @param plotType The type of plot (e.g., "histogram", "line", "scatter").
+     * @param plotType The type of plot (e.g., "histogram", "line").
      * @param numBins The number of bins for histogram plots (default: 10).
      * @param saveAs The file path to save the plot as an image (default: empty string).
      * @throws std::invalid_argument If an unknown plot type is provided.
