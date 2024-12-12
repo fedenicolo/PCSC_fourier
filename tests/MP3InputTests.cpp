@@ -40,11 +40,14 @@ TEST(MP3InputTest, ValidateMP3ReadSineMono) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -61,11 +64,8 @@ TEST(MP3InputTest, ValidateMP3ReadSineMono) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-15);
 }
 
 TEST(MP3InputTest, ValidateMP3ReadSineStereo) {
@@ -98,11 +98,15 @@ TEST(MP3InputTest, ValidateMP3ReadSineStereo) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+    
+    
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -119,9 +123,6 @@ TEST(MP3InputTest, ValidateMP3ReadSineStereo) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-15);
 }

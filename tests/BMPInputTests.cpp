@@ -21,11 +21,14 @@ TEST(BMPInputTest, ValidateBMPReadChess) {
     //Read true pixel data from the csv file
     std::getline(file, line); // Skip 'Chessboard Pixel Values (Black and White)' line
     std::vector<float> csv_data;
+
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -41,16 +44,14 @@ TEST(BMPInputTest, ValidateBMPReadChess) {
     }
 
     // Compare normalized data stored in BMPInput with data from CSV
-    BMPInput ImageInput("Test_Files/chessboard.bmp")
+    BMPInput ImageInput("Test_Files/chessboard.bmp");
+    ImageInput.readData();
     Eigen::MatrixXd Pixels = ImageInput.getData();
     ASSERT_EQ(Pixels.rows(), True_Pixel.rows());
     ASSERT_EQ(Pixels.cols(), True_Pixel.cols());
 
-    for (int i = 0; i < Pixels.rows(); ++i) {
-        for (int j = 0; j < Pixels.cols(); ++j) {
-            EXPECT_NEAR(Pixels(i, j), True_Pixel(i, j), 1e-6);
-        }
-    }
+    double residual = (Pixels - True_Pixel).norm();
+    ASSERT_NEAR(residual, 1e-12, 1e-12);
 }
 
 TEST(BMPInputTest, ValidateBMPReadGradient) {
@@ -64,11 +65,14 @@ TEST(BMPInputTest, ValidateBMPReadGradient) {
     //Read true pixel data from the csv file
     std::getline(file, line); // Skip 'Gradient Image Pixel Values (Grayscale)' line
     std::vector<float> csv_data;
+
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -84,14 +88,12 @@ TEST(BMPInputTest, ValidateBMPReadGradient) {
     }
 
     // Compare normalized data stored in BMPInput with data from CSV
-    PNGInput ImageInput("Test_Files/gradient.bmp")
+    BMPInput ImageInput("Test_Files/gradient.bmp");
+    ImageInput.readData();
     Eigen::MatrixXd Pixels = ImageInput.getData();
     ASSERT_EQ(Pixels.rows(), True_Pixel.rows());
     ASSERT_EQ(Pixels.cols(), True_Pixel.cols());
 
-    for (int i = 0; i < Pixels.rows(); ++i) {
-        for (int j = 0; j < Pixels.cols(); ++j) {
-            EXPECT_NEAR(Pixels(i, j), True_Pixel(i, j), 1e-6);
-        }
-    }
+    double residual = (Pixels - True_Pixel).norm();
+    ASSERT_NEAR(residual, 1e-12, 1e-12);
 }

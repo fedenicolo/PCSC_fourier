@@ -194,7 +194,8 @@ void Fourier::__pad_signal(std::tuple<int, int> padding){
         //Note: With conservative resize the new values are uninitalized, not zero!! So we should explicitly set them to zero.
         if(Fourier::signal.rows() == 1){
             Fourier::signal.conservativeResize(Eigen::NoChange_t(), new_col_length);
-            Fourier::signal.block(1, old_col_length, 1, (new_col_length-old_col_length)) = Eigen::MatrixXd::Zero(1, (new_col_length-old_col_length));
+            std::cout << "new-old: " << new_col_length - old_col_length << std::endl;
+            Fourier::signal.block(0, old_col_length, 1, (new_col_length-old_col_length)) = Eigen::MatrixXd::Zero(1, (new_col_length-old_col_length));
         }else{
             unsigned int old_row_length = (unsigned int) Fourier::signal.rows();
             unsigned int new_row_length = __next_power_of_2(old_row_length);

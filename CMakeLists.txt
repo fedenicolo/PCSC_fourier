@@ -17,6 +17,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 message(${CMAKE_BINARY_DIR})
 file(GLOB MAIN_SOURCES "src/*.cpp")
 
+set(GIT_EXECUTABLE "git")
+option(GIT_SUBMODULE "Check submodules during build" ON)
+if(GIT_SUBMODULE)
+    message(STATUS "Submodule update")
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif()
+endif()
+unset(GIT_SUBMODULE CACHE)
+
 include_directories(${CMAKE_BINARY_DIR}/eigen)
 include_directories(${CMAKE_BINARY_DIR}/src)
 include_directories(/src/stb_image_write.h)
@@ -34,21 +45,63 @@ link_directories($(CMAKE_BINARY_DIR)/lame-3.100/lib)
 target_link_libraries(PCSC_fourier Boost::iostreams Boost::system Boost::filesystem ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
 
 
-option(tests "Enable/Disable tests" OFF)
-
-if(tests)
+option(TESTS "Enable/Disable tests" OFF)
+if(TESTS)
     include_directories(${CMAKE_BINARY_DIR}/googletest)
     add_subdirectory(${CMAKE_BINARY_DIR}/googletest)
-    set(TEST_SRC "tests/FourierTests.cpp" "src/Fourier.h" "src/WAVInput.cpp" "src/Sound.h" "src/Input.cpp" "src/Image.h" "src/BMPInput.cpp")
-    add_executable(FourierTests ${TEST_SRC})
+    
+    add_executable(FourierTests "tests/FourierTests.cpp" "src/Fourier.h" "src/WAVInput.cpp" 
+                                "src/Sound.h" "src/Input.cpp" "src/Image.h" "src/BMPInput.cpp" 
+                                "src/MP3Input.cpp" "src/PNGInput.cpp" "src/AudioExceptions.h" "src/ImageExceptions.h")
+    
+    add_executable(MP3InputTests "tests/MP3InputTests.cpp" "src/MP3Input.cpp" "src/Sound" 
+                                 "src/Input" "src/AudioExceptions.h")
+    
+    add_executable(WAVInputTests "tests/WAVInputTests.cpp" "src/WAVInput.cpp" "src/Sound" 
+                                 "src/Input" "src/AudioExceptions.h")
+    
+    add_executable(PNGInputTests "tests/PNGInputTests.cpp" "src/PNGInput.cpp" "src/Image" 
+                                 "src/Input" "src/ImageExceptions.h")
+
+    add_executable(BMPInputTests "tests/BMPInputTests.cpp" "src/BMPInput.cpp" "src/Image" 
+                                 "src/Input" "src/ImageExceptions.h")
+    
+    
+    
     target_link_libraries(FourierTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem pthread ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
-endif(tests)
-unset(tests CACHE)
+    target_link_libraries(MP3InputTests gtest gtest_main ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
+    target_link_libraries(WAVInputTests gtest gtest_main)
+    target_link_libraries(PNGInputTests gtest gtest_main)
+    target_link_libraries(BMPInputTests gtest gtest_main)
+    
+    add_custom_target(tests
+        DEPENDS FourierTests MP3InputTests WAVInputTests PNGInputTests BMPInputTests
+        COMMENT "Building all test executables"
+    )
+    
+    add_custom_target(run_tests COMMAND bash -c "cp -rv ${CMAKE_BINARY_DIR}/tests/Test_Files ${CMAKE_BINARY_DIR}/build"
+                                COMMAND bash -c "make tests"
+                                COMMAND bash -c "build/FourierTests"
+                                COMMAND bash -c "build/MP3InputTests"
+                                COMMAND bash -c "build/WAVInputTests"
+                                COMMAND bash -c "build/PNGInputTests"
+                                COMMAND bash -c "build/BMPInputTests"
+                                COMMAND bash -c "rm -rv ${CMAKE_BINARY_DIR}/build/Test_Files" WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+    message(STATUS "Run `make run_tests` to run the tests")
+endif(TESTS)
+unset(TESTS CACHE)
 
-
-
-
-
+option(DOCUMENTATION "Activate documentation" OFF)
+if (DOCUMENTATION)
+   set(DOXYGEN_EXECUTABLE doxygen)
+   set(DOXYFILE Doxyfile)
+   add_custom_target(doc_doxygen ALL
+     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${DOXYFILE}
+     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+     COMMENT "Generating API documentation with Doxygen"
+     VERBATIM)
+endif(DOCUMENTATION)
+unset(DOCUMENTATION CACHE)
 
 # Display a message after build
 message(STATUS "Build files generated. Run make to compile")

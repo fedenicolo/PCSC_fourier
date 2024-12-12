@@ -207,13 +207,80 @@ int main() {
         }
         case 'b':{
             //This is the case where we need to filter the signal
-            Eigen::MatrixXcd shifted = fft_->shift(fft_->get_fft_result<double>());
-            SignalProcessor sp = SignalProcessor(shifted);
-            Eigen::MatrixXcd filtered = sp.applyLowPassFilter(3.14159/3);
-            fft_->load_transform<double>(fft_->unshift(filtered), true);
-            fft_->inverse_transform();
-            PNGOutput output = PNGOutput("output.png");
-            output.save(fft_->get_inverse_result<double>());
+            char op_filter;
+            std::cout << "Do you want to apply: " << std::endl;
+            std::cout << "\t a) Low pass filter" << std::endl;
+            std::cout << "\t b) High pass filter" << std::endl;
+            //std::cout << "\t c) Band pass filter" << std::endl;
+            std::cout << "\t z) Go to previous menu" << std::endl;
+            std::cin >> op_filter;
+
+            switch_case_filter:
+            switch(op_filter){
+                case 'a':{
+                    Eigen::MatrixXcd shifted = fft_->shift(fft_->get_fft_result<double>());
+                    SignalProcessor sp = SignalProcessor(shifted);
+                    std::cout << "What cutoff frequency do you want to use? Remember this is a low-pass filter [0-PI]" << std::endl;
+                    double cutoff;
+                    std::cin >> cutoff;
+                    Eigen::MatrixXcd filtered = sp.applyLowPassFilter(cutoff);
+                    fft_->load_transform<double>(fft_->unshift(filtered), true);
+                    fft_->inverse_transform();
+                    
+                    char save_img;
+                    save_low_pass_option:
+                    std::cout << "Do you want to save the image? (y/n)" << std::endl;
+                    std::cin >> save_img; 
+                    if(save_img == 'y'){
+                        std::string img_path = "";
+                        std::cout << "Please enter the save path: Eg: output.png" << std::endl; 
+                        std::cin >> img_path;  
+                        PNGOutput output = PNGOutput(img_path);
+                        output.save(fft_->get_inverse_result<double>());
+                    }else if(save_img != 'n'){
+                        std::cout << "Invalid input. Please try again." << std::endl;
+                        goto save_low_pass_option;
+                    }
+                    
+                    // Low pass filter
+                    break;
+                }
+                case 'b':{
+                    //High pass filter
+                    Eigen::MatrixXcd shifted = fft_->shift(fft_->get_fft_result<double>());
+                    SignalProcessor sp = SignalProcessor(shifted);
+                    std::cout << "What cutoff frequency do you want to use? Remember this is a high-pass filter [0-PI]" << std::endl;
+                    double cutoff;
+                    std::cin >> cutoff;
+                    Eigen::MatrixXcd filtered = sp.applyHighPassFilter(cutoff);
+                    fft_->load_transform<double>(fft_->unshift(filtered), true);
+                    fft_->inverse_transform();
+                    
+                    char save_img;
+                    save_high_pass_option:
+                    std::cout << "Do you want to save the image? (y/n)" << std::endl;
+                    std::cin >> save_img; 
+                    if(save_img == 'y'){
+                        std::string img_path = "";
+                        std::cout << "Please enter the save path: Eg: output.png" << std::endl; 
+                        std::cin >> img_path;  
+                        PNGOutput output = PNGOutput(img_path);
+                        output.save(fft_->get_inverse_result<double>());
+                    }else if(save_img != 'n'){
+                        std::cout << "Invalid input. Please try again." << std::endl;
+                        goto save_high_pass_option;
+                    }
+                    break;
+                }
+                case 'z':{
+                    goto menu_op_2;
+                }
+                default: {
+                    std::cout << "Invalid input. Please try again." << std::endl;
+                    goto switch_case_2;
+                    break;
+                }
+            }            
             break;
         }
         case 'q':{

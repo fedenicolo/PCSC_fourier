@@ -42,6 +42,19 @@ TEST(WAVInputTest, ValidateWAVReadPCM8bit) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+
+    while (std::getline(file, line)) {
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
+        }
+    }
+
+
+
     while (std::getline(file, line)) {
         std::istringstream data_stream(line);
         float sample;
@@ -51,7 +64,7 @@ TEST(WAVInputTest, ValidateWAVReadPCM8bit) {
     }
 
     //Convert CSV data into Eigen Matrix
-    Eigen::MatrixXd True_Audio(num_channels, csv_data.size() / num_channels);
+    Eigen::MatrixXd True_Audio(num_channels, (csv_data.size() / num_channels));
     for (int i = 0; i < num_channels; ++i) {
         for (int j = 0; j < True_Audio.cols(); ++j) {
             True_Audio(i, j) = csv_data[i * True_Audio.cols() + j];
@@ -63,11 +76,8 @@ TEST(WAVInputTest, ValidateWAVReadPCM8bit) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-16);
 }
 
 TEST(WAVInputTest, ValidateWAVReadPCM16bit) {
@@ -102,11 +112,14 @@ TEST(WAVInputTest, ValidateWAVReadPCM16bit) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -123,11 +136,8 @@ TEST(WAVInputTest, ValidateWAVReadPCM16bit) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-16);
 }
 
 TEST(WAVInputTest, ValidateWAVReadPCM24bit) {
@@ -162,11 +172,14 @@ TEST(WAVInputTest, ValidateWAVReadPCM24bit) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -183,11 +196,8 @@ TEST(WAVInputTest, ValidateWAVReadPCM24bit) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-16);
 }
 
 TEST(WAVInputTest, ValidateWAVReadPCM32bit) {
@@ -222,11 +232,15 @@ TEST(WAVInputTest, ValidateWAVReadPCM32bit) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+    
+    
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -243,11 +257,8 @@ TEST(WAVInputTest, ValidateWAVReadPCM32bit) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-16);
 }
 
 TEST(WAVInputTest, ValidateWAVReadPCM32bitStereo) {
@@ -282,11 +293,14 @@ TEST(WAVInputTest, ValidateWAVReadPCM32bitStereo) {
     //Read true audio data from the csv file
     std::getline(file, line); // Skip 'Normalized Data' line
     std::vector<float> csv_data;
+    
     while (std::getline(file, line)) {
-        std::istringstream data_stream(line);
-        float sample;
-        while (data_stream >> sample) {
-            csv_data.push_back(sample);
+        char* tok = NULL;
+        tok = strtok(&line[0], ",");
+        float sample = 0.0f;
+        while (tok != NULL) {
+            csv_data.push_back(atof(tok));
+            tok = strtok(NULL, ",");
         }
     }
 
@@ -303,17 +317,15 @@ TEST(WAVInputTest, ValidateWAVReadPCM32bitStereo) {
     ASSERT_EQ(Audio.rows(), True_Audio.rows());
     ASSERT_EQ(Audio.cols(), True_Audio.cols());
 
-    for (int i = 0; i < Audio.rows(); ++i) {
-        for (int j = 0; j < Audio.cols(); ++j) {
-            EXPECT_NEAR(Audio(i, j), True_Audio(i, j), 1e-6);
-        }
-    }
+    double residual = (Audio - True_Audio).norm();
+    ASSERT_LT(residual, 1e-16);
 }
 
 TEST(WAVInputTest, ValidateWAVFormatError) {
     EXPECT_THROW({
         try {
             WAVInput AudioInput("Test_Files/SineWrongFormat.wav");
+            AudioInput.readData();
         } catch (const std::exception& e) {
             EXPECT_STREQ(e.what(), "Unsupported WAV file: Compressed Audio is not supported.");
             throw;

@@ -37,6 +37,8 @@ class SignalProcessor {
         
         Eigen::MatrixXcd applyHighPassFilter(double cutoff);
         Eigen::MatrixXcd applyLowPassFilter(double cutoff);
+
+        Eigen::MatrixXcd applyBandPassFilter(double low_cutoff, double high_cutoff);
         
         template <typename T>
         void load_signal(const Eigen::MatrixBase<T>& input);
@@ -189,26 +191,62 @@ Eigen::MatrixXd SignalProcessor::applyThreshold(const Eigen::MatrixXd& magnitude
   * @return A filtered matrix with high frequencies preserved.
 */
 Eigen::MatrixXcd SignalProcessor::applyHighPassFilter(double cutoff) {
-    std::ofstream file("test.txt");
-    Eigen::MatrixXcd filteredData = data;
-    Eigen::MatrixXd filter(data.rows(), data.cols());
-    file << "Here is the matrix before filtering:\n" << filteredData << '\n';
+    Eigen::MatrixXcd filteredData = SignalProcessor::data; // Start with a copy of the data
 
-    for(int x = 0; x < filteredData.rows(); x++){
-        for(int y = 0; y < filteredData.cols(); y++){
-            filteredData(x, y) = (frequencyGrid(x, y) <= cutoff) ? filteredData(x, y) : std::complex<double>(0.0, 0.0);
+    int rows = SignalProcessor::data.rows();
+    int cols = SignalProcessor::data.cols();
+
+    int half_rows = rows / 2;
+    int half_cols = cols / 2;
+
+    double max_frequency_rows = M_PI;
+    double max_frequency_cols = M_PI;
+
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            double freq_row = (std::abs(i - half_rows) / static_cast<double>(half_rows)) * max_frequency_rows;
+            double freq_col = (std::abs(j - half_cols) / static_cast<double>(half_cols)) * max_frequency_cols;
+
+            if (std::sqrt(freq_row * freq_row + freq_col * freq_col) < cutoff) {
+                filteredData(i, j) = std::complex<double>(0.0, 0.0);
+            }   
         }
+
     }
-
-
-    if (file.is_open()){
-        file << "Here is the filter:\n" << filter << '\n';
-        file << "Here is the filtered data:\n" << filteredData << '\n';
-    }
-
-    file.close();
 
     return filteredData;
+}
+
+
+Eigen::MatrixXcd SignalProcessor::applyBandPassFilter(double low_cutoff, double high_cutoff){
+    Eigen::MatrixXcd filteredData = SignalProcessor::data; // Start with a copy of the data
+
+    int rows = SignalProcessor::data.rows();
+    int cols = SignalProcessor::data.cols();
+
+    int half_rows = rows / 2;
+    int half_cols = cols / 2;
+
+    double max_frequency_rows = M_PI;
+    double max_frequency_cols = M_PI;
+
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            double freq_row = (std::abs(i - half_rows) / static_cast<double>(half_rows)) * max_frequency_rows;
+            double freq_col = (std::abs(j - half_cols) / static_cast<double>(half_cols)) * max_frequency_cols;
+            double freq = std::sqrt(freq_row * freq_row + freq_col * freq_col);
+            if ( freq < low_cutoff || freq > high_cutoff) {
+                filteredData(i, j) = std::complex<double>(0.0, 0.0);
+            }   
+        }
+
+    }
+
+    return filteredData;
+
+
+
+
 }
 
 
@@ -223,14 +261,23 @@ Eigen::MatrixXcd SignalProcessor::applyLowPassFilter(double cutoff){
     int rows = data.rows();
     int cols = data.cols();
 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            if (frequencyGrid(i, j) > cutoff) {
-                filteredData(i, j) = std::complex<double>(0.0, 0.0); // Suppress high frequencies
-            }
-        }
-    }
+    int half_rows = rows / 2;
+    int half_cols = cols / 2;
 
+    double max_frequency_rows = M_PI;
+    double max_frequency_cols = M_PI;
+
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            double freq_row = (std::abs(i - half_rows) / static_cast<double>(half_rows)) * max_frequency_rows;
+            double freq_col = (std::abs(j - half_cols) / static_cast<double>(half_cols)) * max_frequency_cols;
+
+            if (std::sqrt(freq_row * freq_row + freq_col * freq_col) > cutoff) {
+                filteredData(i, j) = std::complex<double>(0.0, 0.0);
+            }   
+        }
+
+    }
     return filteredData;
 }
 

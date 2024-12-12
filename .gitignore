@@ -26,7 +26,11 @@ Makefile
 
 # Ignore system files
 .DS_Store
+
+
+#These files can always be regenerated
 CMakeCache.txt
 CMakeFiles/
 Makefile
 cmake_install.cmake
+docs/*
