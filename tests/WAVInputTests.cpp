@@ -67,7 +67,7 @@ TEST(WAVInputTest, ValidateWAVReadPCM8bit) {
     Eigen::MatrixXd True_Audio(num_channels, (csv_data.size() / num_channels));
     for (int i = 0; i < num_channels; ++i) {
         for (int j = 0; j < True_Audio.cols(); ++j) {
-            True_Audio(i, j) = csv_data[i * True_Audio.cols() + j];
+            True_Audio(i, j) = csv_data[j * num_channels + i];
         }
     }
 
@@ -127,7 +127,7 @@ TEST(WAVInputTest, ValidateWAVReadPCM16bit) {
     Eigen::MatrixXd True_Audio(num_channels, csv_data.size() / num_channels);
     for (int i = 0; i < num_channels; ++i) {
         for (int j = 0; j < True_Audio.cols(); ++j) {
-            True_Audio(i, j) = csv_data[i * True_Audio.cols() + j];
+            True_Audio(i, j) = csv_data[j * num_channels + i];
         }
     }
 
@@ -187,7 +187,7 @@ TEST(WAVInputTest, ValidateWAVReadPCM24bit) {
     Eigen::MatrixXd True_Audio(num_channels, csv_data.size() / num_channels);
     for (int i = 0; i < num_channels; ++i) {
         for (int j = 0; j < True_Audio.cols(); ++j) {
-            True_Audio(i, j) = csv_data[i * True_Audio.cols() + j];
+            True_Audio(i, j) = csv_data[j * num_channels + i];
         }
     }
 
@@ -248,7 +248,7 @@ TEST(WAVInputTest, ValidateWAVReadPCM32bit) {
     Eigen::MatrixXd True_Audio(num_channels, csv_data.size() / num_channels);
     for (int i = 0; i < num_channels; ++i) {
         for (int j = 0; j < True_Audio.cols(); ++j) {
-            True_Audio(i, j) = csv_data[i * True_Audio.cols() + j];
+            True_Audio(i, j) = csv_data[j * num_channels + i];
         }
     }
 
@@ -308,7 +308,7 @@ TEST(WAVInputTest, ValidateWAVReadPCM32bitStereo) {
     Eigen::MatrixXd True_Audio(num_channels, csv_data.size() / num_channels);
     for (int i = 0; i < num_channels; ++i) {
         for (int j = 0; j < True_Audio.cols(); ++j) {
-            True_Audio(i, j) = csv_data[i * True_Audio.cols() + j];
+            True_Audio(i, j) = csv_data[j * num_channels + i];
         }
     }
 
