@@ -102,6 +102,11 @@ passes and the 2D FFT test passes. Tests on the FFT method are equality tests be
 using trusted tools. All methods used for the padding of the signal pass the tests. The inverse FFT method is assessed by comparing
 the original signal with the result of the inverse FFT method, all tests pass. Finally, the loading methods are also assessed and pass the tests.
 
+Since the filter implementation is using filters that are not smooth, the results have lots of artifacts. Because of this, the tests on the
+filter implementation are not absolute tests where the results of the methods are compared with results of trusted filtering tools.
+Instead the methods are used on predefined test signals, the results are inspected to make sure they still make sens even if they are not perfect. 
+These results are then used as a test to make sure that the implementation of the filters stayed consitent between updates of the project.
+
 **Visualization**: The histogram class has been tested by generating two images using python, then creating histograms on python using the
 same pipeline that we use in the histogram class but with tools from packages. Then we use Google Tests to assess if they are similar.
 The test also assesses if the sum of pixel probabilities equals to 1.
