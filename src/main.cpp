@@ -218,9 +218,8 @@ int main() {
             switch_case_filter:
             switch(op_filter) {
                 case 'a': {
-                    Eigen::MatrixXcd shifted;
-                    shifted = (image) ? fft_->shift(fft_->get_fft_result<double>()) : fft_->get_fft_result<double>();
-
+                    Eigen::MatrixXcd shifted = fft_->get_fft_result<double>();
+                         
                     SignalProcessor sp = SignalProcessor(shifted, !image);
                     std::cout << "What cutoff frequency do you want to use? Remember this is a low-pass filter [0-1]" << std::endl;
                     double cutoff;
@@ -228,7 +227,7 @@ int main() {
                     Eigen::MatrixXcd filtered = sp.applyLowPassFilter(cutoff);
                     
                     if(image){
-                        fft_->load_transform<double>(fft_->unshift(filtered), true);
+                        fft_->load_transform<double>(filtered, true);
                     }else{
                         fft_->load_transform<double>(filtered, false);
                     }
@@ -330,9 +329,7 @@ int main() {
                     break;
                 }
                 case 'b': {
-                    Eigen::MatrixXcd shifted;
-                    
-                    shifted = (image) ? fft_->shift(fft_->get_fft_result<double>()) : fft_->get_fft_result<double>();
+                    Eigen::MatrixXcd shifted = fft_->get_fft_result<double>();
 
                     SignalProcessor sp = SignalProcessor(shifted, !image);
                     std::cout << "What cutoff frequency do you want to use? Remember this is a high-pass filter [0-1]" << std::endl;
@@ -340,7 +337,7 @@ int main() {
                     std::cin >> cutoff;
                     Eigen::MatrixXcd filtered = sp.applyHighPassFilter(cutoff);
                     if(image){
-                        fft_->load_transform<double>(fft_->unshift(filtered), true);
+                        fft_->load_transform<double>(filtered, true);
                     }else{
                         fft_->load_transform<double>(filtered, false);
                     }

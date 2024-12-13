@@ -34,6 +34,9 @@ class SignalProcessor {
 
         template <typename T>
         Eigen::Matrix<std::complex<T>, -1, -1> getData();
+        Eigen::MatrixXd getFrequencyGrid() const {
+            return frequencyGrid;
+        }
 };
 
 /**
@@ -88,9 +91,11 @@ void SignalProcessor::computeFrequencyGrid() {
 
     // Compute the combined frequency grid
     frequencyGrid = Eigen::MatrixXd::Zero(rows, cols);
+    double maxFrequency = std::sqrt((rows / 2.0) * (rows / 2.0) + (cols / 2.0) * (cols / 2.0)); // Max possible frequency
+
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            frequencyGrid(i, j) = std::sqrt(rowFreq(i, 0) * rowFreq(i, 0) + colFreq(0, j) * colFreq(0, j));
+            frequencyGrid(i, j) = std::sqrt(rowFreq(i, 0) * rowFreq(i, 0) + colFreq(0, j) * colFreq(0, j)) / maxFrequency;
         }
     }
 }
