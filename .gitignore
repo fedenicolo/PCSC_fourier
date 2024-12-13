@@ -1,6 +1,7 @@
 # Ignore build directories
 cmake-build-*/
 build/
+!./build/hash_check
 
 #Ignore CMAKE files since they can always be regenerated
 CMakeFiles/
@@ -34,3 +35,4 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 docs/*
+
