@@ -472,10 +472,7 @@ template <typename T>
 Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result(){
     if(Fourier::inverse_result.cols() == 0 || Fourier::inverse_result.rows() == 0){
         throw EMPTY_INVERSE_RESULT();
-    }
-    
-    std::cout << "SRows: " << Fourier::signal_rows << " SCols: " << Fourier::signal_cols << std::endl;
-    std::cout << "FRows: " << Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).rows() << " FCols: " << Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).cols() << std::endl;
+    } 
     return Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).real().template cast<T>();
 }
 
