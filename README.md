@@ -88,6 +88,12 @@ is compared to the audio and image data extracted using the methods of the proje
 matrix and saves it to the file. Therefore, it was tested by reading a file and saving it to a new file making sure the two files are the
 same at the end.
 
+**Processing**: 
+
+**Visualization**: The histogram class has been tested by generating two images using python, then creating histograms on python using the
+same pipeline that we use in the histogram class but with tools from packages. Then we use Google Tests to assess if they are similar. We
+don't check if they are exactly the same because of numerical artifacts that would inevitably make the results a little bit different.
+
 
 ## Todos and Limitations
 
