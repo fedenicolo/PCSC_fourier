@@ -110,13 +110,10 @@ the original signal with the result of the inverse FFT method, all tests pass. F
 
 Since the filter implementation is using filters that are not smooth, the results have lots of artifacts. Because of this, the tests on the
 filter implementation are not absolute tests where the results of the methods are compared with results of trusted filtering tools.
-Instead the methods are used on predefined test signals, the results are inspected to make sure they still make sens even if they are not perfect. 
-These results are then used as a test to make sure that the implementation of the filters stayed consitent between updates of the project.
+Instead the methods are used on predefined test signals, the results are inspected to make sure they still make sense even if they are not perfect. 
+During the test the Filter class ouputs a .txt file whose hash is then compared with what we expect it to be. If the hashes are the same, the tests have passed and you will see the message "The hashes are the same". This hash check is done through the hash_check file and the sha1sum command so make sure you have hash_check in the build directory. If you dont have the sha1sum package you can install the command by installing the coreutils package using your system's package manager.
 
-**Visualization**: The histogram class has been tested by generating two images using python, then creating histograms on python using the
-same pipeline that we use in the histogram class but with tools from packages. Then we use Google Tests to assess if they are similar.
-The test also assesses if the sum of pixel probabilities equals to 1.
-
+**Visualization**: To test the Visualizer we created two control PNGs that plot a line plot and the histrogram plot of a known sinewave, these images are saved in the Test_Files folder in tests/. Then when running the tests the VisualizerTests program will save the histogram and the line plot to the disk and the then hash_check file will be called to compute the hashes. If the hashes are the same, the tests have passed and you will see the message "The hashes are the same". This hash check is done through the hash_check file and the sha1sum command so make sure you have hash_check in the build directory. If you dont have the sha1sum package you can install the command by installing the coreutils package using your system's package manager.
 
 ## Todos and Limitations
 
