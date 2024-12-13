@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Set the build type to Debug
 #set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 # Set debug flags for more control
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
-set(CMAKE_CXX_FLAGS "-O0")
+set(CMAKE_CXX_FLAGS "-O3")
 
 # Specify the build output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
