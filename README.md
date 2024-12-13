@@ -85,8 +85,8 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
 is compared to the audio and image data extracted using the methods of the project.
 
 **Output Generation**: We could not think of a relevant quantitative test using Google Tests for output classes since they only take an existing data
-matrix and save it to the file. Therefore, it was tested by reading a file and saving it to a new file making sure the two files are the
-same at the end. This test was implemented using google tests only for the MP3Output class.
+matrix and save it to the file. Therefore, the methods were tested by reading a file and saving it to a new file making sure the two files are the
+same at the end. Such a test is implemented using Google Tests for the MP3Output class.
 
 **Processing**: Since the Fourier class is the base building block of the project, all of its functionnalities are tested. The 1D FFT test
 passes and the 2D FFT test passes. Tests on the FFT method are equality tests between the FFT obtained using our methods and one computed
