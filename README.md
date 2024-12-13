@@ -7,41 +7,45 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
    ```bash
    git submodule update --init --recursive
    ```
-
-2. If you have previously built something in this directory, clear out any generated files by running:
+2. Make the clean.sh file executable by running
+   ```bash
+   chmod +x ./clean.sh
+   ````
+3. If you have previously built something in this directory, clear out any generated files by running:
    ```bash
    make clean
    ./clean.sh
    ```
 
-3. Generate the Makefile for building by running:
+4. Generate the Makefile for building by running:
    ```bash
    cmake -DTESTS=ON -DDOCUMENTATION=ON .
    ```
 
-4. To build the tests, run:
+5. To build the tests, run:
    ```bash
    make tests
    ```
    You may also set the `-j<NUM_THREADS>` flag to use multiple threads for faster compilation. Note that compiling from scratch may take a while.
 
-5. Run the tests with the command:
+6. Run the tests with the command:
    ```bash
    make -i run_tests
    ```
 
-6. To build the main program, run:
+7. To build the main program, run:
    ```bash
    make main
    ```
 
-7. To generate the Doxygen documentation, run:
+8. To generate the Doxygen documentation, run:
    ```bash
+   mkdir docs
    make doc_doxygen
    ```
    The documentation will be created in the `docs` directory.
 
-8. The main program and all test files will be located in the `build` directory.
+9. The main program and all test files will be located in the `build` directory.
 
 ## Typical program execution and usage
 
