@@ -45,6 +45,11 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
 
 ## Typical program execution and usage
 
+1. Run the program with the command:
+   ```bash
+   make -i run_tests ///THIS NEEDS TO BE EDITED
+   ```  
+
 ## Features
 
 - **Input Handling**:
