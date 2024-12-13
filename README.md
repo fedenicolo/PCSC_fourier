@@ -65,8 +65,7 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
   are easy-to-use low-pass and high-pass filters. The filtering methods only require a cutoff value (2*fcutoff/fsample) in order to work.
 
 - **Visualization**:
-  - `Histogram`: This class provides methods for computing and visualizing histograms. It can be used to compute histograms of pixel intensity 
-  probabilities for example (should we add the part about FFT amplitude visualization here or not ?).
+  - `Histogram`: This class provides methods for computing histograms. It supports computing histograms of real-valued data, such as pixel intensity probabilities, and includes specialized functionality for handling complex-valued data. When an FFT matrix is provided, the class computes the power spectrum and generates a histogram of its values.
 
   - `Visualizer`: This class provides easy-to-use methods for visualizing data using different plot types with Gnuplot integration.
 
