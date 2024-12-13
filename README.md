@@ -49,10 +49,16 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
 
 ## Typical program execution and usage
 
-1. Run the program with the command:
+1. Change directory to the build directory and run the PCSC_fourier file
    ```bash
-   make -i run_tests ///THIS NEEDS TO BE EDITED
-   ```  
+   cd build
+   ./PCSC_fourier
+   ```
+2. The program will display a menu and ask what file you want to load. Choose the correct option and give the path to the file. For ease of use, make sure any file you want to provide is also contained in the build directory as then you only have to provide the filename and not the full path.
+3. You will then get the option to Graph or Filter the signal. Choose the correct option to proceed.
+4. If you choose to graph the signal you will be provided with some plot option. These plots use the gnuplot program to display the plots, so make sure that is installed on your system. You will also be asked if you want to save the plots as a PNG. If you choose to do so, then you also have to provide the name of the saved file. The file will then be saved in the same location as the program.
+5. If you choose to filter the signal you will be asked to choose between a lowpass and a highpass filter. You will also be asked for a cutoff frequency. You need to specify this as a number between 0-1 where 0 would indicate the DC component of the signal and 1 would indicate the maximum frequency in the signal (half the sampling rate). You will then also be asked if you want to save the filterd signal. If the input signal was an image you can save it as a PNG or a CSV file and if the input signal was a sound you can save it as an MP3 file or a CSV.
+6. Once you near the end of the program you will be asked if you want to go back to any of the previous menus. If you dont you can always enter 'q' to quit
 
 ## Features
 
