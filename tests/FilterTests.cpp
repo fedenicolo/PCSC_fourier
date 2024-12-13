@@ -63,6 +63,9 @@ TEST(FilterTest, ValidateLowPassFilter) {
     Audio_Fourier.inverse_transform();
     Eigen::MatrixXd Audio_LowFreq = Audio_Fourier.get_inverse_result<double>();
 
+    std::ofstream output_file("lowpass.txt");
+    output_file << "Here is the matrix m:\n" << Audio_LowFreq << '\n';
+
     // Compare the two results
     ASSERT_EQ(Audio_LowFreq.rows(), True_Audio_LowFreq.rows());
     ASSERT_EQ(Audio_LowFreq.cols(), True_Audio_LowFreq.cols());
@@ -124,6 +127,11 @@ TEST(FilterTest, ValidateHighPassFilter) {
     Audio_Fourier.load_transform(Filtered_Audio_FFT, false);
     Audio_Fourier.inverse_transform();
     Eigen::MatrixXd Audio_HighFreq = Audio_Fourier.get_inverse_result<double>();
+
+
+
+    std::ofstream output_file("highpass.txt");
+    output_file << "Here is the matrix m:\n" << Audio_HighFreq << '\n';
 
     // Compare the two results
     ASSERT_EQ(Audio_HighFreq.rows(), True_Audio_HighFreq.rows());

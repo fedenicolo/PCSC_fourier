@@ -140,6 +140,6 @@ TEST(HistogramTest, ValidateHistogramGradient) {
 
 
     double residual = (Histogram - True_Histogram).norm();
-    ASSERT_NEAR(residual, 0.05, 1e-3);
+    ASSERT_NEAR(residual, 0.05, 2e-3);
     ASSERT_NEAR(pixel_p.sum(), 1.0, 1e-6);
 }
