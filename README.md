@@ -81,6 +81,13 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
   - `Google Test`: For implementing and managing tests.
 
 ## Tests using Google Tests
+**Input Handling**: All google tests for the input classes pass. The true data of the file, extracted using trusted libraries on python,
+is compared to the audio and image data extracted using the methods of the project.
+
+**Output Generation**: We could not think of a relevant test using Google Tests for input classes since they only take an existing data
+matrix and saves it to the file. Therefore, it was tested by reading a file and saving it to a new file making sure the two files are the
+same at the end.
+
 
 ## Todos and Limitations
 
