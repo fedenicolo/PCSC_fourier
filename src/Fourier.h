@@ -128,8 +128,6 @@ void Fourier::load_transform(const Eigen::Matrix<std::complex<T>, -1, -1>& input
     Fourier::fft_result.resize(input.rows(), input.cols());
     Fourier::fft_result.setZero();
     Fourier::fft_result = input.template cast<std::complex<double>>();
-    //Fourier::signal_rows = Fourier::fft_result.rows();
-    //Fourier::signal_cols = Fourier::fft_result.cols();
     Fourier::image = image;
 }
 
@@ -194,7 +192,6 @@ void Fourier::__pad_signal(std::tuple<int, int> padding){
         //Note: With conservative resize the new values are uninitalized, not zero!! So we should explicitly set them to zero.
         if(Fourier::signal.rows() == 1){
             Fourier::signal.conservativeResize(Eigen::NoChange_t(), new_col_length);
-            std::cout << "new-old: " << new_col_length - old_col_length << std::endl;
             Fourier::signal.block(0, old_col_length, 1, (new_col_length-old_col_length)) = Eigen::MatrixXd::Zero(1, (new_col_length-old_col_length));
         }else{
             unsigned int old_row_length = (unsigned int) Fourier::signal.rows();
@@ -476,7 +473,9 @@ Eigen::Matrix<T, -1, -1> Fourier::get_inverse_result(){
     if(Fourier::inverse_result.cols() == 0 || Fourier::inverse_result.rows() == 0){
         throw EMPTY_INVERSE_RESULT();
     }
-
+    
+    std::cout << "SRows: " << Fourier::signal_rows << " SCols: " << Fourier::signal_cols << std::endl;
+    std::cout << "FRows: " << Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).rows() << " FCols: " << Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).cols() << std::endl;
     return Fourier::inverse_result.block(0, 0, Fourier::signal_rows, Fourier::signal_cols).real().template cast<T>();
 }
 

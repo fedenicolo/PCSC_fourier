@@ -158,31 +158,24 @@ void WAVInput::ReadDataChunk(std::ifstream& file){
 }
 
 void WAVInput::readData(){
-  try{
-    // Open the stream to the file
-    std::ifstream file(filepath, std::ios::binary);
-    if (!file.is_open()) {
-      throw INVALID_WAV_FILE_OPEN("Unable to open WAV file : " + filepath);
-    }
-
-    // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
-    if (file.peek() == std::ifstream::traits_type::eof()) {
-    throw INVALID_WAV_FILE_EMPTY();
-    }
-
-    // Read the file
-    ReadHeader(file);
-    ReadFMTChunk(file);
-    ReadDataChunk(file);
-
-    // Close the stream
-    file.close();
-
-  }  catch (const std::exception& e) {
-      std::cerr << "Caught exception: " << e.what() << std::endl;
-      std::exit(EXIT_FAILURE);
+  // Open the stream to the file
+  std::ifstream file(filepath, std::ios::binary);
+  if (!file.is_open()) {
+    throw INVALID_WAV_FILE_OPEN("Unable to open WAV file : " + filepath);
   }
 
+  // Reads the first byte of the file without removing it from the buffer. If empty it returns an End Of File trait
+  if (file.peek() == std::ifstream::traits_type::eof()) {
+  throw INVALID_WAV_FILE_EMPTY();
+  }
+
+  // Read the file
+  ReadHeader(file);
+  ReadFMTChunk(file);
+  ReadDataChunk(file);
+
+  // Close the stream
+  file.close();
 }
 
 

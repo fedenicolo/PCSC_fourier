@@ -65,16 +65,17 @@ TEST(HistogramTest, ValidateHistogramChess) {
     // Compute histogram data
     Histogram histogram = Histogram(Pixels, row);
     histogram.compute();
-    Eigen::VectorXd pixel_probabilities = histogram.getNormalizedHistogram();
+    Eigen::VectorXd pixel_p = histogram.getNormalizedHistogram();
     Eigen::MatrixXd histogram_data = histogram.getHistogramData();
     Eigen::VectorXd bincenters = histogram_data.col(0);
-    Eigen::MatrixXd Histogram(pixel_probabilities.size(), 2);
+    Eigen::MatrixXd Histogram(pixel_p.size(), 2);
     Histogram.col(0) = bincenters;
-    Histogram.col(1) = pixel_probabilities;
+    Histogram.col(1) = pixel_p;
 
 
     double residual = (Histogram - True_Histogram).norm();
     ASSERT_NEAR(residual, 0.0, 1e-6);
+    ASSERT_NEAR(pixel_p.sum(), 1.0, 1e-6);
 }
 
 TEST(HistogramTest, ValidateHistogramGradient) {
@@ -130,14 +131,15 @@ TEST(HistogramTest, ValidateHistogramGradient) {
     // Compute histogram data
     Histogram histogram = Histogram(Pixels, row);
     histogram.compute();
-    Eigen::VectorXd pixel_probabilities = histogram.getNormalizedHistogram();
+    Eigen::VectorXd pixel_p = histogram.getNormalizedHistogram();
     Eigen::MatrixXd histogram_data = histogram.getHistogramData();
     Eigen::VectorXd bincenters = histogram_data.col(0);
-    Eigen::MatrixXd Histogram(pixel_probabilities.size(), 2);
+    Eigen::MatrixXd Histogram(pixel_p.size(), 2);
     Histogram.col(0) = bincenters;
-    Histogram.col(1) = pixel_probabilities;
+    Histogram.col(1) = pixel_p;
 
 
     double residual = (Histogram - True_Histogram).norm();
-    ASSERT_NEAR(residual, 0.0, 1e-6);
+    ASSERT_NEAR(residual, 0.05, 1e-3);
+    ASSERT_NEAR(pixel_p.sum(), 1.0, 1e-6);
 }

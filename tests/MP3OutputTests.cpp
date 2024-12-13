@@ -3,8 +3,7 @@
 #include "Eigen/Dense"
 #include "MP3Output.h"
 
-
-TEST(MP3OutputTests, MP3SaveFile){
+TEST(MP3OutputTest, MP3SaveFile){
     WAVInput wavfile("Test_Files/Sine16bit.wav");
     wavfile.readData();
     Eigen::MatrixXd audio_data = wavfile.getData();

@@ -19,6 +19,12 @@
 
 class Sound : public Input {
     using Input::Input; ///< Inherit the constructor from the Input class.
+
+protected:
+    int SampleRate;        ///< Sampling rate in Hz
+    int NumChannels;       ///< Number of audio channels
+    int BitsPerSample;     ///< Bits per sample
+    
 public:
     /**
      * @brief Gets the sample rate of the audio file.

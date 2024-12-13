@@ -10,8 +10,8 @@ int main(){
     Eigen::MatrixXd audio_data = wav_file.getData();
     
     Visualizer vs = Visualizer();
-    vs.plot(audio_data, "histogram", 32, "hist_control_sine24b.png");
-    vs.plot(audio_data, "line", 32, "line_control_sine24b.png");
+    vs.plot(audio_data, "histogram", 32, "hist_sine24b.png");
+    vs.plot(audio_data, "line", 32, "line_sine24b.png");
     vs.printSummary(audio_data);
 
     return 0;

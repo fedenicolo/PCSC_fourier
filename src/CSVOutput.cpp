@@ -23,7 +23,7 @@ void CSVOutput::save(const Eigen::MatrixXd& data) {
 
     while (true) {
         std::cout << "Is the file an image? (yes/no): ";
-        std::getline(std::cin, input);
+        std::cin >> input;
 
         if (input == "yes") {
             image = true;

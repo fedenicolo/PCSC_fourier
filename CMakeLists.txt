@@ -10,7 +10,7 @@ set(CMAKE_BUILD_TYPE Debug)
 # Set debug flags for more control
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
-set(CMAKE_CXX_FLAGS "-O3")
+set(CMAKE_CXX_FLAGS "-O0")
 
 # Specify the build output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
@@ -78,40 +78,51 @@ if(TESTS)
     
     add_executable(HistogramTests "tests/HistogramTests.cpp" "src/Histogram.cpp" "src/PNGInput.cpp" "src/Image.h" "src/Input.cpp")
     
+    add_executable(FilterTests "tests/FilterTests.cpp" "src/WAVInput.cpp" "src/Fourier.h" "src/SignalProcessor.h" "src/Input.cpp" "src/Sound.h" "src/AudioExceptions.h")
+
+
     target_link_libraries(FourierTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem pthread ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
     target_link_libraries(WAVInputTests gtest gtest_main)
     target_link_libraries(PNGInputTests gtest gtest_main)
     target_link_libraries(BMPInputTests gtest gtest_main)
-    target_link_libraries(VisualizerTests gtest Boost::iostreams Boost::system Boost::filesystem )
-    target_link_libraries(MP3OutputTests gtest Boost::iostreams Boost::system Boost::filesystem ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
-    target_link_libraries(HistogramTests gtest Boost::iostreams Boost::system Boost::filesystem)    
-
+    target_link_libraries(VisualizerTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem )
+    target_link_libraries(MP3OutputTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
+    target_link_libraries(HistogramTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem)    
+    target_link_libraries(FilterTests gtest gtest_main)
 
     add_custom_target(tests
         COMMAND bash -c "cp -rv ${CMAKE_BINARY_DIR}/tests/Test_Files ${CMAKE_BINARY_DIR}/build"
-        DEPENDS FourierTests WAVInputTests PNGInputTests BMPInputTests VisualizerTests MP3OutputTests HistogramTests
+        DEPENDS FourierTests WAVInputTests PNGInputTests BMPInputTests VisualizerTests MP3OutputTests HistogramTests FilterTests
         COMMENT "Building all test executables"
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     )
-    
-    add_custom_target(run_tests COMMAND bash -c "./FourierTests"
-                                COMMAND bash -c "./WAVInputTests"
-                                COMMAND bash -c "./PNGInputTests"
-                                COMMAND bash -c "./BMPInputTests"
-                                COMMAND bash -c "./VisualizerTests"
-                                COMMAND bash -c "./MP3OutputTests"
-                                COMMAND bash -c "
-                                    hash1=\$(sha1sum Test_Files/Sine16bit_control.mp3 | awk '{print \$1}');
-                                    hash2=\$(sha1sum ./Sine16bitOutput.mp3 | awk '{print \$1}');
-                                    if [ \"\$hash1\" = \"\$hash2\" ]; then
-                                        echo 'The hash of the MP3 output MATCHES the control.';
-                                        exit 0;
-                                    else
-                                        echo 'The hash of the MP3 output does NOT MATCH the control.';
-                                        exit 1;
-                                    fi" 
-                                COMMAND bash -c "./HistogramTests"
-                                WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/build)
+
+
+
+    add_custom_target(run_tests
+        COMMAND bash -c "echo '########### Running Fourier Tests ##########'"
+        COMMAND bash -c "./FourierTests"
+        COMMAND bash -c "echo '########### Running WAV Tests     ##########'"
+        COMMAND bash -c "./WAVInputTests"
+        COMMAND bash -c "echo '########### Running PNG Tests     ##########'"
+        COMMAND bash -c "./PNGInputTests"
+        COMMAND bash -c "echo '########### Running BMP Tests     ##########'"
+        COMMAND bash -c "./BMPInputTests"
+        COMMAND bash -c "echo '######## Running Visualizer Tests ##########'"
+        COMMAND bash -c "./VisualizerTests"
+        COMMAND bash -c "./hash_check Test_Files/hist_control_sine24b.png hist_sine24b.png"
+        COMMAND bash -c "./hash_check Test_Files/line_control_sine24b.png line_sine24b.png"
+        COMMAND bash -c "echo '######### Running MP3Output Tests ##########'"
+        COMMAND bash -c "./MP3OutputTests"
+        COMMAND bash -c "./hash_check Test_Files/Sine16bit_control.mp3 Sine16bitOutput.mp3"
+        COMMAND bash -c "echo '######### Running Histogram Tests ##########'"
+        COMMAND bash -c "./HistogramTests"
+        COMMAND bash -c "echo '######### Running Filter Tests ##########'"
+        COMMAND bash -c "./FilterTests"
+        COMMAND bash -c "rm -rv Test_Files/ hist_sine24b.png line_sine24b.png Sine16bitOutput.mp3"
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/build
+        COMMENT "Running all tests"
+    )
 
     message(STATUS "Run `make run_tests` to run the tests")
 endif(TESTS)

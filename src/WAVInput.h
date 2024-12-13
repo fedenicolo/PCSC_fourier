@@ -5,7 +5,7 @@
 #define WAVINPUT_H
 
 #include "Sound.h"
-#include <Eigen/Dense>
+#include "Eigen/Dense"
 #include <vector>
 #include <string>
 
@@ -77,9 +77,6 @@ public:
 
 private:
     int AudioFormat;          ///< The audio format (e.g., PCM 8bit unsigned).
-    int NumChannels;          ///< Number of audio channels.
-    int SampleRate;           ///< The sample rate in Hz.
-    int BitsPerSample;        ///< Number of bits per audio sample.
     Eigen::MatrixXd AudioData;///< Eigen Matrix to store the audio data.
 
     /**
