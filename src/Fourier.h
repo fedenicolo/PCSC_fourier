@@ -103,6 +103,7 @@ Fourier::Fourier(Sound& input){
 whether this data is an image or if it is a sound. This greatly affects how the FFT is computed. If you want to load
 another type of Eigen matrix you need to call the default constructor first and then call the load_signal function.
  * @param input an Eigen::MatrixXd matrix
+ * @param isImage A bool to determine whether the provided input matrix is an image or a sound
 */
 Fourier::Fourier(Eigen::MatrixXd input, bool isImage) : signal(input), signal_rows(input.rows()), signal_cols(input.cols()), image(image) {};
 template <typename T>
