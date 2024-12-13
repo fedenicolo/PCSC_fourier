@@ -93,13 +93,21 @@ same at the end.
 
 ### Todos
 - **Support Additional Input Types**: Extend support to more input formats beyond WAV, BMP, and PNG.
-- **Expand Filtering Options**: Implement new filters, both with and without Fourier transform, to compare results. For example, add contour extraction without Fourier transform, based on pixel intensity gradients.
-- **Enhance Visualization**: Add more visualization options, such as stem plots, for improved data interpretation.
+- **Expand Filtering Options**: Implement new filters, both with and without Fourier transform, to compare results. For example, add contour extraction without Fourier transform, based on pixel intensity gradients. Other types
+of filters could also be implemented such as band-pass or band-stop. Finally, more advanced features such as noise canceling could be added.
+- **Improve Visualization**: Add more visualization options for improved data interpretation. Stem plots could be implemented to visualize the amplitude of the FFT and show it to the user allowing him to chose a cutoff
+frequency based on it.
 - **Executable Input Option**: Add support for running the program with a single configuration file as input, alongside the current menu-driven interface.
 
 ### Current Limitations
-- **Input Formats**: Supports only WAV, BMP, and PNG; more formats need to be added.
+- **Input Formats**: Supports only WAV, BMP, and PNG; more formats need to be added. Also, the WAV reader only supports the most common uncompressed PCM audio formats. Other audio formats could be added for more 
+flexibility.
+- **Output Generation**: The same thing can be said for output generation, the MP3Output class has only one saving format (PCM 32bit float).
+Different opttions could be implemented along with a menu to select the encoding format the user wants to use. Finally, some other file types
+could also be implemented.
 - **Menu-Driven Interface**: While user-friendly, it may not be ideal for automated or batch processing workflows.
-- **Static Bin and Filter Configurations**: Histogram bins and filter configurations are fixed and cannot adapt dynamically to the input data.
+- **Static Bin and Filter Configurations**: Histogram bins and filter configurations are fixed and cannot adapt dynamically to the input data. Currenty filters may introduce numerical artifacts, which smoother designs can mitigate.
+
+
 
 
