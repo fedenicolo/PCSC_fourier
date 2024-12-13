@@ -1,5 +1,5 @@
 # Project name : PCSC_fourier
-The goal of the PCSC_fourier project is to provide a set of easy-to-use tools for basic audio and image processing using object-oriented C++.
+The goal of the PCSC_fourier project is to provide a set of easy-to-use tools for basic audio and image processing, leveraging the power of Fourier transforms and customizable filters, using object-oriented C++.
 
 ## Instructions to Build the Project
 
@@ -62,7 +62,7 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
   The Fourier class has multiple constructors and provides several templated methods allowing great flexibility in its usage.
 
   - `SignalProcessor`: This class provides methods to filter FFT data and therefore process audio and image data. The filters that are available to the user
-  are easy-to-use low-pass and high-pass filters. The filtering methods require a cutoff value (between 0 and 1 both for image and sound)(2*fcutoff/fsample) in order to work. The class automatically handles the creation of frequency grids tailored to the input type, whether it is a 2D image or a 1D sound signal.
+  are easy-to-use low-pass and high-pass filters. The filtering methods require a cutoff value (between 0 and 1 both for image and sound)(normalized frequencies; 2*fcutoff/fsample) in order to work. The class automatically handles the creation of frequency grids tailored to the input type, whether it is a 2D image or a 1D sound signal.
 
 - **Visualization and Analysis**:
   - `Histogram`: This class provides methods for computing histograms. It supports computing histograms of real-valued data, such as pixel intensity probabilities, and includes specialized functionality for handling complex-valued data. When an FFT matrix is provided, the class computes the power spectrum and generates a histogram of its values.
