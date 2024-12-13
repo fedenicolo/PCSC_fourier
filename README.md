@@ -87,6 +87,6 @@ The goal of the PCSC_fourier project is to provide a set of easy-to-use tools fo
 - **Support Additional Input Types**: Extend support to more input formats beyond WAV, BMP, and PNG.
 - **Expand Filtering Options**: Implement new filters, both with and without Fourier transform, to compare their results. For example a contour extraction without the fourier transform, but based only on the "gradient" of pixel intensity.
 - **Enhance Visualization**: Add more visualization options, such as stem plots, for improved data interpretation.
-- **Executable Input Option**: Add support for running the program with a single configuration file as input, alongside the current guided, menu-driven interface. While user-friendly, the current menu-driven approach may not suit automated or large-scale batch processing.
+- **Executable Input Option**: Add support for running the program with a single configuration file as input, alongside the current guided, menu-driven interface. While user-friendly, the current menu-driven approach may not ideal for automated or large-scale batch processing.
 - **Static bin and Filter configurations**: Currently histogram requires a predetermined number of bins and filters do not have an adaptive configurations.
 
