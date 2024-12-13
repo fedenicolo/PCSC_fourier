@@ -296,7 +296,12 @@ int main() {
                                 } while (!validateExtension(img_path, "png"));
 
                                 PNGOutput output = PNGOutput(img_path);
-                                output.save(fft_->get_inverse_result<double>());
+
+
+                                Eigen::MatrixXd filtered_data = fft_->get_inverse_result<double>();
+
+
+                                output.save(filtered_data);
                             } else if(save_format == 'c') {
                                 std::string csv_path = "";
                                 do {
@@ -408,10 +413,6 @@ int main() {
                                 PNGOutput output = PNGOutput(png_path);
 
                                 Eigen::MatrixXd filtered_data = fft_->get_inverse_result<double>();
-
-                                std::cout << "Output rows: " << filtered_data.rows() << " Output cols" << filtered_data.cols() << std::endl;
-                                std::cout << "Data Rows: " << data.rows() << " Data Cols: " << data.cols() << std::endl;
-
 
                                 output.save(filtered_data);
                             } else if(save_format == 'c') {
