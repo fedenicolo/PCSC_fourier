@@ -91,7 +91,7 @@ same at the end.
 **Processing**: Since the Fourier class is the base building block of the project, all of its functionnalities are tested. The 1D FFT test
 passes and the 2D FFT test passes. Tests on the FFT method are equality tests between the FFT obtained using our methods and one computed
 using trusted tools. All methods used for the padding of the signal pass the tests. The inverse FFT method is assessed by comparing
-the original signal with result of the inverse FFT method, all tests pass. Finally, the loading functions are also testes and pass the tests.
+the original signal with result of the inverse FFT method, all tests pass. Finally, the loading functions are also tested and pass the tests.
 
 **Visualization**: The histogram class has been tested by generating two images using python, then creating histograms on python using the
 same pipeline that we use in the histogram class but with tools from packages. Then we use Google Tests to assess if they are similar.
@@ -109,7 +109,7 @@ frequency based on it.
 - **Executable Input Option**: Add support for running the program with a single configuration file as input, alongside the current menu-driven interface.
 
 ### Current Limitations
-- **Input Formats**: Supports only WAV, BMP, and PNG; more formats need to be added. Also, the WAV reader only supports the most common uncompressed PCM audio formats. Other audio formats could be added for more 
+- **Input Formats**: Supports only WAV, BMP, and PNG; more formats need to be added. Also, the WAV reader only supports the most common uncompressed PCM audio formats. Similarly, the PNG reader only supports PNG images with up to 3 color channels. Other audio formats could be added for more 
 flexibility.
 - **Output Generation**: The same thing can be said for output generation, the MP3Output class has only one saving format (PCM 32bit float).
 Different opttions could be implemented along with a menu to select the encoding format the user wants to use. Finally, some other file types
