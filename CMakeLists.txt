@@ -54,7 +54,9 @@ add_executable(PCSC_fourier "${CMAKE_SOURCE_DIR}/src/Fourier.h" "${CMAKE_SOURCE_
 find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
 include_directories(${EIGEN3_INCLUDE_DIR})
 # Link libraries
-add_custom_target(build_mpg123 
+add_custom_target(build_mpg123
+                  COMMAND bash -c "autoreconf -iv"
+                  COMMAND bash -c "chmod +x configure"
                   COMMAND bash -c "./configure --prefix=${CMAKE_BINARY_DIR}/mpg123-1.32.8/local"
                   COMMAND bash -c "make"
                   COMMAND bash -c "make install"
@@ -62,6 +64,7 @@ add_custom_target(build_mpg123
                   COMMENT "Building mpg123")
 
 add_custom_target(build_lame
+                  COMMAND bash -c "chmod +x configure"
                   COMMAND bash -c "./configure --prefix=${CMAKE_BINARY_DIR}/lame-3.100"
                   COMMAND bash -c "make"
                   COMMAND bash -c "make install"
