@@ -57,8 +57,9 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 add_custom_target(build_mpg123
                   COMMAND bash -c "autoreconf -iv"
                   COMMAND bash -c "chmod +x configure"
+                  COMMAND bash -c "make clean"
                   COMMAND bash -c "./configure --prefix=${CMAKE_SOURCE_DIR}/mpg123-1.32.8/local/"
-                  COMMAND bash -c "make"
+                  COMMAND bash -c "make V=1"
                   COMMAND bash -c "make install"
                   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/mpg123-1.32.8
                   COMMENT "Building mpg123")

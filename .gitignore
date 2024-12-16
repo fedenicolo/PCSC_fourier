@@ -16,6 +16,10 @@ Makefile
 *.iml
 .vscode/
 
+**/.libs/
+**/.libs/
+
+
 # Ignore compiled files
 *.o
 *.out
