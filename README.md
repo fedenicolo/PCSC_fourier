@@ -1,57 +1,69 @@
 # Project name : PCSC_fourier
 The goal of the PCSC_fourier project is to provide a set of easy-to-use tools for basic audio and image processing, leveraging the power of Fourier transforms and customizable filters, using object-oriented C++.
 
+
+## Current Limitations
+- **Bug in Main**: If you use the low pass filter on an audio file, when asked if you want to save the filtered audio as
+  an MP3 or CSV to select the MP3 output format you need to pass in `p` and not `m` as the program suggestes.
+- **Calculating Cutoff Frequency for Sound**: To calculate the cutoff frequency for the sound you need to do `cutoff/sample_frequency`
+- **Input Formats**: Supports only WAV, BMP, and PNG; more formats need to be added. Also, the WAV reader only supports the most common uncompressed PCM audio formats. Similarly, the PNG reader only supports PNG images with up to 3 color channels. Other audio formats could be added for more 
+flexibility. For the Audio Inputs we only support Mono formats in terms of filtering.
+- **Output Generation**: The same thing can be said for output generation, the MP3Output class has only one saving format (PCM 32bit float).
+Different opttions could be implemented along with a menu to select the encoding format the user wants to use. Finally, some other file types
+could also be implemented.
+- **Menu-Driven Interface**: While user-friendly, it may not be ideal for automated or batch processing workflows.
+- **Static Bin and Filter Configurations**: Histogram bins and filter configurations are fixed and cannot adapt dynamically to the input data. Currenty filters may introduce numerical artifacts, which smoother designs can mitigate.
+
+
 ## Instructions to Build the Project
 
 1. Navigate to the root directory of the project. Update the submodules by running:
    ```bash
    git submodule update --init --recursive
    ```
-2. Make the clean.sh file executable by running
-   ```bash
-   chmod +x ./clean.sh
-   ````
-3. If you have previously built something in this directory, clear out any generated files by running:
-   ```bash
-   make clean
-   ./clean.sh
-   ```
 
-4. Generate the Makefile for building by running:
+2. To build the main program, start from the root of the project and run:
    ```bash
-   cmake -DTESTS=ON -DDOCUMENTATION=ON .
-   ```
-
-5. To build the tests, run:
-   ```bash
-   make tests
-   ```
-   You may also set the `-j<NUM_THREADS>` flag to use multiple threads for faster compilation. Note that compiling from scratch may take a while.
-
-6. Run the tests with the command:
-   ```bash
-   make -i run_tests
-   ```
-
-7. To build the main program, run:
-   ```bash
+   mkdir /path/to/build/directory
+   cd /path/to/build/directory
+   cmake ..
    make main
    ```
 
-8. To generate the Doxygen documentation, run:
+3. To create tests, start from the root of the project and run:
+   ```bash
+   mkdir /path/to/test/directory
+   cd /path/to/test/directory
+   cmake -DTESTS=ON ..
+   make tests
+   ```
+   You may also set the `-j<NUM_THREADS>` flag to use multiple threads for faster compilation. Note that compiling from
+   scratch may take a while depending on the speed if your system. If you see a message that says "cpluscplus killed" or
+   something similar then run the command again with `make -j1 tests` to use only one thread and lower memory.
+
+4. Run the tests with the command:
+   ```bash
+   make -i run_tests
+   ```
+   You need to pass in the `-i` flag since we explicitly throw and catch an error. This flag will force make to
+   continute even if an error is thrown.
+
+
+5. To generate the documentation, start from the root of the project and run:
    ```bash
    mkdir docs
+   cd docs
+   cmake -DDOCUMENTATION=ON ..
    make doc_doxygen
    ```
-   The documentation will be created in the `docs` directory.
+   You must create the docs directory exactly as specified since the DOXYFILE will put the built documentation in this directory. It will not create this directory by itself!! The documentation will be created in the `docs` directory.
 
-9. The main program and all test files will be located in the `build` directory.
 
 ## Typical program execution and usage
 
 1. Change directory to the build directory and run the PCSC_fourier file
    ```bash
-   cd build
+   cd /path/to/your/build/directory
    ./PCSC_fourier
    ```
 2. The program will display a menu and ask what file you want to load. Choose the correct option and give the path to the file. For ease of use, make sure any file you want to provide is also contained in the build directory as then you only have to provide the filename and not the full path.
@@ -115,9 +127,7 @@ During the test the Filter class ouputs a .txt file whose hash is then compared 
 
 **Visualization**: To test the Visualizer we created two control PNGs that plot a line plot and the histrogram plot of a known sinewave, these images are saved in the Test_Files folder in tests/. Then when running the tests the VisualizerTests program will save the histogram and the line plot to the disk and the then hash_check file will be called to compute the hashes. If the hashes are the same, the tests have passed and you will see the message "The hashes are the same". This hash check is done through the hash_check file and the sha1sum command so make sure you have hash_check in the build directory. If you dont have the sha1sum package you can install the command by installing the coreutils package using your system's package manager.
 
-## Todos and Limitations
-
-### Todos
+## TODOs
 - **Support Additional Input Types**: Extend support to more input formats beyond WAV, BMP, and PNG.
 - **Expand Filtering Options**: Implement new filters, both with and without Fourier transform, to compare results. For example, add contour extraction without Fourier transform, based on pixel intensity gradients. Other types
 of filters could also be implemented such as band-pass or band-stop. Finally, more advanced features such as noise canceling could be added.
@@ -125,14 +135,6 @@ of filters could also be implemented such as band-pass or band-stop. Finally, mo
 frequency based on it.
 - **Executable Input Option**: Add support for running the program with a single configuration file as input, alongside the current menu-driven interface.
 
-### Current Limitations
-- **Input Formats**: Supports only WAV, BMP, and PNG; more formats need to be added. Also, the WAV reader only supports the most common uncompressed PCM audio formats. Similarly, the PNG reader only supports PNG images with up to 3 color channels. Other audio formats could be added for more 
-flexibility.
-- **Output Generation**: The same thing can be said for output generation, the MP3Output class has only one saving format (PCM 32bit float).
-Different opttions could be implemented along with a menu to select the encoding format the user wants to use. Finally, some other file types
-could also be implemented.
-- **Menu-Driven Interface**: While user-friendly, it may not be ideal for automated or batch processing workflows.
-- **Static Bin and Filter Configurations**: Histogram bins and filter configurations are fixed and cannot adapt dynamically to the input data. Currenty filters may introduce numerical artifacts, which smoother designs can mitigate.
 
 
 

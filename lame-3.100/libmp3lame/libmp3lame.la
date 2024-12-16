@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/lame-3.100/lib'
+libdir='/mnt/c/Users/aaron/Desktop/Coding/MATH-458/final_project/build_debug/lame-3.100/lib'

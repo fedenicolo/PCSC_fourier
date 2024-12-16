@@ -1,301 +1,523 @@
-<mxfile host="65bd71144e">
+<mxfile host="65bd71144e" scale="20" border="0">
     <diagram id="RX924UfIvbt7zdrnU-vz" name="Page-1">
-        <mxGraphModel dx="828" dy="645" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="583" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="365" dy="338" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="583" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="2" value="Class&lt;br&gt;&lt;b&gt;Input&lt;/b&gt;&lt;br&gt;{abstract}" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="40" width="200" height="203" as="geometry"/>
+                <mxCell id="40" value="Class&lt;br&gt;&lt;b&gt;Histogram&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="1440" width="280" height="343" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="41" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="55" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="186" value="- Eigen::MatrixXd data" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="75" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="- std::vector&amp;lt;int&amp;gt; bins" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="95" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="- int numBins" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="115" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="- double minRange" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="135" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="- double maxRange" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="155" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="175" width="280" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="183" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="+ void compute()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="203" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="+ Eigen::MatrixXd getNormalizedHistogram()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="223" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="+ Eigen::VectorXi getBins()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="243" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="187" value="+ Eigen::MatrixXd getHistogramData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="263" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="188" value="- void flattenMatrix()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="283" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="- void initialize(const Eigen::MatrixXd&amp;amp;, int)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="303" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="189" value="- void initialize(const Eigen::MatrixXcd&amp;amp;, int, double)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
+                    <mxGeometry y="323" width="280" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="Class&lt;br&gt;&lt;b&gt;Fourier&lt;br&gt;&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="1440" width="320" height="563" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="55" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="- Eigen::MatrixXd signal" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="75" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="- Eigen::MatrixXcd fft_result" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="95" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="- Eigen::MatrixXcd inverse_result" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="115" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="180" value="- int signal_rows" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="135" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="181" value="- int signal_cols" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="155" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="182" value="- bool isImage" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="175" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="- double PI" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="195" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="215" width="320" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="223" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="+ void load_signal(Eigen::MatrixBase&amp;lt;T&amp;gt;&amp;amp;, bool)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="243" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="+ void transform()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="263" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="+ void load_transform(const Eigen::MatrixXcd&amp;amp;, bool)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="283" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="+ bool inverse_transform()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="303" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="+ Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, -1, -1&amp;gt; get_fft_result()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="323" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="175" value="+ Eigen::Matrix&amp;lt;T, -1, -1&amp;gt; get_inverse_result_padded()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="343" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="+ Eigen::Matrix&amp;lt;T, -1, -1&amp;gt; get_inverse_result()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="363" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="83" value="+ Eigen::MatrixXcd shift(const Eigen::MatrixXcd&amp;amp;);" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="53" vertex="1">
+                    <mxGeometry y="383" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="+ Eigen::MatrixXcd unshift(const Eigen::MatrixXcd&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="403" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" value="+ Eigen::Matrix&amp;lt;T, -1, -1&amp;gt; get_signal()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="423" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="176" value="+ void print_signal()&amp;nbsp; &amp;nbsp;&amp;nbsp;" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="443" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="177" value="- void __pad_signal(std::tuple&amp;lt;int, int&amp;gt;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="463" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="179" value="- bool __is_power_of_2(int)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="483" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="178" value="- unsigned int __next_power_of_2(unsigned int)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="503" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="- void __fft(Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, 1, -1&amp;gt;&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="523" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="- void __ifft(Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, 1, -1&amp;gt;&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
+                    <mxGeometry y="543" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="Class&lt;br&gt;&lt;b&gt;Visualizer&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1440" width="440" height="203" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="55" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="75" width="440" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="83" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="+ void plot(const Eigen::MatrixXd&amp;amp;, const std::string&amp;amp;, int, const std::string&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="103" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="183" value="+ void printSummary(std::vector&amp;lt;double&amp;gt;&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="123" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="- void plotHistogram(const Eigen::MatrixXd&amp;amp;, int, const std::string&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="143" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="185" value="- void plotLine(const Eigen::MatrixXd&amp;amp;, const std::string&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="163" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="184" value="- void configureOutput(Gnuplot&amp;amp;, const std::string&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                    <mxGeometry y="183" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="174" value="" style="group;fillColor=none;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="180" y="40" width="1400" height="843" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Class&lt;br&gt;&lt;b&gt;Input&lt;/b&gt;&lt;br&gt;{abstract}" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="174" vertex="1">
+                    <mxGeometry x="480" width="200" height="203" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="55" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="# std::string filepath" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="4" value="# std::string filepath" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="75" width="200" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="95" width="200" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="8" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="103" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="9" value="+ virtual void readData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="9" value="+ virtual void readData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="123" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="std::string getFilepath()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="10" value="std::string getFilepath()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="143" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="virtual bool isValidFile()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="14" value="virtual bool isValidFile()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="163" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="virtual Eigen::MatrixXd getData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="15" value="virtual Eigen::MatrixXd getData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="183" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="Class&lt;br&gt;&lt;b&gt;Sound&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="320" width="200" height="183" as="geometry"/>
+                <mxCell id="171" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.501;entryY=0.997;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=none;" parent="174" source="16" target="15" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="220" y="240"/>
+                            <mxPoint x="580" y="240"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="17" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
+                <mxCell id="16" value="Class&lt;br&gt;&lt;b&gt;Sound&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="174" vertex="1">
+                    <mxGeometry x="120" y="280" width="200" height="163" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
                     <mxGeometry y="55" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" value="*Add extra attributes here*" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
+                <mxCell id="109" value="- int NumChannels" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
                     <mxGeometry y="75" width="200" height="20" as="geometry"/>
                 </mxCell>
+                <mxCell id="110" value="- int SampleRate" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
+                    <mxGeometry y="95" width="200" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="- int BitsPerSample" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
+                    <mxGeometry y="115" width="200" height="20" as="geometry"/>
+                </mxCell>
                 <mxCell id="19" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="16" vertex="1">
-                    <mxGeometry y="95" width="200" height="8" as="geometry"/>
+                    <mxGeometry y="135" width="200" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
-                    <mxGeometry y="103" width="200" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="21" value="+ void readData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
-                    <mxGeometry y="123" width="200" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="23" value="+ bool isValidFile()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
+                <mxCell id="20" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
                     <mxGeometry y="143" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="+ Eigen::MatrixXd getData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="16" vertex="1">
-                    <mxGeometry y="163" width="200" height="20" as="geometry"/>
+                <mxCell id="30" value="Class&lt;br&gt;&lt;b&gt;BMPInput&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="174" vertex="1">
+                    <mxGeometry x="480" y="520" width="440" height="263" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1.023;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="16" target="15" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="170" y="300" as="sourcePoint"/>
-                        <mxPoint x="140" y="246" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="30" value="Class&lt;br&gt;&lt;b&gt;BMP&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="280" y="320" width="440" height="163" as="geometry"/>
-                </mxCell>
-                <mxCell id="31" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                <mxCell id="31" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="55" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="147" value="- int width" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="75" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="149" value="- int height" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="95" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" value="- Eigen::MatrixXd ImageData" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                    <mxGeometry y="115" width="440" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="33" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="30" vertex="1">
-                    <mxGeometry y="75" width="440" height="8" as="geometry"/>
+                    <mxGeometry y="135" width="440" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
-                    <mxGeometry y="83" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="35" value="+ Eigen::MatrixXd getData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
-                    <mxGeometry y="103" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="37" value="- void readBMP(std::string&amp;amp;, std::vector&amp;lt;unsigned char&amp;gt;&amp;amp;, int&amp;amp; int&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
-                    <mxGeometry y="123" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="38" value="- Eigen::MatrixXd convertToGrayscale(std::vector&amp;lt;unsigned char&amp;gt;&amp;amp;, int&amp;amp;, int&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
+                <mxCell id="34" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="143" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="39" value="" style="endArrow=classic;html=1;entryX=0.5;entryY=1.02;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="30" target="15" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="390" y="310" as="sourcePoint"/>
-                        <mxPoint x="150" y="250" as="targetPoint"/>
-                        <Array as="points">
-                            <mxPoint x="500" y="280"/>
-                            <mxPoint x="140" y="280"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="40" value="Class&lt;br&gt;&lt;b&gt;Histogram&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="520" y="827" width="280" height="283" as="geometry"/>
-                </mxCell>
-                <mxCell id="41" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="55" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="42" value="- std::vector&amp;lt;int&amp;gt; bins" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="75" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="50" value="- int numBins" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="95" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="49" value="- double minRange" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="115" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="51" value="- double maxRange" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="135" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="43" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="155" width="280" height="8" as="geometry"/>
-                </mxCell>
-                <mxCell id="44" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="163" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="45" value="+ void compute(Eigen::MatrixXd&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="183" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="46" value="+ Eigen::MatrixXd getNormalizedHistogram()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="203" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="47" value="+ Eigen::MatrixXi getBins()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="223" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="48" value="+ Eigen::MatrixXd getHistogramData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="243" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="52" value="+ void visualize()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="40" vertex="1">
-                    <mxGeometry y="263" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="53" value="Class&lt;br&gt;&lt;b&gt;Fourier&amp;lt;T&amp;gt;&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="840" y="827" width="320" height="403" as="geometry"/>
-                </mxCell>
-                <mxCell id="54" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="55" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="55" value="- Eigen::Matrix&amp;lt;T, 1, -1&amp;gt; signal" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="75" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="56" value="- Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, 1, -1&amp;gt; fft_result" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="95" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="57" value="- Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, 1, -1&amp;gt; inverse_result" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="115" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="58" value="- T PI" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="135" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="59" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="155" width="320" height="8" as="geometry"/>
-                </mxCell>
-                <mxCell id="60" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="163" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="61" value="+ bool load_signal(std::vector&amp;lt;T&amp;gt;&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="183" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="62" value="+ void pad_signal(int)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="203" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="63" value="+ bool transform()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="223" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="64" value="+ bool inverse_transform()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="243" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="65" value="+ std::vector&amp;lt;std::complex&amp;lt;T&amp;gt;&amp;gt; get_fft_result()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="53" vertex="1">
-                    <mxGeometry y="263" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="81" value="+ std::vector&amp;lt;T&amp;gt; get_signal()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="53">
-                    <mxGeometry y="283" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="83" value="+ void print_signal()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="53">
-                    <mxGeometry y="303" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="82" value="- bool __is_power_of_2(int)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="53">
-                    <mxGeometry y="323" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="84" value="- unsigned int __next_power_of_2(unsigned int)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="53">
-                    <mxGeometry y="343" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="86" value="- void __fft(Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, 1, -1&amp;gt;&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="53">
-                    <mxGeometry y="363" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="85" value="- void __ifft(Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, 1, -1&amp;gt;&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="53">
-                    <mxGeometry y="383" width="320" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="66" value="Class&lt;br&gt;&lt;b&gt;Visualizer&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="827" width="440" height="323" as="geometry"/>
-                </mxCell>
-                <mxCell id="67" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="55" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="68" value="- std::vector&amp;lt;int&amp;gt; bins" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="75" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="69" value="int numBins" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="95" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="70" value="double minRange" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="115" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="71" value="double maxRange" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="135" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="72" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="155" width="440" height="8" as="geometry"/>
-                </mxCell>
-                <mxCell id="73" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                <mxCell id="35" value="+ Eigen::MatrixXd getData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="163" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="74" value="+ void plotHistogram(const Histogram&amp;amp;, std::string&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                <mxCell id="37" value="- void readBMP()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="183" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="75" value="+ void plotLine(std::vector&amp;lt;double&amp;gt;&amp;amp;, std::string&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                <mxCell id="150" value="- Eigen::MatrixXd convertToGrayscale(const std::vector&amp;lt;unsigned char&amp;gt;&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="203" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="76" value="+ void plotScatter(std::vector&amp;lt;double&amp;gt;&amp;amp;, std::vector&amp;lt;double&amp;gt;&amp;amp;, std::string&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                <mxCell id="38" value="+ getHeight()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="223" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="77" value="+ void printSummary(std::vector&amp;lt;double&amp;gt;&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
+                <mxCell id="151" value="+ getWidth()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="30" vertex="1">
                     <mxGeometry y="243" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="78" value="- void configureLinePlot(std::vector&amp;lt;double&amp;gt;&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="263" width="440" height="20" as="geometry"/>
+                <mxCell id="168" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.497;entryY=1.004;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=none;" parent="174" source="87" target="20" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="79" value="- void configureScatterPlot(std::vector&amp;lt;double&amp;gt;&amp;amp;, std::vector&amp;lt;double&amp;gt;&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="283" width="440" height="20" as="geometry"/>
+                <mxCell id="87" value="Class&lt;br&gt;&lt;b&gt;WAVInput&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="174" vertex="1">
+                    <mxGeometry y="520" width="440" height="323" as="geometry"/>
                 </mxCell>
-                <mxCell id="80" value="- void configureOutput(std::string&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="66" vertex="1">
-                    <mxGeometry y="303" width="440" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="87" value="Class&lt;br&gt;&lt;b&gt;WAV&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="760" y="320" width="440" height="383" as="geometry"/>
-                </mxCell>
-                <mxCell id="88" value="Attributes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="88" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="55" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="95" value="- int AudioFormat" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="95" value="- int AudioFormat" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="75" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="96" value="- int NumChannels" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="98" value="- Eigen::MatrixXd AudioData" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="95" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="97" value="- int SampleRate" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="115" width="440" height="20" as="geometry"/>
+                <mxCell id="89" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="87" vertex="1">
+                    <mxGeometry y="115" width="440" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="99" value="- int BitsPerSample" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="135" width="440" height="20" as="geometry"/>
+                <mxCell id="90" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
+                    <mxGeometry y="123" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="98" value="- Eigen::MatrixXd AudioData" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="155" width="440" height="20" as="geometry"/>
+                <mxCell id="91" value="+ Eigen::MatrixXd getData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
+                    <mxGeometry y="143" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="89" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="175" width="440" height="8" as="geometry"/>
+                <mxCell id="92" value="+ int getSampleRate()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
+                    <mxGeometry y="163" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="90" value="Methods" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="93" value="+ int getNumChannels()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="183" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="91" value="+ Eigen::MatrixXd getData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="100" value="+ int getBitsPerSample()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="203" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="92" value="+ int getSampleRate()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="101" value="+ int getAudioFormat()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="223" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="93" value="+ int getNumChannels()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="103" value="+ readData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="243" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="100" value="+ int getBitsPerSample()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="102" value="- void ReadHeader(std::ifstream&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="263" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="101" value="+ int getAudioFormat()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="104" value="- void ReadFMTChunk(std::ifstream&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="283" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="103" value="+ readData()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
+                <mxCell id="105" value="- void ReadDataChunk(std::ifstream&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="87" vertex="1">
                     <mxGeometry y="303" width="440" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="102" value="- void ReadHeader(std::ifstream&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="323" width="440" height="20" as="geometry"/>
+                <mxCell id="113" value="Class&lt;br&gt;&lt;b&gt;Image&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="174" vertex="1">
+                    <mxGeometry x="840" y="280" width="200" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="104" value="- void ReadFMTChunk(std::ifstream&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="343" width="440" height="20" as="geometry"/>
+                <mxCell id="114" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="113" vertex="1">
+                    <mxGeometry y="55" width="200" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="105" value="- void ReadDataChunk(std::ifstream&amp;amp;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="87">
-                    <mxGeometry y="363" width="440" height="20" as="geometry"/>
+                <mxCell id="118" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="113" vertex="1">
+                    <mxGeometry y="75" width="200" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="94" value="" style="endArrow=classic;html=1;entryX=0.5;entryY=1.02;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="87">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="560" y="300" as="sourcePoint"/>
-                        <mxPoint x="140" y="243.39999999999998" as="targetPoint"/>
+                <mxCell id="119" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="113" vertex="1">
+                    <mxGeometry y="83" width="200" height="37" as="geometry"/>
+                </mxCell>
+                <mxCell id="169" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.503;entryY=1.001;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=none;" parent="174" source="30" target="119" edge="1">
+                    <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="980" y="280"/>
-                            <mxPoint x="140" y="280"/>
+                            <mxPoint x="700" y="460"/>
+                            <mxPoint x="941" y="460"/>
                         </Array>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="170" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.504;entryY=0.999;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=none;" parent="174" source="153" target="119" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1180" y="460"/>
+                            <mxPoint x="940" y="460"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="153" value="Class&lt;br&gt;&lt;b&gt;PNGInput&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="174" vertex="1">
+                    <mxGeometry x="960" y="520" width="440" height="303" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="55" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="155" value="- int width" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="75" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="165" value="- int height" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="95" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="156" value="- int numChannels" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="115" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" value="- Eigen::MatrixXd ImageData" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="135" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="158" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="155" width="440" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="159" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="163" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" value="+ Eigen::MatrixXd getData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="183" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="161" value="- void readData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="203" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="162" value="- Eigen::MatrixXd convertToGrayscale(const unsigned char* )" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="223" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="163" value="+ getHeight()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="243" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="164" value="+ getWidth()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="263" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="166" value="+ getChannels()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="153" vertex="1">
+                    <mxGeometry y="283" width="440" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="173" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.501;entryY=1.002;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=none;" parent="174" source="113" target="15" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="580" y="210" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="940" y="240"/>
+                            <mxPoint x="580" y="240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="190" value="Class&lt;br&gt;&lt;b&gt;Signal Processor&lt;br&gt;&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1240" y="1440" width="320" height="303" as="geometry"/>
+                </mxCell>
+                <mxCell id="191" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="55" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="192" value="- Eigen::MatrixXcd data" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="75" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="194" value="- Eigen::MatrixXd frequencyGrid" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="95" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="195" value="- bool isSound" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="115" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="199" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="135" width="320" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="200" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="143" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="201" value="+ Eigen::MatrixXcd applyHighPassFilter(double)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="163" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="202" value="+ Eigen::MatrixXcd applyLowPassFilter(double);" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="183" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="203" value="+ load_signal(const Eigen::MatrixBase&amp;lt;T&amp;gt;&amp;amp;, bool)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="203" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="204" value="+ Eigen::Matrix&amp;lt;std::complex&amp;lt;T&amp;gt;, -1, -1&amp;gt; getData()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="223" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="205" value="+ Eigen::MatrixXd getFrequencyGrid()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="243" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="206" value="- void computeFrequencyGrid()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="263" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="207" value="- void computeFrequencyGridForSound()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="190" vertex="1">
+                    <mxGeometry y="283" width="320" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="217" value="Class&lt;br&gt;&lt;b&gt;Output&lt;/b&gt;&lt;br&gt;{abstract}" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="960" width="260" height="183" as="geometry"/>
+                </mxCell>
+                <mxCell id="218" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="55" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="219" value="# std::string filepath" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="75" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="220" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="95" width="260" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="221" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="103" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="222" value="+ virtual void save(const Eigen::MatrixXd&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="123" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="223" value="+ std::string getOutputFilePath()" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="143" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="224" value="+ void setOutputFilePath(const std::string&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="217" vertex="1">
+                    <mxGeometry y="163" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="248" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.498;entryY=1.001;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=12;fillColor=none;" parent="1" source="226" target="224" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="490" y="1170"/>
+                            <mxPoint x="799" y="1170"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="226" value="Class&lt;br&gt;&lt;b&gt;MP3Output&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="1200" width="260" height="163" as="geometry"/>
+                </mxCell>
+                <mxCell id="227" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="226" vertex="1">
+                    <mxGeometry y="55" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="228" value="- long sampleRate" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="226" vertex="1">
+                    <mxGeometry y="75" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="234" value="- int numChannels" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="226" vertex="1">
+                    <mxGeometry y="95" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="229" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="226" vertex="1">
+                    <mxGeometry y="115" width="260" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="230" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="226" vertex="1">
+                    <mxGeometry y="123" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="231" value="+ void save(const Eigen::MatrixXd&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="226" vertex="1">
+                    <mxGeometry y="143" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="247" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.499;entryY=1.001;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=12;fillColor=none;" parent="1" source="235" target="224" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="235" value="Class&lt;br&gt;&lt;b&gt;PNGOutput&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="670" y="1200" width="260" height="123" as="geometry"/>
+                </mxCell>
+                <mxCell id="236" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="235" vertex="1">
+                    <mxGeometry y="55" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="239" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="235" vertex="1">
+                    <mxGeometry y="75" width="260" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="240" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="235" vertex="1">
+                    <mxGeometry y="83" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="241" value="+ void save(const Eigen::MatrixXd&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="235" vertex="1">
+                    <mxGeometry y="103" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="249" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontSize=12;entryX=0.496;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=none;" parent="1" source="242" target="224" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="900" y="1160" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1110" y="1170"/>
+                            <mxPoint x="799" y="1170"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="242" value="Class&lt;br&gt;&lt;b&gt;CSVOutput&lt;/b&gt;" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=55;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="980" y="1200" width="260" height="123" as="geometry"/>
+                </mxCell>
+                <mxCell id="243" value="Attributes" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="242" vertex="1">
+                    <mxGeometry y="55" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="244" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="242" vertex="1">
+                    <mxGeometry y="75" width="260" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="245" value="Methods" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="242" vertex="1">
+                    <mxGeometry y="83" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="246" value="+ void save(const Eigen::MatrixXd&amp;amp;)" style="text;html=1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="242" vertex="1">
+                    <mxGeometry y="103" width="260" height="20" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
