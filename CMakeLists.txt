@@ -57,8 +57,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 add_custom_target(build_mpg123
                   COMMAND bash -c "autoreconf -iv"
                   COMMAND bash -c "chmod +x configure"
-                  COMMAND bash -c "make clean"
-                  COMMAND bash -c "./configure --prefix=${CMAKE_SOURCE_DIR}/mpg123-1.32.8/local/"
+                  COMMAND bash -c "./configure --prefix=${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/"
                   COMMAND bash -c "make V=1"
                   COMMAND bash -c "make install"
                   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/mpg123-1.32.8
@@ -66,7 +65,7 @@ add_custom_target(build_mpg123
 
 add_custom_target(build_lame
                   COMMAND bash -c "chmod +x configure"
-                  COMMAND bash -c "./configure --prefix=${CMAKE_SOURCE_DIR}/lame-3.100/"
+                  COMMAND bash -c "./configure --prefix=${CMAKE_BINARY_DIR}/lame-3.100/"
                   COMMAND bash -c "make"
                   COMMAND bash -c "make install"
                   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/lame-3.100
@@ -75,7 +74,7 @@ add_custom_target(build_lame
                   
                   
 add_dependencies(PCSC_fourier build_mpg123 build_lame)
-target_link_libraries(PCSC_fourier Boost::iostreams Boost::system Boost::filesystem ${CMAKE_SOURCE_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_SOURCE_DIR}/lame-3.100/lib/libmp3lame.so)
+target_link_libraries(PCSC_fourier Boost::iostreams Boost::system Boost::filesystem ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
 link_directories(${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib)
 link_directories(${CMAKE_BINARY_DIR}/lame-3.100/lib)
 
@@ -114,12 +113,12 @@ if(TESTS)
     add_dependencies(FourierTests build_mpg123 build_lame)
     add_dependencies(MP3OutputTests build_mpg123 build_lame)
 
-    target_link_libraries(FourierTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem pthread ${CMAKE_SOURCE_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_SOURCE_DIR}/lame-3.100/lib/libmp3lame.so)
+    target_link_libraries(FourierTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem pthread ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
     target_link_libraries(WAVInputTests gtest gtest_main)
     target_link_libraries(PNGInputTests gtest gtest_main)
     target_link_libraries(BMPInputTests gtest gtest_main)
     target_link_libraries(VisualizerTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem )
-    target_link_libraries(MP3OutputTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem ${CMAKE_SOURCE_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_SOURCE_DIR}/lame-3.100/lib/libmp3lame.so)
+    target_link_libraries(MP3OutputTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem ${CMAKE_BINARY_DIR}/mpg123-1.32.8/local/lib/libmpg123.so ${CMAKE_BINARY_DIR}/lame-3.100/lib/libmp3lame.so)
     target_link_libraries(HistogramTests gtest gtest_main Boost::iostreams Boost::system Boost::filesystem)    
     target_link_libraries(FilterTests gtest gtest_main)
 
