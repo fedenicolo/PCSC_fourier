@@ -64,6 +64,7 @@ add_custom_target(build_mpg123
                   COMMENT "Building mpg123")
 
 add_custom_target(build_lame
+                  COMMAND bash -c "autoreconf -iv"
                   COMMAND bash -c "chmod +x configure"
                   COMMAND bash -c "./configure --prefix=${CMAKE_BINARY_DIR}/lame-3.100"
                   COMMAND bash -c "make"
