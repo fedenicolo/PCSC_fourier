@@ -15,7 +15,7 @@ could also be implemented.
 - **Static Bin and Filter Configurations**: Histogram bins and filter configurations are fixed and cannot adapt dynamically to the input data. Currenty filters may introduce numerical artifacts, which smoother designs can mitigate.
 
 
-## Instructions to Build the Project
+## Instructions to Build the Project (FOR LINUX OR ANY UNIX LIKE SYSTEM)
 
 1. Navigate to the root directory of the project. Update the submodules by running:
    ```bash
