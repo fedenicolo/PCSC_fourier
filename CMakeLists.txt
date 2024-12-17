@@ -154,7 +154,7 @@ if(TESTS)
         COMMAND bash -c "./FilterTests"
         COMMAND bash -c "./hash_check Test_Files/lowpass.txt lowpass.txt"
         COMMAND bash -c "./hash_check Test_Files/highpass.txt highpass.txt"
-        COMMAND bash -c "rm -rv Test_Files/ hist_sine24b.png line_sine24b.png Sine16bitOutput.mp3 lowpass.txt highpass.txt"
+        COMMAND bash -c "rm -v hist_sine24b.png line_sine24b.png Sine16bitOutput.mp3 lowpass.txt highpass.txt"
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         COMMENT "Running all tests"
     )

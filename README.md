@@ -56,7 +56,16 @@ could also be implemented.
    cmake -DDOCUMENTATION=ON ..
    make doc_doxygen
    ```
-   You must create the docs directory exactly as specified since the DOXYFILE will put the built documentation in this directory. It will not create this directory by itself!! The documentation will be created in the `docs` directory.
+   You must create the docs directory exactly as specified since the DOXYFILE will put the built documentation in this
+   directory. It will not create this directory by itself!! The html documentation will be created in the `docs\html`
+   directory. Open the `index.html` file to view the documentation.
+
+### Possible Build Problems
+- If the building of lame or mpg123 fails for any reason. Delete the `lame-3.100` and `mpg123-1.32.8` directories from
+  the root directory as well as the build directory. Then download the mpg123-1.32.8 from this
+  [link](https://sourceforge.net/projects/mpg123/files/mpg123/1.32.8/) and the lame-3.100 from this
+  [link](https://sourceforge.net/projects/lame/files/lame/3.100/). Unzip them and place them in the root directory, then
+  run the build process again.
 
 
 ## Typical program execution and usage
